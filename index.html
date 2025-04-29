@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olimjonov Og'abek | Web Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2d2d2d',
+                        accent: '#c8a164',
+                        light: '#f5f5f5',
+                    },
+                    fontFamily: {
+                        playfair: ['Playfair Display', 'serif'],
+                        poppins: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-100">
+    <!-- Navbar -->
+    <nav class="fixed w-full bg-primary/95 backdrop-blur-sm shadow-lg z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Logo qismi -->
+            <div class="logo-container">
+                <a href="#home" class="group flex items-center space-x-2">
+                    <div class="logo-circle">
+                        <span class="logo-text">OO</span>
+                    </div>
+                    <div class="logo-details opacity-0 group-hover:opacity-100 transition-all duration-500">
+                        <span class="text-accent font-playfair">Og'abek</span>
+                        <span class="text-light font-playfair">Olimjonov</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Navigation links -->
+            <ul class="hidden md:flex space-x-8 font-poppins">
+                <li><a href="#home" class="text-light hover:text-accent transition-colors">Home</a></li>
+                <li><a href="#about" class="text-light hover:text-accent transition-colors">About</a></li>
+                <li><a href="#skills" class="text-light hover:text-accent transition-colors">Skills</a></li>
+                <li><a href="#projects" class="text-light hover:text-accent transition-colors">Projects</a></li>
+                <li><a href="#contact" class="text-light hover:text-accent transition-colors">Contact</a></li>
+            </ul>
+            <button class="md:hidden text-light" id="menu-btn">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center bg-primary relative overflow-hidden">
+        <!-- Animated background particles -->
+        <div class="particles-container absolute inset-0"></div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center">
+                <div class="mb-4 text-accent font-medium tracking-wider animate-fadeIn">FRONTEND DEVELOPER</div>
+                <h1 class="text-6xl md:text-7xl font-playfair font-bold mb-6 text-light hero-title">
+                    <span class="text-accent animate-slideRight">Hello,</span><br />
+                    <span class="animate-slideLeft">I'm Og'abek</span><br />
+                    <span class="animate-slideRight">Olimjonov</span>
+                </h1>
+                <p class="text-xl md:text-2xl font-poppins text-light/80 mb-12 animate-fadeIn">
+                    <span class="typing-text">Web Developer | Designer | Creator</span>
+                </p>
+                <div class="flex flex-col md:flex-row gap-6 justify-center items-center animate-fadeIn">
+                    <a href="#contact" class="hero-btn primary">
+                        <span>Contact Me</span>
+                        <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#projects" class="hero-btn secondary">
+                        <span>View Projects</span>
+                        <i class="fas fa-project-diagram ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Social Media Links -->
+                <div class="mt-12 flex justify-center space-x-6 animate-fadeIn">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-accent text-2xl"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl about-text font-playfair font-bold text-center mb-12">
+                About <span class="text-accent">Me</span>
+            </h2>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <!-- Profile Image -->
+                <div class="md:w-1/3">
+                    <div class="profile-image-container shadow-xl">
+                        <img src="img/Bek-profile-images.jpeg" alt="Profile" class="profile-image">
+                    </div>
+                </div>
+                <!-- About Content -->
+                <div class="md:w-2/3">
+                    <div class="space-y-6 text-gray-600">
+                        <p class="text-lg leading-relaxed">
+                            Hello! I'm <span class="text-accent font-semibold"> Og'abek Olimjonov</span> — a young
+                            developer focusing on front-end development. Currently, I'm learning React.js and gaining
+                            experience in creating web applications.
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Skills -->
+                            <div>
+                                <h3 class="text-xl font-bold text-primary mb-3">Core Skills:</h3>
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li>HTML5, CSS3, JavaScript</li>
+                                    <li>React.js, Responsive Design</li>
+                                    <li>UI/UX Design, Figma</li>
+                                </ul>
+                            </div>
+
+                            <!-- Interests -->
+                            <div>
+                                <h3 class="text-xl font-bold text-primary mb-3">Interests:</h3>
+                                <ul class="list-disc list-inside space-y-2">
+                                    <li>Web Development</li>
+                                    <li>UI/UX Design</li>
+                                    <li>Music 🎵</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Goals -->
+                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-accent">
+                            <h3 class="text-xl font-bold text-primary mb-2">My Goals:</h3>
+                            <p class="text-gray-600">
+                                To become a professional developer, participate in international projects, and establish
+                                my own IT company in the future.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 bg-secondary relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-playfair font-bold text-center mb-16 text-light">
+                My <span class="text-accent">Skills</span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Frontend Development -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="skill-title">Frontend Development</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span>HTML5/CSS3</span>
+                            <div class="skill-progress">
+                                <div class="progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>JavaScript</span>
+                            <div class="skill-progress">
+                                <div class="progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>React.js</span>
+                            <div class="skill-progress">
+                                <div class="progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3 class="skill-title">Design</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span>Figma</span>
+                            <div class="skill-progress">
+                                <div class="progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>UI/UX</span>
+                            <div class="skill-progress">
+                                <div class="progress" style="width: 75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools -->
+                <div class="skill-card">
+                    <div class="skill-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="skill-title">Tools & Others</h3>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span>Git</span>
+                            <div class="skill-progress">
+                                <div class="progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Responsive Design</span>
+                            <div class="skill-progress">
+                                <div class="progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold projects-text text-center mb-12">My Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project Card 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://via.placeholder.com/400x300" alt="Project 1" class="w-full">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Project 1</h3>
+                        <p class="text-gray-600 mb-4">Brief information about the project</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-blue-600 hover:text-blue-800">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#" class="text-blue-600 hover:text-blue-800">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project Card 2 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://via.placeholder.com/400x300" alt="Project 2" class="w-full">
+                    <div class="p-6">
+                        <h3 class="font-bold text-xl mb-2">Project 2</h3>
+                        <p class="text-gray-600 mb-4">Brief information about the project</p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-blue-600 hover:text-blue-800">
+                                <i class="fab fa-github"></i> GitHub
+                            </a>
+                            <a href="#" class="text-blue-600 hover:text-blue-800">
+                                <i class="fas fa-external-link-alt"></i> Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Contact Me</h2>
+            <div class="max-w-2xl mx-auto">
+                <form class="space-y-6">
+                    <div>
+                        <label class="block text-gray-700 mb-2">Name</label>
+                        <input type="text"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Email</label>
+                        <input type="email"
+                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 mb-2">Message</label>
+                        <textarea class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
+                            rows="4"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition duration-300">
+                        Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to top button -->
+    <button onclick="topFunction()" id="backToTopBtn" title="Go to top"
+        class="fixed bottom-8 right-8 bg-accent hover:bg-accent/90 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 cursor-pointer">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-github text-2xl"></i></a>
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-linkedin text-2xl"></i></a>
+                <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter text-2xl"></i></a>
+            </div>
+            <p>&copy; 2024 Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // Back to top button
+        let mybutton = document.getElementById("backToTopBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "flex";
+                mybutton.style.opacity = "1";
+            } else {
+                mybutton.style.opacity = "0";
+                setTimeout(() => {
+                    mybutton.style.display = "none";
+                }, 300);
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    </script>
+</body>
+
+</html>
