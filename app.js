@@ -1,9 +1,28 @@
 // Mobile menu functionality
 const menuBtn = document.getElementById('menu-btn');
-const nav = document.querySelector('nav ul');
+const mobileNav = document.querySelector('.mobile-nav');
+const navLinks = document.querySelectorAll('.mobile-nav .nav-item');
 
+// Toggle mobile menu
 menuBtn.addEventListener('click', () => {
-    nav.classList.toggle('hidden');
+    menuBtn.classList.toggle('active');
+    mobileNav.classList.toggle('active');
+});
+
+// Close mobile menu when clicking on a link
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        menuBtn.classList.remove('active');
+        mobileNav.classList.remove('active');
+    });
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!menuBtn.contains(e.target) && !mobileNav.contains(e.target)) {
+        menuBtn.classList.remove('active');
+        mobileNav.classList.remove('active');
+    }
 });
 
 // Smooth scroll for navigation links
@@ -31,14 +50,41 @@ const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            
+            // Animate hero title spans
+            if (entry.target.classList.contains('hero')) {
+                const spans = entry.target.querySelectorAll('.hero-title span');
+                spans.forEach(span => span.classList.add('visible'));
+            }
+            
+            // Animate skill progress bars
+            if (entry.target.classList.contains('skill-card')) {
+                const progressBars = entry.target.querySelectorAll('.progress');
+                progressBars.forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }
         }
     });
 }, observerOptions);
 
-// Add animation classes to sections
+// Observe all sections
 document.querySelectorAll('section').forEach(section => {
-    section.classList.add('section-animate');
     observer.observe(section);
+});
+
+// Observe individual elements
+document.querySelectorAll('.about-image-container, .about-card, .about-goals, .skill-card, .project-card, .contact-info, .contact-form, footer').forEach(element => {
+    observer.observe(element);
+});
+
+// Add animation classes to about section elements
+document.querySelectorAll('.about-image-container, .about-card, .about-goals, .about-text').forEach(element => {
+    observer.observe(element);
 });
 
 // Add animation classes to skill cards
@@ -81,7 +127,7 @@ if (form) {
         // Reset form and button
         submitButton.classList.remove('loading-animation');
         submitButton.disabled = false;
-        submitButton.innerHTML = 'Yuborish';
+        submitButton.innerHTML = 'Send Message';
         
         alert('Message sent successfully!');
         form.reset();
@@ -90,15 +136,7 @@ if (form) {
 
 // Add scroll progress indicator
 const progressBar = document.createElement('div');
-progressBar.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    background: linear-gradient(to right, #3b82f6, #8b5cf6);
-    z-index: 9999;
-    transition: width 0.2s ease;
-`;
+progressBar.className = 'scroll-progress';
 document.body.appendChild(progressBar);
 
 window.addEventListener('scroll', () => {
@@ -140,41 +178,24 @@ function type() {
 // Start typing animation
 type();
 
-// Skill progress animation
-const skillCards = document.querySelectorAll('.skill-card');
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.querySelectorAll('.progress').forEach(progress => {
-                progress.style.width = progress.parentElement.dataset.progress;
-            });
-        }
-    });
-}, { threshold: 0.5 });
-
-skillCards.forEach(card => observer.observe(card));
-
 // Back to top button functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const backToTopBtn = document.getElementById('back-to-top');
+const backToTopBtn = document.getElementById('backToTopBtn');
 
-    // Show/hide button based on scroll position
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-            backToTopBtn.classList.remove('hidden');
-            backToTopBtn.classList.add('visible');
-        } else {
-            backToTopBtn.classList.remove('visible');
-            backToTopBtn.classList.add('hidden');
-        }
-    });
+window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) {
+        backToTopBtn.style.display = 'flex';
+        backToTopBtn.style.opacity = '1';
+    } else {
+        backToTopBtn.style.opacity = '0';
+        setTimeout(() => {
+            backToTopBtn.style.display = 'none';
+        }, 300);
+    }
+});
 
-    // Scroll to top when button is clicked
-    backToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+backToTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
     });
 });

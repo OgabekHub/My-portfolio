@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Olimjonov Og'abek | Web Developer</title>
+    <meta name="description" content="Og'abek Olimjonov - Frontend Developer Portfolio">
+    <title>Olimjonov Og'abek | Frontend Developer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link
@@ -31,11 +32,11 @@
     </script>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-primary">
     <!-- Navbar -->
     <nav class="fixed w-full bg-primary/95 backdrop-blur-sm shadow-lg z-50">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <!-- Logo qismi -->
+            <!-- Logo -->
             <div class="logo-container">
                 <a href="#home" class="group flex items-center space-x-2">
                     <div class="logo-circle">
@@ -48,17 +49,30 @@
                 </a>
             </div>
 
-            <!-- Navigation links -->
+            <!-- Desktop Navigation -->
             <ul class="hidden md:flex space-x-8 font-poppins">
-                <li><a href="#home" class="text-light hover:text-accent transition-colors">Home</a></li>
-                <li><a href="#about" class="text-light hover:text-accent transition-colors">About</a></li>
-                <li><a href="#skills" class="text-light hover:text-accent transition-colors">Skills</a></li>
-                <li><a href="#projects" class="text-light hover:text-accent transition-colors">Projects</a></li>
-                <li><a href="#contact" class="text-light hover:text-accent transition-colors">Contact</a></li>
+                <li><a href="#home" class="nav-item">Home</a></li>
+                <li><a href="#about" class="nav-item">About</a></li>
+                <li><a href="#skills" class="nav-item">Skills</a></li>
+                <li><a href="#projects" class="nav-item">Projects</a></li>
+                <li><a href="#contact" class="nav-item">Contact</a></li>
             </ul>
-            <button class="md:hidden text-light" id="menu-btn">
-                <i class="fas fa-bars text-2xl"></i>
+
+            <!-- Mobile menu button -->
+            <button id="menu-btn" class="md:hidden" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
             </button>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav md:hidden">
+            <ul class="flex flex-col items-center space-y-4 py-4">
+                <li><a href="#home" class="nav-item">Home</a></li>
+                <li><a href="#about" class="nav-item">About</a></li>
+                <li><a href="#skills" class="nav-item">Skills</a></li>
+                <li><a href="#projects" class="nav-item">Projects</a></li>
+                <li><a href="#contact" class="nav-item">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
@@ -68,38 +82,48 @@
         <div class="particles-container absolute inset-0"></div>
 
         <div class="container mx-auto px-4 relative z-10">
-            <div class="text-center">
-                <div class="mb-4 text-accent font-medium tracking-wider animate-fadeIn">FRONTEND DEVELOPER</div>
-                <h1 class="text-6xl md:text-7xl font-playfair font-bold mb-6 text-light hero-title">
-                    <span class="text-accent animate-slideRight">Hello,</span><br />
-                    <span class="animate-slideLeft">I'm Og'abek</span><br />
-                    <span class="animate-slideRight">Olimjonov</span>
-                </h1>
-                <p class="text-xl md:text-2xl font-poppins text-light/80 mb-12 animate-fadeIn">
-                    <span class="typing-text">Web Developer | Designer | Creator</span>
-                </p>
-                <div class="flex flex-col md:flex-row gap-6 justify-center items-center animate-fadeIn">
-                    <a href="#contact" class="hero-btn primary">
-                        <span>Contact Me</span>
-                        <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
-                    <a href="#projects" class="hero-btn secondary">
-                        <span>View Projects</span>
-                        <i class="fas fa-project-diagram ml-2"></i>
-                    </a>
+            <div class="flex flex-col md:flex-row items-center justify-between gap-12">
+                <!-- Text Content -->
+                <div class="text-center md:text-left md:w-1/2">
+                    <div class="mb-4 text-accent font-medium tracking-wider animate-fadeIn">Frontend Developer</div>
+                    <h1 class="text-4xl md:text-6xl font-playfair font-bold mb-6 text-light hero-title">
+                        <span class="text-accent animate-slideRight">Hello,</span><br />
+                        <span class="animate-slideLeft">I'm Og'abek</span><br />
+                        <span class="animate-slideRight">Olimjonov</span>
+                    </h1>
+                    <p class="text-lg md:text-xl font-poppins text-light/80 mb-8 animate-fadeIn">
+                        <span class="typing-text">Turning ideas into elegant web solutions</span>
+                    </p>
+                    <div class="flex flex-col md:flex-row gap-4 justify-center md:justify-start items-center animate-fadeIn">
+                        <a href="#contact" class="hero-btn primary">
+                            <span>Let's Talk</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#projects" class="hero-btn secondary">
+                            <span>My Work</span>
+                            <i class="fas fa-project-diagram ml-2"></i>
+                        </a>
+                    </div>
+
+                    <!-- Social Media Links -->
+                    <div class="mt-8 flex justify-center md:justify-start space-x-4 animate-fadeIn">
+                        <a href="#" class="social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://t.me/ogabekolimjonov_dev" class="social-link" aria-label="Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Social Media Links -->
-                <div class="mt-12 flex justify-center space-x-6 animate-fadeIn">
-                    <a href="#" class="social-link">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-telegram"></i>
-                    </a>
+                <!-- Profile Image -->
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="hero-image-container">
+                        <img src="img/Bek-profile-images.jpeg" alt="Og'abek Olimjonov" class="hero-image">
+                    </div>
                 </div>
             </div>
         </div>
@@ -113,29 +137,34 @@
     <!-- About Section -->
     <section id="about" class="py-20 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-4xl about-text font-playfair font-bold text-center mb-12">
+            <h2 class="text-4xl font-playfair font-bold about-text text-center mb-12">
                 About <span class="text-accent">Me</span>
             </h2>
             <div class="flex flex-col md:flex-row items-center gap-12">
                 <!-- Profile Image -->
                 <div class="md:w-1/3">
-                    <div class="profile-image-container shadow-xl">
-                        <img src="img/Bek-profile-images.jpeg" alt="Profile" class="profile-image">
+                    <div class="about-image-container">
+                        <img src="img/Bek-profile-images.jpeg" alt="Og'abek Olimjonov" class="about-image">
+                        <div class="about-image-overlay"></div>
                     </div>
                 </div>
+
                 <!-- About Content -->
                 <div class="md:w-2/3">
                     <div class="space-y-6 text-gray-600">
                         <p class="text-lg leading-relaxed">
-                            Hello! I'm <span class="text-accent font-semibold"> Og'abek Olimjonov</span> — a young
+                            Hello! I'm <span class="text-accent font-semibold">Og'abek Olimjonov</span> — a young
                             developer focusing on front-end development. Currently, I'm learning React.js and gaining
                             experience in creating web applications.
                         </p>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <!-- Skills -->
-                            <div>
-                                <h3 class="text-xl font-bold text-primary mb-3">Core Skills:</h3>
+                            <div class="about-card">
+                                <div class="about-card-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-primary mb-3">Core Skills</h3>
                                 <ul class="list-disc list-inside space-y-2">
                                     <li>HTML5, CSS3, JavaScript</li>
                                     <li>React.js, Responsive Design</li>
@@ -144,8 +173,11 @@
                             </div>
 
                             <!-- Interests -->
-                            <div>
-                                <h3 class="text-xl font-bold text-primary mb-3">Interests:</h3>
+                            <div class="about-card">
+                                <div class="about-card-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <h3 class="text-xl font-bold text-primary mb-3">Interests</h3>
                                 <ul class="list-disc list-inside space-y-2">
                                     <li>Web Development</li>
                                     <li>UI/UX Design</li>
@@ -155,12 +187,17 @@
                         </div>
 
                         <!-- Goals -->
-                        <div class="bg-gray-50 p-4 rounded-lg border-l-4 border-accent">
-                            <h3 class="text-xl font-bold text-primary mb-2">My Goals:</h3>
-                            <p class="text-gray-600">
-                                To become a professional developer, participate in international projects, and establish
-                                my own IT company in the future.
-                            </p>
+                        <div class="about-goals">
+                            <div class="about-goals-icon">
+                                <i class="fas fa-bullseye"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-primary mb-2">My Goals</h3>
+                                <p class="text-gray-600">
+                                    To become a professional developer, participate in international projects, and establish
+                                    my own IT company in the future.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -184,19 +221,28 @@
                     <h3 class="skill-title">Frontend Development</h3>
                     <div class="skill-items">
                         <div class="skill-item">
-                            <span>HTML5/CSS3</span>
+                            <div class="skill-info">
+                                <span>HTML5/CSS3</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
                             <div class="skill-progress">
                                 <div class="progress" style="width: 90%"></div>
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span>JavaScript</span>
+                            <div class="skill-info">
+                                <span>JavaScript</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
                             <div class="skill-progress">
                                 <div class="progress" style="width: 85%"></div>
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span>React.js</span>
+                            <div class="skill-info">
+                                <span>React.js</span>
+                                <span class="skill-percentage">75%</span>
+                            </div>
                             <div class="skill-progress">
                                 <div class="progress" style="width: 75%"></div>
                             </div>
@@ -212,13 +258,19 @@
                     <h3 class="skill-title">Design</h3>
                     <div class="skill-items">
                         <div class="skill-item">
-                            <span>Figma</span>
+                            <div class="skill-info">
+                                <span>Figma</span>
+                                <span class="skill-percentage">80%</span>
+                            </div>
                             <div class="skill-progress">
                                 <div class="progress" style="width: 80%"></div>
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span>UI/UX</span>
+                            <div class="skill-info">
+                                <span>UI/UX</span>
+                                <span class="skill-percentage">75%</span>
+                            </div>
                             <div class="skill-progress">
                                 <div class="progress" style="width: 75%"></div>
                             </div>
@@ -234,13 +286,19 @@
                     <h3 class="skill-title">Tools & Others</h3>
                     <div class="skill-items">
                         <div class="skill-item">
-                            <span>Git</span>
+                            <div class="skill-info">
+                                <span>Git</span>
+                                <span class="skill-percentage">85%</span>
+                            </div>
                             <div class="skill-progress">
                                 <div class="progress" style="width: 85%"></div>
                             </div>
                         </div>
                         <div class="skill-item">
-                            <span>Responsive Design</span>
+                            <div class="skill-info">
+                                <span>Responsive Design</span>
+                                <span class="skill-percentage">90%</span>
+                            </div>
                             <div class="skill-progress">
                                 <div class="progress" style="width: 90%"></div>
                             </div>
@@ -254,37 +312,84 @@
     <!-- Projects Section -->
     <section id="projects" class="py-20 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold projects-text text-center mb-12">My Projects</h2>
+            <h2 class="text-4xl font-playfair font-bold text-center projects-text  mb-16">
+                My <span class="text-accent">Projects</span>
+            </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Project Card 1 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://via.placeholder.com/400x300" alt="Project 1" class="w-full">
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2">Project 1</h3>
-                        <p class="text-gray-600 mb-4">Brief information about the project</p>
-                        <div class="flex space-x-4">
-                            <a href="#" class="text-blue-600 hover:text-blue-800">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
-                            <a href="#" class="text-blue-600 hover:text-blue-800">
-                                <i class="fas fa-external-link-alt"></i> Demo
-                            </a>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Project 1">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link" aria-label="View on GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="project-link" aria-label="View live demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Project 1</h3>
+                        <p class="project-description">Brief information about the project and its features.</p>
+                        <div class="project-tech">
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>MongoDB</span>
                         </div>
                     </div>
                 </div>
+
                 <!-- Project Card 2 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://via.placeholder.com/400x300" alt="Project 2" class="w-full">
-                    <div class="p-6">
-                        <h3 class="font-bold text-xl mb-2">Project 2</h3>
-                        <p class="text-gray-600 mb-4">Brief information about the project</p>
-                        <div class="flex space-x-4">
-                            <a href="#" class="text-blue-600 hover:text-blue-800">
-                                <i class="fab fa-github"></i> GitHub
-                            </a>
-                            <a href="#" class="text-blue-600 hover:text-blue-800">
-                                <i class="fas fa-external-link-alt"></i> Demo
-                            </a>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Project 2">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link" aria-label="View on GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="project-link" aria-label="View live demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Project 2</h3>
+                        <p class="project-description">Brief information about the project and its features.</p>
+                        <div class="project-tech">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Project 3">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="#" class="project-link" aria-label="View on GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="project-link" aria-label="View live demo">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Project 3</h3>
+                        <p class="project-description">Brief information about the project and its features.</p>
+                        <div class="project-tech">
+                            <span>React</span>
+                            <span>Firebase</span>
+                            <span>Tailwind</span>
                         </div>
                     </div>
                 </div>
@@ -295,79 +400,177 @@
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-gray-100">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">Contact Me</h2>
-            <div class="max-w-2xl mx-auto">
-                <form class="space-y-6">
-                    <div>
-                        <label class="block text-gray-700 mb-2">Name</label>
-                        <input type="text"
-                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+            <h2 class="text-4xl font-playfair font-bold text-accent text-center mb-16">
+                Contact <span class="text-accent">Me</span>
+            </h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Contact Info -->
+                    <div class="contact-info">
+                        <h3 class="text-2xl font-bold text-accent mb-6">Let's Connect</h3>
+                        <p class="text-gray-600 mb-8">
+                            Feel free to reach out to me for any questions or opportunities. I'm always open to discussing new projects and ideas.
+                        </p>
+                        <div class="space-y-6">
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Email</h4>
+                                    <p class="text-gray-600">your.email@example.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Phone</h4>
+                                    <p class="text-gray-600">+123 456 7890</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold">Location</h4>
+                                    <p class="text-gray-600">Tashkent, Uzbekistan</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Social Links -->
+                        <div class="mt-8 flex space-x-4">
+                            <a href="#" class="social-link" aria-label="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="#" class="social-link" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://t.me/ogabekolimjonov_dev" class="social-link" aria-label="Telegram">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div>
-                        <label class="block text-gray-700 mb-2">Email</label>
-                        <input type="email"
-                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+
+                    <!-- Contact Form -->
+                    <div class="contact-form">
+                        <form class="space-y-6">
+                            <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-input" placeholder="Your name" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-input" placeholder="Your email" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Subject</label>
+                                <input type="text" class="form-input" placeholder="Subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-input" rows="4" placeholder="Your message" required></textarea>
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                <span>Send Message</span>
+                                <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
                     </div>
-                    <div>
-                        <label class="block text-gray-700 mb-2">Message</label>
-                        <textarea class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-                            rows="4"></textarea>
-                    </div>
-                    <button type="submit"
-                        class="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition duration-300">
-                        Send Message
-                    </button>
-                </form>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Back to top button -->
-    <button onclick="topFunction()" id="backToTopBtn" title="Go to top"
-        class="fixed bottom-8 right-8 bg-accent hover:bg-accent/90 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 cursor-pointer">
+    <button id="backToTopBtn" title="Go to top" aria-label="Back to top">
         <i class="fas fa-arrow-up"></i>
     </button>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-4 text-center">
-            <div class="flex justify-center space-x-6 mb-4">
-                <a href="#" class="hover:text-blue-400"><i class="fab fa-github text-2xl"></i></a>
-                <a href="#" class="hover:text-blue-400"><i class="fab fa-linkedin text-2xl"></i></a>
-                <a href="#" class="hover:text-blue-400"><i class="fab fa-twitter text-2xl"></i></a>
+    <footer class="bg-primary py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- Description -->
+                <div class="col-span-1">
+                    <div class="logo-container mb-6">
+                        <a href="#home" class="group flex items-center space-x-2">
+                            <div class="logo-circle">
+                                <span class="logo-text">OO</span>
+                            </div>
+                            <div class="logo-details opacity-0 group-hover:opacity-100 transition-all duration-500">
+                                <span class="text-accent font-playfair">Og'abek</span>
+                                <span class="text-light font-playfair">Olimjonov</span>
+                            </div>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 mb-8">
+                        A passionate frontend developer focused on creating beautiful and functional web experiences. Let's work together to bring your ideas to life.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="footer-social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="footer-social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://t.me/ogabekolimjonov_dev" class="footer-social-link" aria-label="Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home" aria-label="Home">Home</a></li>
+                        <li><a href="#about" aria-label="About">About</a></li>
+                        <li><a href="#skills" aria-label="Skills">Skills</a></li>
+                        <li><a href="#projects" aria-label="Projects">Projects</a></li>
+                        <li><a href="#contact" aria-label="Contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="footer-title">Contact Info</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-envelope" aria-hidden="true"></i>
+                            <span>your.email@example.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                            <span>+123 456 7890</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                            <span>Tashkent, Uzbekistan</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <p>&copy; 2024 Portfolio. All rights reserved.</p>
+
+            <!-- Copyright -->
+            <div class="border-t border-gray-800 mt-12 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 text-sm">
+                        &copy; 2024 Og'abek Olimjonov. All rights reserved.
+                    </p>
+                    <div class="mt-4 md:mt-0">
+                        <p class="text-gray-400 text-sm">
+                            Made with <i class="fas fa-heart text-accent" aria-hidden="true"></i> by Og'abek
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </footer>
 
     <script src="app.js"></script>
-    <script>
-        // Back to top button
-        let mybutton = document.getElementById("backToTopBtn");
-
-        // When the user scrolls down 20px from the top of the document, show the button
-        window.onscroll = function () { scrollFunction() };
-
-        function scrollFunction() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                mybutton.style.display = "flex";
-                mybutton.style.opacity = "1";
-            } else {
-                mybutton.style.opacity = "0";
-                setTimeout(() => {
-                    mybutton.style.display = "none";
-                }, 300);
-            }
-        }
-
-        // When the user clicks on the button, scroll to the top of the document
-        function topFunction() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-    </script>
 </body>
 
 </html>
