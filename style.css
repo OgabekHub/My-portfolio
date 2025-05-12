@@ -8,7 +8,7 @@
   --transition-default: all 0.3s ease;
   --shadow-default: 0 10px 30px rgba(0, 0, 0, 0.1);
   --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.2);
-  /* --container-padding: 3rem; */
+  --container-padding: 3rem;
   --section-spacing: 3rem;
 }
 
@@ -121,7 +121,7 @@ body {
 }
 
 .mobile-nav .nav-item:hover {
-  color: var(--color-accent);
+  color: var(--color-primary);
   background: rgba(255, 255, 255, 0.1);
   border-radius: 0.5rem;
 }
