@@ -135,7 +135,7 @@ body {
   .mobile-nav {
     display: block; /* Show on mobile */
   }
-  
+
   .mobile-nav:not(.active) {
     display: none;
   }
@@ -731,12 +731,12 @@ body {
   .hero-title {
     font-size: 2.5rem !important;
   }
-  
+
   .hero-btn {
     width: 100%;
     padding: 0.75rem 1.5rem;
   }
-  
+
   .social-link {
     width: 35px;
     height: 35px;
@@ -1312,7 +1312,7 @@ body {
     transform: none;
     margin-bottom: 2rem;
   }
-  
+
   .about-image-container:hover {
     transform: none;
   }
@@ -1877,7 +1877,7 @@ footer.visible {
     section, .about-card, .skill-card, .project-card {
         transform: translateY(20px);
     }
-    
+
     .about-image-container {
         transform: translateX(-20px);
     }
@@ -1885,7 +1885,7 @@ footer.visible {
 
 /* Global responsive styles */
 :root {
-    --container-padding: 1rem;
+    --container-padding: 3rem;
     --section-spacing: 3rem;
 }
 
@@ -2016,9 +2016,9 @@ footer {
 
     /* Social links */
     .social-link {
-        width: 32px;
-        height: 32px;
-        font-size: 0.9rem;
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
     }
 
     /* Navigation */
