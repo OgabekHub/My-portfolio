@@ -132,16 +132,34 @@ if (form && submitButton) {
         submitButton.disabled = true;
         submitButton.innerHTML = 'Sending...';
 
-        // Simulate form submission delay
-        await new Promise(resolve => setTimeout(resolve, 1500));
 
-        // Reset form and button
-        submitButton.classList.remove('loading-animation');
-        submitButton.disabled = false;
-        submitButton.innerHTML = 'Send Message';
-        
-        alert('Message sent successfully!');
-        form.reset();
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            alert('Message sent successfully!');
+            form.reset();
+        } catch (error) {
+            alert('Sorry, something went wrong. Please try again later.');
+        } finally {
+            submitButton.classList.remove('loading-animation');
+            submitButton.disabled = false;
+            submitButton.innerHTML = 'Send Message';
+        }
+
+     
     });
 }
 

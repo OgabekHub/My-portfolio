@@ -467,22 +467,22 @@
 
                     <!-- Contact Form -->
                     <div class="contact-form">
-                        <form class="space-y-6">
+                        <form class="space-y-6" id="contactForm">
                             <div class="form-group">
                                 <label class="form-label">Name</label>
-                                <input type="text" class="form-input" placeholder="Your name" required>
+                                <input type="text" class="form-input" placeholder="Your name" name="name" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Email</label>
-                                <input type="email" class="form-input" placeholder="Your email" required>
+                                <input type="email" class="form-input" placeholder="Your email" name="email" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Subject</label>
-                                <input type="text" class="form-input" placeholder="Subject" required>
+                                <input type="text" class="form-input" placeholder="Subject" name="subject" required>
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Message</label>
-                                <textarea class="form-input" rows="4" placeholder="Your message" required></textarea>
+                                <textarea class="form-input" rows="4" placeholder="Your message" name="message" required></textarea>
                             </div>
                             <button type="submit" class="submit-btn">
                                 <span>Send Message</span>
