@@ -28,8 +28,19 @@ document.addEventListener('click', (e) => {
 // Smooth scroll for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+
+        if (href === '#') {
+            return;
+        }
+
+        const target = document.querySelector(href);
+
+        if (!target) {
+            return;
+        }
+
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
         const offset = 80; // Navbar height
         const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
         
@@ -110,9 +121,9 @@ document.querySelectorAll('footer a').forEach(icon => {
 
 // Form submission handling with loading animation
 const form = document.querySelector('form');
-const submitButton = form.querySelector('button[type="submit"]');
+const submitButton = form ? form.querySelector('button[type="submit"]') : null;
 
-if (form) {
+if (form && submitButton) {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
