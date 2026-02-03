@@ -916,7 +916,7 @@ body {
 
 /* Particles animation */
 .particles-container {
-  background-image: 
+  background-image:
     /* Dumaloq nuqtalar */
     radial-gradient(circle at 20px 20px, rgba(200, 161, 100, 0.3) 2px, transparent 0),
     radial-gradient(circle at 60px 60px, rgba(200, 161, 100, 0.2) 1px, transparent 0),
@@ -1135,7 +1135,7 @@ body {
 /* About section animations */
 .about-image-container {
   position: relative;
-  border-radius: 50px;
+  border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   transform: translateX(-20px);
@@ -1925,7 +1925,6 @@ footer.visible {
 
 /* Mobile optimizations */
 @media (max-width: 768px) {
-<<<<<<< HEAD
 
   section,
   .about-card,
@@ -1937,26 +1936,12 @@ footer.visible {
   .about-image-container {
     transform: translateX(-20px);
   }
-=======
-    section, .about-card, .skill-card, .project-card {
-        transform: translateY(20px);
-    }
-
-    .about-image-container {
-        transform: translateX(-20px);
-    }
->>>>>>> 3f0c1378ea0f035a3f261548ddc6d8668cf04577
 }
 
 /* Global responsive styles */
 :root {
-<<<<<<< HEAD
   --container-padding: 3rem;
   --section-spacing: 3rem;
-=======
-    --container-padding: 3rem;
-    --section-spacing: 3rem;
->>>>>>> 3f0c1378ea0f035a3f261548ddc6d8668cf04577
 }
 
 /* Container padding */
@@ -2086,21 +2071,12 @@ footer {
     padding: 0.5rem 1rem;
   }
 
-<<<<<<< HEAD
   /* Social links */
   .social-link {
     width: 32px;
     height: 32px;
     font-size: 0.9rem;
   }
-=======
-    /* Social links */
-    .social-link {
-        width: 35px;
-        height: 35px;
-        font-size: 1.1rem;
-    }
->>>>>>> 3f0c1378ea0f035a3f261548ddc6d8668cf04577
 
   /* Navigation */
   .mobile-nav {

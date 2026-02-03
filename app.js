@@ -132,6 +132,7 @@ if (form && submitButton) {
         submitButton.disabled = true;
         submitButton.innerHTML = 'Sending...';
 
+
         const formData = new FormData(form);
         const payload = Object.fromEntries(formData.entries());
 
@@ -157,6 +158,8 @@ if (form && submitButton) {
             submitButton.disabled = false;
             submitButton.innerHTML = 'Send Message';
         }
+
+     
     });
 }
 
