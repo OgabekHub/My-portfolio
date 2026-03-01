@@ -137,12 +137,12 @@ if (form && submitButton) {
         const payload = Object.fromEntries(formData.entries());
 
         try {
-            const response = await fetch('/api/contact', {
+            const response = await fetch('/', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
-                body: JSON.stringify(payload)
+                body: new URLSearchParams(formData).toString()
             });
 
             if (!response.ok) {
