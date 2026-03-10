@@ -38,13 +38,46 @@
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <!-- Logo -->
             <div class="logo-container">
-                <a href="#home" class="group flex items-center space-x-2">
+                <a href="#home" class="flex items-center space-x-2">
                     <div class="logo-circle">
-                        <span class="logo-text">OO</span>
+                        <svg class="face-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="logoBg" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#020617" />
+                                    <stop offset="100%" stop-color="#020617" />
+                                </linearGradient>
+                                <linearGradient id="logoRing" x1="0" y1="0" x2="1" y2="1">
+                                    <stop offset="0%" stop-color="#f8f5ec" />
+                                    <stop offset="45%" stop-color="#c8a164" />
+                                    <stop offset="100%" stop-color="#8b6b34" />
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Base circle -->
+                            <circle cx="40" cy="40" r="34" fill="url(#logoBg)" />
+                            <circle cx="40" cy="40" r="33" fill="none" stroke="rgba(15,23,42,0.85)" stroke-width="1.5" />
+                            <circle cx="40" cy="40" r="31.5" fill="none" stroke="url(#logoRing)" stroke-width="2" />
+
+                            <!-- Inner subtle ring -->
+                            <circle cx="40" cy="40" r="25" fill="none" stroke="rgba(200,161,100,0.22)"
+                                stroke-width="1" stroke-dasharray="4 6" stroke-linecap="round" />
+
+                            <!-- OB monogram (custom shape) -->
+                            <g fill="none" stroke="#f9fafb" stroke-width="2.8" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <!-- B spine -->
+                                <path d="M34 30 L34 50" />
+                                <!-- Upper bowl -->
+                                <path d="M34 32 Q46 32 46 36 Q46 40 34 40" />
+                                <!-- Lower bowl -->
+                                <path d="M34 40 Q46 40 46 44 Q46 48 34 48" />
+                            </g>
+                        </svg>
                     </div>
-                    <div class="logo-details opacity-0 group-hover:opacity-100 transition-all duration-500">
-                        <span class="text-accent font-playfair">Og'abek</span>
-                        <span class="text-light font-playfair">Olimjonov</span>
+
+                    <div class="logo-details opacity-0 transition-all duration-500">
+                        <span class="text-accent font-playfair tracking-wide">Og'abek</span>
+                        <span class="text-light font-playfair text-sm md:text-base opacity-80">Olimjonov</span>
                     </div>
                 </a>
             </div>
@@ -94,8 +127,7 @@
                     <p class="text-lg md:text-xl font-poppins text-light/80 mb-8 animate-fadeIn">
                         <span class="typing-text">Turning ideas into elegant web solutions</span>
                     </p>
-                    <div
-                        class="flex flex-col md:flex-row gap-4 justify-center items-center animate-fadeIn">
+                    <div class="flex flex-col md:flex-row gap-4 justify-center items-center animate-fadeIn">
                         <a href="#contact" class="hero-btn primary">
                             <span>Let's Talk</span>
                             <i class="fas fa-arrow-right ml-2"></i>
@@ -124,7 +156,8 @@
                 <!-- Profile Image -->
                 <div class="md:w-1/2 flex justify-center">
                     <div class="hero-image-container">
-                        <img src="img/Bek-profile-images.jpeg" alt="Og'abek Olimjonov" class="hero-image">
+                        <img src="img/Portrait of Michael Mando in a Black Suit Jacket.png" alt="Og'abek Olimjonov"
+                            class="hero-image">
                     </div>
                 </div>
             </div>
@@ -146,7 +179,8 @@
                 <!-- Profile Image -->
                 <div class="md:w-1/3">
                     <div class="about-image-container">
-                        <img src="img/Bek-profile-images.jpeg" alt="Og'abek Olimjonov" class="about-image">
+                        <img src="img/Portrait of Michael Mando in a Black Suit Jacket.png" alt="Og'abek Olimjonov"
+                            class="about-image">
                         <div class="about-image-overlay"></div>
                     </div>
                 </div>
@@ -328,7 +362,8 @@
                                 <a href="https://github.com/OgabekHub" class="project-link" aria-label="View on GitHub">
                                     <i class="fab fa-github"></i>
                                 </a>
-                                <a href="https://my-portfolio-card.netlify.app/" class="project-link" aria-label="View live demo">
+                                <a href="https://my-portfolio-card.netlify.app/" class="project-link"
+                                    aria-label="View live demo">
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
                             </div>
@@ -358,7 +393,8 @@
                                 <a href="https://github.com/OgabekHub" class="project-link" aria-label="View on GitHub">
                                     <i class="fab fa-github"></i>
                                 </a>
-                                <a href="https://website-valorant.netlify.app/" class="project-link" aria-label="View live demo">
+                                <a href="https://website-valorant.netlify.app/" class="project-link"
+                                    aria-label="View live demo">
                                     <i class="fas fa-external-link-alt"></i>
                                 </a>
                             </div>
@@ -483,7 +519,8 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Message</label>
-                                <textarea class="form-input" rows="4" placeholder="Your message" name="message" required></textarea>
+                                <textarea class="form-input" rows="4" placeholder="Your message" name="message"
+                                    required></textarea>
                             </div>
                             <button type="submit" class="submit-btn">
                                 <span>Send Message</span>
@@ -508,13 +545,45 @@
                 <!-- Description -->
                 <div class="col-span-1">
                     <div class="logo-container mb-6">
-                        <a href="#home" class="group flex items-center space-x-2">
+                        <a href="#home" class="flex items-center space-x-2">
                             <div class="logo-circle">
-                                <span class="logo-text">OO</span>
+                                <svg class="face-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="logoBgFooter" x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0%" stop-color="#020617" />
+                                            <stop offset="100%" stop-color="#020617" />
+                                        </linearGradient>
+                                        <linearGradient id="logoRingFooter" x1="0" y1="0" x2="1" y2="1">
+                                            <stop offset="0%" stop-color="#f8f5ec" />
+                                            <stop offset="45%" stop-color="#c8a164" />
+                                            <stop offset="100%" stop-color="#8b6b34" />
+                                        </linearGradient>
+                                    </defs>
+
+                                    <circle cx="40" cy="40" r="34" fill="url(#logoBgFooter)" />
+                                    <circle cx="40" cy="40" r="33" fill="none" stroke="rgba(15,23,42,0.85)"
+                                        stroke-width="1.5" />
+                                    <circle cx="40" cy="40" r="31.5" fill="none" stroke="url(#logoRingFooter)"
+                                        stroke-width="2" />
+
+                                    <circle cx="40" cy="40" r="25" fill="none" stroke="rgba(200,161,100,0.22)"
+                                        stroke-width="1" stroke-dasharray="4 6" stroke-linecap="round" />
+
+                                    <!-- OB monogram (custom shape) -->
+                                    <g fill="none" stroke="#f9fafb" stroke-width="2.8" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <!-- B spine -->
+                                        <path d="M34 30 L34 50" />
+                                        <!-- Upper bowl -->
+                                        <path d="M34 32 Q46 32 46 36 Q46 40 34 40" />
+                                        <!-- Lower bowl -->
+                                        <path d="M34 40 Q46 40 46 44 Q46 48 34 48" />
+                                    </g>
+                                </svg>
                             </div>
-                            <div class="logo-details opacity-0 group-hover:opacity-100 transition-all duration-500">
-                                <span class="text-accent font-playfair">Og'abek</span>
-                                <span class="text-light font-playfair">Olimjonov</span>
+                            <div class="logo-details opacity-0 transition-all duration-500">
+                                <span class="text-accent font-playfair tracking-wide">Og'abek</span>
+                                <span class="text-light font-playfair text-sm opacity-80">Olimjonov</span>
                             </div>
                         </a>
                     </div>

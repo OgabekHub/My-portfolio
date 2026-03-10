@@ -228,3 +228,19 @@ backToTopBtn.addEventListener('click', function() {
         behavior: 'smooth'
     });
 });
+
+// Logo hover behavior (show name only when logo hovered)
+document.querySelectorAll('.logo-container').forEach(container => {
+    const circle = container.querySelector('.logo-circle');
+    const details = container.querySelector('.logo-details');
+
+    if (!circle || !details) return;
+
+    circle.addEventListener('mouseenter', () => {
+        container.classList.add('logo-active');
+    });
+
+    container.addEventListener('mouseleave', () => {
+        container.classList.remove('logo-active');
+    });
+});
