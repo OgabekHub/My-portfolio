@@ -687,14 +687,17 @@ body {
 @media (max-width: 768px) {
   .logo-text {
     font-size: 1rem;
+  
   }
 
   .logo-details span:first-child {
     font-size: 0.9rem;
+    display: none;
   }
 
   .logo-details span:last-child {
     font-size: 0.8rem;
+    display: none;
   }
 }
 
