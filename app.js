@@ -119,49 +119,62 @@ document.querySelectorAll('footer a').forEach(icon => {
     icon.classList.add('social-icon');
 });
 
-// Form submission handling with loading animation
+// Form submission handling with redirect + EmailJS auto-reply
 const form = document.querySelector('form');
 const submitButton = form ? form.querySelector('button[type="submit"]') : null;
 
 if (form && submitButton) {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        
-        // Add loading animation
+
         submitButton.classList.add('loading-animation');
         submitButton.disabled = true;
         submitButton.innerHTML = '<span>Sending...</span><i class="fas fa-spinner fa-spin ml-2"></i>';
 
-
         const formData = new FormData(form);
-        const payload = Object.fromEntries(formData.entries());
+        const senderName  = formData.get('name');
+        const senderEmail = formData.get('email');
 
         try {
+            // 1) Netlify Forms ga jo'natish
             const response = await fetch('/', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams(formData).toString()
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to send message');
+            if (!response.ok) throw new Error('Netlify form failed');
+
+            // 2) EmailJS orqali auto-reply yuborish
+            try {
+                await emailjs.send(
+                    'service_5o3o1i8',
+                    'template_goumrk5',
+                    {
+                        name:       senderName,   // template: {{name}}
+                        email:      senderEmail,  // template: {{email}} (To Email field)
+                        from_name:  "Og'abek Olimjonov",
+                        reply_to:   'olimjonov.ogabek.dev@gmail.com'
+                    }
+                );
+            } catch (autoReplyErr) {
+                // Auto-reply yuborilmasa ham asosiy xabar bordi — ok
+                console.warn('Auto-reply failed (non-critical):', autoReplyErr);
             }
 
-            alert('✅ Message sent successfully! I will get back to you soon.');
+            // 3) Thank-you sahifaga o'tkazish
             form.reset();
+            window.location.href = '/thank-you';
+
         } catch (error) {
-            alert('❌ Sorry, something went wrong. Please try again or email me directly.');
-        } finally {
+            alert('❌ Sorry, something went wrong. Please email me directly:\nolimjonov.ogabek.dev@gmail.com');
             submitButton.classList.remove('loading-animation');
             submitButton.disabled = false;
             submitButton.innerHTML = '<span>Send Message</span><i class="fas fa-paper-plane ml-2"></i>';
         }
-
-     
     });
 }
+
 
 // Add scroll progress indicator
 const progressBar = document.createElement('div');

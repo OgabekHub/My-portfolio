@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Thank you for contacting Og'abek Olimjonov">
+    <title>Thank You | Og'abek Olimjonov</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --accent: #c8a164;
+            --accent-light: #e2c08d;
+            --primary: #1a1a1a;
+            --secondary: #2d2d2d;
+            --light: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--primary);
+            font-family: 'Poppins', sans-serif;
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                radial-gradient(circle at 20px 20px, rgba(200, 161, 100, 0.25) 2px, transparent 0),
+                radial-gradient(circle at 60px 60px, rgba(200, 161, 100, 0.15) 1px, transparent 0),
+                radial-gradient(circle at 40px 40px, rgba(200, 161, 100, 0.2) 1.5px, transparent 0);
+            background-size: 80px 80px;
+            animation: floatParticles 20s linear infinite;
+        }
+
+        @keyframes floatParticles {
+            from { transform: translateY(0); }
+            to   { transform: translateY(-80px); }
+        }
+
+        /* Glowing orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        .orb-1 {
+            width: 400px; height: 400px;
+            background: var(--accent);
+            top: -100px; right: -100px;
+            animation: orbPulse 6s ease-in-out infinite;
+        }
+        .orb-2 {
+            width: 300px; height: 300px;
+            background: var(--accent-light);
+            bottom: -80px; left: -80px;
+            animation: orbPulse 6s ease-in-out infinite 3s;
+        }
+        @keyframes orbPulse {
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50%       { opacity: 0.18; transform: scale(1.1); }
+        }
+
+        /* Card */
+        .card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(200, 161, 100, 0.2);
+            border-radius: 28px;
+            padding: 3.5rem 3rem;
+            max-width: 520px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(200, 161, 100, 0.08);
+            animation: cardIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+        }
+        @keyframes cardIn {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Check icon */
+        .icon-wrap {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 8px 30px rgba(200, 161, 100, 0.4);
+            animation: iconPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+            transform: scale(0);
+        }
+        @keyframes iconPop {
+            to { transform: scale(1); }
+        }
+
+        .icon-wrap i {
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        /* Pulse ring */
+        .icon-wrap::after {
+            content: '';
+            position: absolute;
+            width: 90px; height: 90px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            animation: ringPulse 2s ease-out 1s infinite;
+        }
+        @keyframes ringPulse {
+            0%   { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--light) 30%, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            color: rgba(245, 245, 245, 0.7);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+        }
+
+        p span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Divider */
+        .divider {
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-light));
+            border-radius: 2px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Countdown */
+        .countdown {
+            font-size: 0.85rem;
+            color: rgba(245, 245, 245, 0.4);
+            margin-bottom: 2rem;
+        }
+
+        .countdown span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: var(--primary);
+            box-shadow: 0 4px 18px rgba(200, 161, 100, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 28px rgba(200, 161, 100, 0.5);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid rgba(200, 161, 100, 0.4);
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(200, 161, 100, 0.1);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Social row */
+        .social-row {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 42px; height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(200, 161, 100, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--accent);
+            color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 6px 18px rgba(200, 161, 100, 0.4);
+        }
+
+        @media (max-width: 500px) {
+            .card { padding: 2.5rem 1.5rem; }
+            h1 { font-size: 1.8rem; }
+            .btn-group { flex-direction: column; align-items: center; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="particles"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="card">
+        <div class="icon-wrap">
+            <i class="fas fa-check"></i>
+        </div>
+
+        <h1>Message Received!</h1>
+        <div class="divider"></div>
+        <p>
+            Thank you for reaching out! I've received your message and will get back to you
+            within <span>24–48 hours</span>. Looking forward to connecting with you! 🚀
+        </p>
+
+        <p class="countdown">
+            Redirecting to home in <span id="timer">10</span> seconds...
+        </p>
+
+        <div class="btn-group">
+            <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i>
+                Back to Portfolio
+            </a>
+            <a href="/#projects" class="btn btn-secondary">
+                <i class="fas fa-project-diagram"></i>
+                My Projects
+            </a>
+        </div>
+
+        <div class="social-row">
+            <a href="https://github.com/OgabekHub" class="social-icon" target="_blank" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/og-abek-olimjonov-2a52b3364" class="social-icon" target="_blank" aria-label="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://t.me/olimjonov_ogabek" class="social-icon" target="_blank" aria-label="Telegram">
+                <i class="fab fa-telegram"></i>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Countdown redirect
+        let seconds = 10;
+        const timerEl = document.getElementById('timer');
+        const interval = setInterval(() => {
+            seconds--;
+            timerEl.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(interval);
+                window.location.href = '/';
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

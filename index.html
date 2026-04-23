@@ -468,7 +468,9 @@
 
                     <!-- Contact Form -->
                     <div class="contact-form">
-                        <form class="space-y-6" id="contactForm" name="contact" method="POST" data-netlify="true">
+                        <form class="space-y-6" id="contactForm" name="contact" method="POST"
+                            action="/thank-you"
+                            data-netlify="true">
                             <input type="hidden" name="form-name" value="contact" />
                             <div class="form-group">
                                 <label class="form-label">Name</label>
@@ -618,6 +620,13 @@
         </div>
     </footer>
 
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // TODO: Replace with your EmailJS Public Key
+        // Get it at: https://dashboard.emailjs.com/admin/account
+        emailjs.init('35xgz0k7Rt9b7KEbF');
+    </script>
     <script src="app.js"></script>
 </body>
 
