@@ -130,7 +130,7 @@ if (form && submitButton) {
         // Add loading animation
         submitButton.classList.add('loading-animation');
         submitButton.disabled = true;
-        submitButton.innerHTML = 'Sending...';
+        submitButton.innerHTML = '<span>Sending...</span><i class="fas fa-spinner fa-spin ml-2"></i>';
 
 
         const formData = new FormData(form);
@@ -149,14 +149,14 @@ if (form && submitButton) {
                 throw new Error('Failed to send message');
             }
 
-            alert('Message sent successfully!');
+            alert('✅ Message sent successfully! I will get back to you soon.');
             form.reset();
         } catch (error) {
-            alert('Sorry, something went wrong. Please try again later.');
+            alert('❌ Sorry, something went wrong. Please try again or email me directly.');
         } finally {
             submitButton.classList.remove('loading-animation');
             submitButton.disabled = false;
-            submitButton.innerHTML = 'Send Message';
+            submitButton.innerHTML = '<span>Send Message</span><i class="fas fa-paper-plane ml-2"></i>';
         }
 
      

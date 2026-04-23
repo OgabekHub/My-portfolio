@@ -811,6 +811,89 @@ body {
   background: rgba(200, 161, 100, 0.1);
 }
 
+/* ===== RESUME BUTTON — Hero section ===== */
+.hero-btn.resume {
+  background: transparent;
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-btn.resume::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(200, 161, 100, 0.18),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.hero-btn.resume:hover::before {
+  left: 100%;
+}
+
+.hero-btn.resume:hover {
+  background: var(--color-accent);
+  color: var(--color-primary);
+  box-shadow: 0 8px 28px rgba(200, 161, 100, 0.45);
+}
+
+/* ===== RESUME DOWNLOAD BUTTON — About section ===== */
+.resume-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 36px;
+  background: linear-gradient(135deg, #c8a164 0%, #8b6b34 100%);
+  color: #fff;
+  border-radius: 50px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.4px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 18px rgba(200, 161, 100, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.resume-download-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.resume-download-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(200, 161, 100, 0.55);
+}
+
+.resume-download-btn:hover::after {
+  opacity: 1;
+}
+
+.resume-download-btn i {
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
+}
+
+.resume-download-btn:hover i:last-child {
+  transform: translateX(4px);
+}
+
 /* Social links */
 .social-link {
   width: 40px;
@@ -1012,6 +1095,41 @@ body {
   }
 }
 
+/* ===== TECH BADGE GRID — Skills Section ===== */
+.tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.25rem;
+}
+
+.tech-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.4rem 0.9rem;
+  background: rgba(200, 161, 100, 0.08);
+  border: 1px solid rgba(200, 161, 100, 0.22);
+  border-radius: 50px;
+  color: var(--color-light);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  cursor: default;
+}
+
+.tech-badge i {
+  color: var(--color-accent);
+  font-size: 0.88rem;
+}
+
+.tech-badge:hover {
+  background: rgba(200, 161, 100, 0.18);
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(200, 161, 100, 0.2);
+}
+
 /* Particles animation */
 .particles-container {
   background-image:
@@ -1034,6 +1152,10 @@ body {
 }
 
 /* About section styles */
+.about-section-bg {
+  background-color: #faf7f2;
+}
+
 .text-accent,
 .about-text,
 .font-semibold,
@@ -1146,6 +1268,28 @@ body {
     padding-left: var(--container-padding) !important;
     padding-right: var(--container-padding) !important;
   }
+}
+
+/* ===== NAVBAR RESUME PILL BUTTON ===== */
+.nav-item.nav-resume {
+  background: var(--color-accent);
+  color: var(--color-primary) !important;
+  border-radius: 50px;
+  padding: 0.45rem 1.25rem !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  letter-spacing: 0.3px;
+}
+
+.nav-item.nav-resume::before {
+  display: none !important;
+}
+
+.nav-item.nav-resume:hover {
+  background: #e2c08d;
+  color: var(--color-primary) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(200, 161, 100, 0.4);
 }
 
 /* Navigation styles */
@@ -1527,6 +1671,37 @@ body {
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 500;
+}
+
+/* ===== PROJECT GRADIENT CARD ===== */
+.project-gradient-bg {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 75%, #533483 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.project-gradient-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.project-gradient-content i {
+  font-size: 4rem;
+  color: rgba(200, 161, 100, 0.85);
+  filter: drop-shadow(0 0 18px rgba(200, 161, 100, 0.5));
+  animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
 }
 
 /* Contact section */
