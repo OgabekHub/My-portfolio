@@ -119,7 +119,7 @@ document.querySelectorAll('footer a').forEach(icon => {
     icon.classList.add('social-icon');
 });
 
-// Form submission handling with redirect + EmailJS auto-reply
+// Form submission handling via EmailJS
 const form = document.querySelector('form');
 const submitButton = form ? form.querySelector('button[type="submit"]') : null;
 
@@ -138,44 +138,26 @@ if (form && submitButton) {
         const senderMessage = formData.get('message');
 
         try {
-            // 1) Server API ga jo'natish
-            const response = await fetch('/api/contact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: senderName,
-                    email: senderEmail,
-                    subject: senderSubject,
-                    message: senderMessage
-                })
-            });
+            // EmailJS orqali xabar yuborish
+            await emailjs.send(
+                'service_5o3o1i8',
+                'template_goumrk5',
+                {
+                    name:       senderName,
+                    email:      senderEmail,
+                    subject:    senderSubject,
+                    message:    senderMessage,
+                    from_name:  "Og'abek Olimjonov",
+                    reply_to:   'olimjonov.ogabek.dev@gmail.com'
+                }
+            );
 
-            if (!response.ok) throw new Error('Server request failed');
-
-            // 2) EmailJS orqali auto-reply yuborish
-            try {
-                await emailjs.send(
-                    'service_5o3o1i8',
-                    'template_goumrk5',
-                    {
-                        name:       senderName,   // template: {{name}}
-                        email:      senderEmail,  // template: {{email}} (To Email field)
-                        subject:    senderSubject, // template: {{subject}}
-                        message:    senderMessage, // template: {{message}}
-                        from_name:  "Og'abek Olimjonov",
-                        reply_to:   'olimjonov.ogabek.dev@gmail.com'
-                    }
-                );
-            } catch (autoReplyErr) {
-                // Auto-reply yuborilmasa ham asosiy xabar bordi — ok
-                console.warn('Auto-reply failed (non-critical):', autoReplyErr);
-            }
-
-            // 3) Thank-you sahifaga o'tkazish
+            // Muvaffaqiyatli — Thank-you sahifaga o'tkazish
             form.reset();
-            window.location.href = '/thank-you.html';
+            window.location.href = 'thank-you.html';
 
         } catch (error) {
+            console.error('EmailJS error:', error);
             alert('❌ Sorry, something went wrong. Please email me directly:\nolimjonov.ogabek.dev@gmail.com');
             submitButton.classList.remove('loading-animation');
             submitButton.disabled = false;
