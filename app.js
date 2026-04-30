@@ -134,16 +134,23 @@ if (form && submitButton) {
         const formData = new FormData(form);
         const senderName  = formData.get('name');
         const senderEmail = formData.get('email');
+        const senderSubject = formData.get('subject');
+        const senderMessage = formData.get('message');
 
         try {
-            // 1) Netlify Forms ga jo'natish
-            const response = await fetch('/', {
+            // 1) Server API ga jo'natish
+            const response = await fetch('/api/contact', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams(formData).toString()
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: senderName,
+                    email: senderEmail,
+                    subject: senderSubject,
+                    message: senderMessage
+                })
             });
 
-            if (!response.ok) throw new Error('Netlify form failed');
+            if (!response.ok) throw new Error('Server request failed');
 
             // 2) EmailJS orqali auto-reply yuborish
             try {
@@ -153,6 +160,8 @@ if (form && submitButton) {
                     {
                         name:       senderName,   // template: {{name}}
                         email:      senderEmail,  // template: {{email}} (To Email field)
+                        subject:    senderSubject, // template: {{subject}}
+                        message:    senderMessage, // template: {{message}}
                         from_name:  "Og'abek Olimjonov",
                         reply_to:   'olimjonov.ogabek.dev@gmail.com'
                     }
@@ -164,7 +173,7 @@ if (form && submitButton) {
 
             // 3) Thank-you sahifaga o'tkazish
             form.reset();
-            window.location.href = '/thank-you';
+            window.location.href = '/thank-you.html';
 
         } catch (error) {
             alert('❌ Sorry, something went wrong. Please email me directly:\nolimjonov.ogabek.dev@gmail.com');
