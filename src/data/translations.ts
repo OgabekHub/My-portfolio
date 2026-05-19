@@ -1,0 +1,258 @@
+export type Language = "uz" | "en";
+
+export const translations = {
+  uz: {
+    nav: {
+      home: "Bosh sahifa",
+      about: "Men haqimda",
+      skills: "Ko'nikmalar",
+      projects: "Loyihalar",
+      contact: "Aloqa",
+    },
+    hero: {
+      role: "Frontend Dasturchi",
+      hello: "Assalomu alaykum,",
+      im: "Men Og'abek",
+      surname: "Olimjonov",
+      words: ["Web Dasturchi", "UI/UX Dizayner", "Frontend Dasturchi"],
+      talk: "Bog'lanish",
+      work: "Loyihalarim",
+    },
+    about: {
+      title: "Men haqimda",
+      intro: "Assalomu alaykum! Men Og'abek Olimjonov — frontend dasturlashga qiziquvchi yosh dasturchiman. Hozirda React.js-ni o'rganyapman va veb-ilovalarni yaratishda tajriba orttiryapman.",
+      coreSkillsTitle: "Asosiy Ko'nikmalar",
+      coreSkills: [
+        "HTML5, CSS3, JavaScript",
+        "React.js, Moslashuvchan Dizayn (Responsive)",
+        "UI/UX Dizayn, Figma"
+      ],
+      interestsTitle: "Qiziqishlar",
+      interests: [
+        "Veb Dasturlash",
+        "UI/UX Dizayn",
+        "Musiqa tinglash 🎵"
+      ],
+      goalsTitle: "Mening Maqsadlarim",
+      goalsDesc: "Professional dasturchi bo'lib yetishish, xalqaro loyihalarda ishtirok etish va kelajakda o'z IT kompaniyamga asos solish.",
+      viewResume: "Rezyumeni Ko'rish",
+      timelineTitle: "Ta'lim va Tajriba",
+      timeline: [
+        {
+          period: "2024 - Hozirgacha",
+          title: "Frontend Dasturlash (Freelance / Amaliyot)",
+          location: "Masofaviy",
+          desc: "React.js, Next.js va Tailwind CSS yordamida turli xil veb-saytlar va foydalanuvchi interfeyslarini yaratish. Loyihalarni optimallashtirish va UI qulayligini ta'minlash."
+        },
+        {
+          period: "2023 - Hozirgacha",
+          title: "Kompyuter Ilmlari va Dasturiy Injiniring",
+          location: "Namangan Davlat Universiteti",
+          desc: "Algoritmlar, ma'lumotlar tuzilmalari, dasturlash asoslari va dasturiy ta'minotni ishlab chiqish metodologiyalarini o'rganish."
+        },
+        {
+          period: "2023 (6 oy)",
+          title: "Frontend Web Development Kursi",
+          location: "IT Akademiya",
+          desc: "HTML, CSS, JavaScript, SASS, Bootstrap, Git va React.js asoslari bo'yicha intensiv ta'lim va ko'plab amaliy loyihalarni ishlab chiqish."
+        }
+      ]
+    },
+    skills: {
+      title: "Mening ko'nikmalarim",
+      frontend: "Frontend Texnologiyalari",
+      design: "Dizayn Asboblari",
+      tools: "Dasturlash Asboblari va Boshqalar"
+    },
+    projects: {
+      title: "Mening Loyihalarim",
+      all: "Barchasi",
+      react: "React",
+      vanilla: "Vanilla CSS/JS",
+      design: "Dizayn",
+      items: [
+        {
+          id: 1,
+          title: "Portfolio vizitka kartasi",
+          desc: "Shaxsiy Vizitka Kartasi – Barchasi Bitta Profil. Telegram, GitHub va asosiy portfolio saytimga to'g'ridan-to'g'ri havolalarni o'z ichiga olgan oddiy va toza vizitka kartasi. HTML va CSS yordamida to'liq moslashuvchan (responsive) qilib qurilgan.",
+          tags: ["vanilla", "design"],
+          techs: ["HTML", "CSS"]
+        },
+        {
+          id: 2,
+          title: "Valorant veb-sayti",
+          desc: "Valorant Fan Veb-sayti – O'yin haqida ma'lumotlar va hamjamiyat. Valorant o'yiniga bag'ishlangan zamonaviy fan-sayt. O'yin qahramonlari, yangiliklar va so'nggi ma'lumotlarni namoyish etadi.",
+          tags: ["vanilla"],
+          techs: ["HTML", "CSS", "JavaScript"]
+        },
+        {
+          id: 3,
+          title: "TaskFlow Dashboard paneli",
+          desc: "TaskFlow – Professional vazifalarni boshqarish paneli (Dashboard). Jamoa ish faoliyatini boshqarish, vazifalarni rejalashtirish va sprint rivojlanishini real vaqt rejimida grafiklar bilan kuzatib borish uchun to'liq interaktiv boshqaruv paneli.",
+          tags: ["react", "design"],
+          techs: ["React", "Firebase", "Tailwind"]
+        }
+      ],
+      liveDemo: "Saytni ko'rish",
+      gitHub: "Kodni ko'rish"
+    },
+    contact: {
+      title: "Men bilan bog'lanish",
+      connect: "Aloqa o'rnatamiz",
+      desc: "Har qanday savol yoki hamkorlik takliflari uchun murojaat qilishingiz mumkin. Yangi loyihalar va ajoyib g'oyalarni muhokama qilish uchun doim ochiqman.",
+      nameLabel: "Ismingiz",
+      namePlaceholder: "Ismingizni kiriting",
+      emailLabel: "Elektron pochta",
+      emailPlaceholder: "Pochtangizni kiriting",
+      subjectLabel: "Mavzu",
+      subjectPlaceholder: "Mavzu",
+      messageLabel: "Xabar",
+      messagePlaceholder: "Xabaringizni yozing...",
+      sendBtn: "Xabarni Yuborish",
+      sendingBtn: "Yuborilmoqda...",
+      errorAlert: "❌ Kechirasiz, xatolik yuz berdi. Iltimos, menga to'g'ridan-to'g'ri yozing:\nolimjonov.ogabek.dev@gmail.com"
+    },
+    footer: {
+      desc: "Chiroyli va funksional veb-tajribalar yaratishga ishtiyoqi baland frontend dasturchi. Fikrlaringizni hayotga tatbiq etish uchun birgalikda ishlaymiz.",
+      quickLinks: "Tezkor havolalar",
+      info: "Aloqa ma'lumotlari",
+      rights: "Barcha huquqlar himoyalangan.",
+      madeWith: "tomonidan yaratildi"
+    },
+    thankYou: {
+      title: "Xabar Qabul Qilindi!",
+      desc: "Murojaat qilganingiz uchun tashakkur! Xabaringizni oldim va siz bilan 24-48 soat ichida bog'lanaman. Siz bilan muloqot qilishni intiqlik bilan kutaman! 🚀",
+      redirect: "Bosh sahifaga qaytishga qoldi:",
+      seconds: "soniya...",
+      backBtn: "Bosh sahifaga",
+      projectsBtn: "Loyihalarim",
+    }
+  },
+  en: {
+    nav: {
+      home: "Home",
+      about: "About",
+      skills: "Skills",
+      projects: "Projects",
+      contact: "Contact",
+    },
+    hero: {
+      role: "Frontend Developer",
+      hello: "Hello,",
+      im: "I'm Og'abek",
+      surname: "Olimjonov",
+      words: ["Web Developer", "UI/UX Designer", "Frontend Developer"],
+      talk: "Let's Talk",
+      work: "My Work",
+    },
+    about: {
+      title: "About Me",
+      intro: "Hello! I'm Og'abek Olimjonov — a young developer focusing on front-end development. Currently, I'm learning React.js and gaining experience in creating web applications.",
+      coreSkillsTitle: "Core Skills",
+      coreSkills: [
+        "HTML5, CSS3, JavaScript",
+        "React.js, Responsive Design",
+        "UI/UX Design, Figma"
+      ],
+      interestsTitle: "Interests",
+      interests: [
+        "Web Development",
+        "UI/UX Design",
+        "Listening to music 🎵"
+      ],
+      goalsTitle: "My Goals",
+      goalsDesc: "To become a professional developer, participate in international projects, and establish my own IT company in the future.",
+      viewResume: "View My Resume",
+      timelineTitle: "Education & Experience",
+      timeline: [
+        {
+          period: "2024 - Present",
+          title: "Frontend Developer (Freelance / Internship)",
+          location: "Remote",
+          desc: "Building websites and user interfaces using React.js, Next.js, and Tailwind CSS. Optimizing performance and ensuring user experience (UX) quality."
+        },
+        {
+          period: "2023 - Present",
+          title: "Computer Science & Software Engineering",
+          location: "Namangan State University",
+          desc: "Studying algorithms, data structures, programming fundamentals, and software development methodologies."
+        },
+        {
+          period: "2023 (6 months)",
+          title: "Frontend Web Development Course",
+          location: "IT Academy",
+          desc: "Intensive training on HTML, CSS, JavaScript, SASS, Bootstrap, Git, and React.js basics along with building real-world practical projects."
+        }
+      ]
+    },
+    skills: {
+      title: "My Skills",
+      frontend: "Frontend Technologies",
+      design: "Design Tools",
+      tools: "Development Tools & Others"
+    },
+    projects: {
+      title: "My Projects",
+      all: "All",
+      react: "React",
+      vanilla: "Vanilla CSS/JS",
+      design: "Design",
+      items: [
+        {
+          id: 1,
+          title: "Portfolio card",
+          desc: "My Portfolio Card – All in One Profile. A simple and clean portfolio card that includes direct links to my Telegram, GitHub, and full portfolio website. Fully responsive and built with HTML & CSS.",
+          tags: ["vanilla", "design"],
+          techs: ["HTML", "CSS"]
+        },
+        {
+          id: 2,
+          title: "Valorant website",
+          desc: "Valorant Fan Website – Game Info & Community. A sleek and responsive fan website dedicated to Valorant. Showcasing game info, news, and updates. Perfect for any Valorant enthusiast!",
+          tags: ["vanilla"],
+          techs: ["HTML", "CSS", "JavaScript"]
+        },
+        {
+          id: 3,
+          title: "TaskFlow Dashboard",
+          desc: "TaskFlow – Professional Task Management Dashboard. A fully interactive dashboard for managing team workflows, scheduling tasks, and tracking sprint progress with real-time status updates and chart visualisations.",
+          tags: ["react", "design"],
+          techs: ["React", "Firebase", "Tailwind"]
+        }
+      ],
+      liveDemo: "Live Demo",
+      gitHub: "View Code"
+    },
+    contact: {
+      title: "Contact Me",
+      connect: "Let's Connect",
+      desc: "Feel free to reach out to me for any questions or opportunities. I'm always open to discussing new projects and ideas.",
+      nameLabel: "Name",
+      namePlaceholder: "Enter your name",
+      emailLabel: "Email",
+      emailPlaceholder: "Enter your email",
+      subjectLabel: "Subject",
+      subjectPlaceholder: "Subject",
+      messageLabel: "Message",
+      messagePlaceholder: "Write your message...",
+      sendBtn: "Send Message",
+      sendingBtn: "Sending...",
+      errorAlert: "❌ Sorry, something went wrong. Please email me directly:\nolimjonov.ogabek.dev@gmail.com"
+    },
+    footer: {
+      desc: "A passionate frontend developer focused on creating beautiful and functional web experiences. Let's work together to bring your ideas to life.",
+      quickLinks: "Quick Links",
+      info: "Contact Info",
+      rights: "All rights reserved.",
+      madeWith: "Made with"
+    },
+    thankYou: {
+      title: "Message Received!",
+      desc: "Thank you for reaching out! I've received your message and will get back to you within 24–48 hours. Looking forward to connecting with you! 🚀",
+      redirect: "Redirecting to home in",
+      seconds: "seconds...",
+      backBtn: "Back to Portfolio",
+      projectsBtn: "My Projects",
+    }
+  }
+};

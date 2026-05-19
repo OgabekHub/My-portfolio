@@ -1,0 +1,291 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { useLanguage } from "@/context/LanguageContext";
+
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLogoHovered, setIsLogoHovered] = useState(false);
+  const { language, toggleLanguage, t } = useLanguage();
+  const [isDark, setIsDark] = useState(true);
+
+  useEffect(() => {
+    const isLight = !document.documentElement.classList.contains("dark");
+    setIsDark(!isLight);
+  }, []);
+
+  const handleThemeToggle = () => {
+    const nextDark = !isDark;
+    setIsDark(nextDark);
+    if (nextDark) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  };
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    setIsOpen(false);
+
+    if (targetId === "#") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      return;
+    }
+
+    const targetElement = document.querySelector(targetId);
+    if (targetElement) {
+      const offset = 80; // Navbar height
+      const targetPosition =
+        targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  return (
+    <nav className="fixed w-full bg-primary/95 backdrop-blur-sm shadow-lg z-50 border-b border-secondary/20">
+      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <div
+          className={`logo-container ${isLogoHovered ? "logo-active" : ""}`}
+          onMouseEnter={() => setIsLogoHovered(true)}
+          onMouseLeave={() => setIsLogoHovered(false)}
+        >
+          <a
+            href="#home"
+            onClick={(e) => handleLinkClick(e, "#home")}
+            className="flex items-center space-x-2"
+          >
+            <div className="logo-circle">
+              <svg className="face-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="logoBg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#020617" />
+                    <stop offset="100%" stopColor="#020617" />
+                  </linearGradient>
+                  <linearGradient id="logoRing" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#f8f5ec" />
+                    <stop offset="45%" stopColor="#c8a164" />
+                    <stop offset="100%" stopColor="#8b6b34" />
+                  </linearGradient>
+                </defs>
+
+                {/* Base circle */}
+                <circle cx="40" cy="40" r="34" fill="url(#logoBg)" />
+                <circle
+                  cx="40"
+                  cy="40"
+                  r="33"
+                  fill="none"
+                  stroke="rgba(15,23,42,0.85)"
+                  strokeWidth="1.5"
+                />
+                <circle cx="40" cy="40" r="31.5" fill="none" stroke="url(#logoRing)" strokeWidth="2" />
+
+                {/* Inner subtle ring */}
+                <circle
+                  cx="40"
+                  cy="40"
+                  r="25"
+                  fill="none"
+                  stroke="rgba(200,161,100,0.22)"
+                  strokeWidth="1"
+                  strokeDasharray="4 6"
+                  strokeLinecap="round"
+                />
+
+                {/* OB monogram */}
+                <g
+                  fill="none"
+                  stroke="#f9fafb"
+                  strokeWidth="2.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M34 30 L34 50" />
+                  <path d="M34 32 Q46 32 46 36 Q46 40 34 40" />
+                  <path d="M34 40 Q46 40 46 44 Q46 48 34 48" />
+                </g>
+              </svg>
+            </div>
+
+            <div className="logo-details opacity-0 transition-all duration-500">
+              <span className="text-accent font-playfair tracking-wide">Og&apos;abek</span>
+              <span className="text-light font-playfair text-sm md:text-base opacity-80">
+                Olimjonov
+              </span>
+            </div>
+          </a>
+        </div>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-8 font-poppins">
+          <ul className="flex space-x-8">
+            <li>
+              <a
+                href="#home"
+                onClick={(e) => handleLinkClick(e, "#home")}
+                className="nav-item nav-link"
+              >
+                {t.nav.home}
+              </a>
+            </li>
+            <li>
+              <a
+                href="#about"
+                onClick={(e) => handleLinkClick(e, "#about")}
+                className="nav-item nav-link"
+              >
+                {t.nav.about}
+              </a>
+            </li>
+            <li>
+              <a
+                href="#skills"
+                onClick={(e) => handleLinkClick(e, "#skills")}
+                className="nav-item nav-link"
+              >
+                {t.nav.skills}
+              </a>
+            </li>
+            <li>
+              <a
+                href="#projects"
+                onClick={(e) => handleLinkClick(e, "#projects")}
+                className="nav-item nav-link"
+              >
+                {t.nav.projects}
+              </a>
+            </li>
+            <li>
+              <a
+                href="#contact"
+                onClick={(e) => handleLinkClick(e, "#contact")}
+                className="nav-item nav-link"
+              >
+                {t.nav.contact}
+              </a>
+            </li>
+          </ul>
+
+          <div className="flex items-center space-x-4 border-l border-gray-600/30 pl-6">
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={handleThemeToggle}
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/60 text-accent transition-all duration-300"
+              aria-label="Toggle dark mode"
+            >
+              <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-lg`}></i>
+            </button>
+
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLanguage}
+              className="border border-accent/40 rounded-full px-3 py-1 text-sm font-semibold bg-transparent hover:bg-accent/10 hover:border-accent text-accent transition-all duration-300 min-w-[42px]"
+            >
+              {language === "uz" ? "EN" : "UZ"}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu button */}
+        <div className="flex items-center space-x-4 md:hidden">
+          {/* Dark Mode Toggle for Mobile Navbar Header */}
+          <button
+            onClick={handleThemeToggle}
+            className="w-9 h-9 rounded-full flex items-center justify-center bg-secondary/20 text-accent"
+            aria-label="Toggle dark mode"
+          >
+            <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-base`}></i>
+          </button>
+
+          <button
+            id="menu-btn"
+            onClick={toggleMenu}
+            className={`${isOpen ? "active" : ""}`}
+            aria-label="Toggle menu"
+          >
+            <i className={`fas ${isOpen ? "fa-times" : "fa-bars"}`}></i>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className={`mobile-nav md:hidden ${isOpen ? "active" : ""}`}>
+        <ul className="flex flex-col items-center space-y-4 py-6 font-poppins">
+          <li>
+            <a
+              href="#home"
+              onClick={(e) => handleLinkClick(e, "#home")}
+              className="nav-item text-lg"
+            >
+              {t.nav.home}
+            </a>
+          </li>
+          <li>
+            <a
+              href="#about"
+              onClick={(e) => handleLinkClick(e, "#about")}
+              className="nav-item text-lg"
+            >
+              {t.nav.about}
+            </a>
+          </li>
+          <li>
+            <a
+              href="#skills"
+              onClick={(e) => handleLinkClick(e, "#skills")}
+              className="nav-item text-lg"
+            >
+              {t.nav.skills}
+            </a>
+          </li>
+          <li>
+            <a
+              href="#projects"
+              onClick={(e) => handleLinkClick(e, "#projects")}
+              className="nav-item text-lg"
+            >
+              {t.nav.projects}
+            </a>
+          </li>
+          <li>
+            <a
+              href="#contact"
+              onClick={(e) => handleLinkClick(e, "#contact")}
+              className="nav-item text-lg"
+            >
+              {t.nav.contact}
+            </a>
+          </li>
+
+          <li className="pt-4 border-t border-gray-600/20 w-[60%] flex justify-center space-x-6">
+            {/* Language Switcher for Mobile */}
+            <button
+              onClick={() => {
+                toggleLanguage();
+                setIsOpen(false);
+              }}
+              className="border border-accent/40 rounded-full px-4 py-1.5 text-base font-semibold text-accent transition-all duration-300"
+            >
+              {language === "uz" ? "English" : "O'zbekcha"}
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+}
