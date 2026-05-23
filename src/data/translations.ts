@@ -80,10 +80,10 @@ export const translations = {
         },
         {
           id: 2,
-          title: "Valorant veb-sayti",
-          desc: "Valorant Fan Veb-sayti – O'yin haqida ma'lumotlar va hamjamiyat. Valorant o'yiniga bag'ishlangan zamonaviy fan-sayt. O'yin qahramonlari, yangiliklar va so'nggi ma'lumotlarni namoyish etadi.",
-          tags: ["vanilla"],
-          techs: ["HTML", "CSS", "JavaScript"]
+          title: "AgroVision AI Platformasi",
+          desc: "AgroVision AI – Qishloq xo'jaligi uchun sun'iy intellekt platformasi. Zamonaviy kompyuter ko'rishi va chuqur o'rganish (YOLOv8 & EfficientNet) modellari yordamida o'simlik turlarini aniqlash, kasalliklarni tashxislash va aqlli ekin tavsiyalarini olish tizimi.",
+          tags: ["react", "design"],
+          techs: ["React", "Next.js", "Tailwind", "Python", "YOLOv8"]
         },
         {
           id: 3,
@@ -207,10 +207,10 @@ export const translations = {
         },
         {
           id: 2,
-          title: "Valorant website",
-          desc: "Valorant Fan Website – Game Info & Community. A sleek and responsive fan website dedicated to Valorant. Showcasing game info, news, and updates. Perfect for any Valorant enthusiast!",
-          tags: ["vanilla"],
-          techs: ["HTML", "CSS", "JavaScript"]
+          title: "AgroVision AI Platform",
+          desc: "AgroVision AI – Artificial Intelligence platform for agriculture in Uzbekistan. Utilizing modern computer vision and deep learning (YOLOv8 & EfficientNet) models to detect plant types, diagnose crop diseases, and provide smart agricultural recommendations.",
+          tags: ["react", "design"],
+          techs: ["React", "Next.js", "Tailwind", "Python", "YOLOv8"]
         },
         {
           id: 3,

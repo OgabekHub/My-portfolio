@@ -17,9 +17,9 @@ export default function Projects() {
     },
     {
       id: 2,
-      image: "/img/valorant.jpg",
+      image: "/img/agrovision.png",
       github: "https://github.com/OgabekHub",
-      demo: "https://website-valorant.netlify.app/",
+      demo: "https://agro-vision-ai-zeta.vercel.app/",
     },
     {
       id: 3,
