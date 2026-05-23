@@ -87,10 +87,10 @@ export const translations = {
         },
         {
           id: 3,
-          title: "TaskFlow Dashboard paneli",
-          desc: "TaskFlow – Professional vazifalarni boshqarish paneli (Dashboard). Jamoa ish faoliyatini boshqarish, vazifalarni rejalashtirish va sprint rivojlanishini real vaqt rejimida grafiklar bilan kuzatib borish uchun to'liq interaktiv boshqaruv paneli.",
+          title: "Faxr Mebel veb-sayti",
+          desc: "Faxr Mebel – Zamonaviy mebel fabrikasining katalog veb-sayti. Mijozlarga oshxona, mehmonxona va yotoqxona uchun premium mebellarni onlayn ko'rish va buyurtma berish imkonini beruvchi chiroyli va qulay platforma.",
           tags: ["react", "design"],
-          techs: ["React", "Firebase", "Tailwind"]
+          techs: ["React", "Vite", "Tailwind", "Framer Motion"]
         }
       ],
       liveDemo: "Saytni ko'rish",
@@ -214,10 +214,10 @@ export const translations = {
         },
         {
           id: 3,
-          title: "TaskFlow Dashboard",
-          desc: "TaskFlow – Professional Task Management Dashboard. A fully interactive dashboard for managing team workflows, scheduling tasks, and tracking sprint progress with real-time status updates and chart visualisations.",
+          title: "Faxr Mebel Website",
+          desc: "Faxr Mebel – Catalog and showcase website for a modern furniture factory. An elegant platform for clients to browse and order premium kitchen, bedroom, and living room furniture online.",
           tags: ["react", "design"],
-          techs: ["React", "Firebase", "Tailwind"]
+          techs: ["React", "Vite", "Tailwind", "Framer Motion"]
         }
       ],
       liveDemo: "Live Demo",

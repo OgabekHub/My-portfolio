@@ -23,9 +23,9 @@ export default function Projects() {
     },
     {
       id: 3,
-      image: "/img/taskflow.png",
+      image: "/img/faxrmebel.png",
       github: "https://github.com/OgabekHub",
-      demo: "#projects",
+      demo: "https://faxr-mebel.vercel.app/",
     },
   ];
 
