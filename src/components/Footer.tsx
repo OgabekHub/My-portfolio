@@ -23,7 +23,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-primary py-16 border-t border-secondary/20">
+    <footer className="bg-primary py-16 border-t border-light/10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Description Column */}
@@ -188,13 +188,13 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-secondary/30 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-light/60">
-            <p>
+        <div className="border-t border-light/10 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-xs text-light/50">
               &copy; {new Date().getFullYear()} Og&apos;abek Olimjonov. {t.footer.rights}
             </p>
             <div className="mt-4 md:mt-0">
-              <p>
+              <p className="text-xs text-light/50">
                 {t.footer.madeWith} <i className="fas fa-heart text-accent" aria-hidden="true"></i> by Og&apos;abek
               </p>
             </div>

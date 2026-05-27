@@ -3,6 +3,7 @@ import { Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
 
 import { LanguageProvider } from "@/context/LanguageContext";
+import CustomCursor from "@/components/CustomCursor";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -54,7 +55,10 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${poppins.variable} font-poppins bg-primary text-light antialiased`}
       >
-        <LanguageProvider>{children}</LanguageProvider>
+        <LanguageProvider>
+          <CustomCursor />
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

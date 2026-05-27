@@ -20,7 +20,7 @@ export const translations = {
     },
     about: {
       title: "Men haqimda",
-      intro: "Assalomu alaykum! Men Og'abek Olimjonov — frontend dasturlashga qiziquvchi yosh dasturchiman. Hozirda React.js-ni o'rganyapman va veb-ilovalarni yaratishda tajriba orttiryapman.",
+      intro: "Assalomu alaykum! Men Og'abek Olimjonov — zamonaviy, tezkor va foydalanuvchilar uchun qulay veb-saytlar yaratishga qiziquvchi Junior Frontend dasturchiman. HTML, CSS, JavaScript va React.js yordamida responsive (moslashuvchan) interfeyslar yaratish hamda Figma dizaynlarini piksel-ideal ko'rinishda kodga o'tkazish bo'yicha amaliy tajribaga egaman. Har doim toza kod yozishga va ilg'or texnologiyalarni o'rganishga intilaman.",
       coreSkillsTitle: "Asosiy Ko'nikmalar",
       coreSkills: [
         "HTML5, CSS3, JavaScript",
@@ -62,7 +62,9 @@ export const translations = {
       title: "Mening ko'nikmalarim",
       frontend: "Frontend Texnologiyalari",
       design: "Dizayn Asboblari",
-      tools: "Dasturlash Asboblari va Boshqalar"
+      tools: "Dasturlash Asboblari va Boshqalar",
+      badgesView: "Ko'nikmalar",
+      progressView: "Darajalar"
     },
     projects: {
       title: "Mening Loyihalarim",
@@ -147,7 +149,7 @@ export const translations = {
     },
     about: {
       title: "About Me",
-      intro: "Hello! I'm Og'abek Olimjonov — a young developer focusing on front-end development. Currently, I'm learning React.js and gaining experience in creating web applications.",
+      intro: "Hello! I'm Og'abek Olimjonov, a passionate Junior Frontend Developer dedicated to building modern, responsive, and user-friendly web interfaces. I have hands-on experience working with HTML, CSS, JavaScript, and React.js, focusing on pixel-perfect translation from Figma designs to clean, maintainable code. I am always eager to learn new technologies and build solutions that deliver great user experiences.",
       coreSkillsTitle: "Core Skills",
       coreSkills: [
         "HTML5, CSS3, JavaScript",
@@ -189,7 +191,9 @@ export const translations = {
       title: "My Skills",
       frontend: "Frontend Technologies",
       design: "Design Tools",
-      tools: "Development Tools & Others"
+      tools: "Development Tools & Others",
+      badgesView: "Skills",
+      progressView: "Proficiency"
     },
     projects: {
       title: "My Projects",

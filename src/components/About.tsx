@@ -93,27 +93,6 @@ export default function About() {
             </div>
           </div>
         </div>
-
-        {/* Timeline Section */}
-        <div className="mt-28">
-          <h3 className="text-3xl font-playfair font-bold text-center mb-16">
-            {t.about.timelineTitle}
-          </h3>
-          <div className="timeline-container relative">
-            <div className="timeline-line"></div>
-            {t.about.timeline.map((item, idx) => (
-              <div key={idx} className="timeline-item">
-                <div className="timeline-dot"></div>
-                <div className="timeline-content">
-                  <div className="timeline-date">{item.period}</div>
-                  <h4 className="text-lg font-bold text-accent mb-1 font-playfair">{item.title}</h4>
-                  <div className="text-xs font-semibold text-light/50 mb-3">{item.location}</div>
-                  <p className="text-sm text-light/80 leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );
