@@ -43,7 +43,7 @@ export default function Footer() {
                     <defs>
                       <linearGradient id="logoBgFooter" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stopColor="#020617" />
-                        <stop offset="100%" stopColor="#020617" />
+                        <stop offset="100%" stopColor="#0f172a" />
                       </linearGradient>
                       <linearGradient id="logoRingFooter" x1="0" y1="0" x2="1" y2="1">
                         <stop offset="0%" stopColor="#f8f5ec" />
@@ -52,47 +52,28 @@ export default function Footer() {
                       </linearGradient>
                     </defs>
 
-                    <circle cx="40" cy="40" r="34" fill="url(#logoBgFooter)" />
-                    <circle
-                      cx="40"
-                      cy="40"
-                      r="33"
-                      fill="none"
-                      stroke="rgba(15,23,42,0.85)"
-                      strokeWidth="1.5"
-                    />
-                    <circle
-                      cx="40"
-                      cy="40"
-                      r="31.5"
-                      fill="none"
-                      stroke="url(#logoRingFooter)"
-                      strokeWidth="2"
-                    />
+                    {/* Dark background */}
+                    <circle cx="40" cy="40" r="38" fill="url(#logoBgFooter)" />
 
+                    {/* Outer border ring */}
+                    <circle cx="40" cy="40" r="37" fill="none" stroke="url(#logoRingFooter)" strokeWidth="1.5" opacity="0.5" />
+
+                    {/* Inner decorative dashed ring */}
                     <circle
-                      cx="40"
-                      cy="40"
-                      r="25"
+                      cx="40" cy="40" r="29"
                       fill="none"
-                      stroke="rgba(200,161,100,0.22)"
+                      stroke="rgba(200,161,100,0.18)"
                       strokeWidth="1"
-                      strokeDasharray="4 6"
+                      strokeDasharray="3 6"
                       strokeLinecap="round"
                     />
 
-                    {/* OB monogram */}
-                    <g
-                      fill="none"
-                      stroke="#f9fafb"
-                      strokeWidth="2.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M34 30 L34 50" />
-                      <path d="M34 32 Q46 32 46 36 Q46 40 34 40" />
-                      <path d="M34 40 Q46 40 46 44 Q46 48 34 48" />
-                    </g>
+                    {/* Main O ring */}
+                    <circle cx="40" cy="40" r="18" fill="none" stroke="url(#logoRingFooter)" strokeWidth="3.5" />
+
+                    {/* Golden apostrophe dot — O' belgisi */}
+                    <circle cx="57" cy="14" r="4.5" fill="#c8a164" />
+                    <circle cx="57" cy="14" r="2" fill="#f8f5ec" opacity="0.7" />
                   </svg>
                 </div>
                 <div className="logo-details opacity-0 transition-all duration-500">

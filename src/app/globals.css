@@ -536,7 +536,8 @@ body {
   background: radial-gradient(circle at 20% 10%, rgba(200, 161, 100, 0.14), transparent 55%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
   box-shadow: 0 0 0 1px rgba(200, 161, 100, 0.22), 0 10px 22px rgba(0, 0, 0, 0.45);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  transform: rotate(0deg);
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, background 0.3s ease;
 }
 
 .logo-circle::before {
@@ -579,23 +580,7 @@ body {
 .neb-r      { animation: nebPulse 4s ease-in-out infinite 0.5s; transform-origin: 65px 42px; }
 .smile-g    { transform-origin: 50px 62px; animation: smileB 4s ease-in-out infinite; }
 
-/* Hover */
-.logo-container.logo-active .face-svg {
-    animation: none !important;
-    filter:
-        drop-shadow(0 0 24px rgba(220,160,255,0.8))
-        drop-shadow(0 0 65px rgba(180,120,255,0.28)) !important;
-}
-.logo-container.logo-active .gal-outer { animation: galSpin  4s linear infinite !important; }
-.logo-container.logo-active .gal-mid   { animation: galSpinR 2.5s linear infinite !important; }
-.logo-container.logo-active .gal-inner { animation: galSpin  1.5s linear infinite !important; }
-.logo-container.logo-active .planet1   { animation: orbit1 1.5s linear infinite !important; }
-.logo-container.logo-active .planet2   { animation: orbit2 2.2s linear infinite !important; }
-.logo-container.logo-active .eye-l {
-    animation: none !important;
-    transform: scaleY(0.05) !important;
-    transition: transform 0.08s !important;
-}
+/* Hover: logo aylanishi */
 
 /* Keyframes */
 @keyframes galSpin    { to { transform: rotate(360deg); } }
@@ -682,12 +667,12 @@ body {
   font-size: 0.85rem;
 }
 
-/* Logo hover effects */
+/* Logo hover effects — hover da 360° aylanadi, cursor ketganda orqaga qaytadi */
 .logo-container.logo-active .logo-circle {
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.62), 0 0 0 1px rgba(200, 161, 100, 0.34),
-    0 0 22px rgba(200, 161, 100, 0.18);
-  background: radial-gradient(circle at 20% 0%, rgba(200, 161, 100, 0.22), transparent 58%),
+  transform: rotate(360deg) scale(1.04);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.62), 0 0 0 1px rgba(200, 161, 100, 0.45),
+    0 0 28px rgba(200, 161, 100, 0.25);
+  background: radial-gradient(circle at 20% 0%, rgba(200, 161, 100, 0.25), transparent 58%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.015));
 }
 

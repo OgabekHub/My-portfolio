@@ -81,65 +81,30 @@ export default function Navbar() {
                     <stop offset="45%" stopColor="#c8a164" />
                     <stop offset="100%" stopColor="#8b6b34" />
                   </linearGradient>
-                  <linearGradient id="ooGrad" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0%" stopColor="#f8f5ec" />
-                    <stop offset="50%" stopColor="#c8a164" />
-                    <stop offset="100%" stopColor="#8b6b34" />
-                  </linearGradient>
                 </defs>
 
-                {/* Base circle */}
-                <circle cx="40" cy="40" r="34" fill="url(#logoBg)" />
-                <circle
-                  cx="40"
-                  cy="40"
-                  r="33"
-                  fill="none"
-                  stroke="rgba(15,23,42,0.85)"
-                  strokeWidth="1.5"
-                />
-                <circle cx="40" cy="40" r="31.5" fill="none" stroke="url(#logoRing)" strokeWidth="2" />
+                {/* Dark background */}
+                <circle cx="40" cy="40" r="38" fill="url(#logoBg)" />
 
-                {/* Inner subtle ring */}
+                {/* Outer border ring */}
+                <circle cx="40" cy="40" r="37" fill="none" stroke="url(#logoRing)" strokeWidth="1.5" opacity="0.5" />
+
+                {/* Inner decorative dashed ring */}
                 <circle
-                  cx="40"
-                  cy="40"
-                  r="25"
+                  cx="40" cy="40" r="29"
                   fill="none"
-                  stroke="rgba(200,161,100,0.22)"
+                  stroke="rgba(200,161,100,0.18)"
                   strokeWidth="1"
-                  strokeDasharray="4 6"
+                  strokeDasharray="3 6"
                   strokeLinecap="round"
                 />
 
-                {/* OO monogram — Left O (Og'abek) */}
-                <ellipse
-                  cx="29"
-                  cy="41"
-                  rx="10"
-                  ry="13"
-                  fill="none"
-                  stroke="url(#ooGrad)"
-                  strokeWidth="2.5"
-                />
-                {/* OO monogram — Right O (Olimjonov) */}
-                <ellipse
-                  cx="51"
-                  cy="41"
-                  rx="10"
-                  ry="13"
-                  fill="none"
-                  stroke="url(#ooGrad)"
-                  strokeWidth="2.5"
-                />
-                {/* Apostrophe mark for O' in Og'abek */}
-                <path
-                  d="M37 25 Q38.5 21.5 40 25"
-                  fill="none"
-                  stroke="#c8a164"
-                  strokeWidth="2.2"
-                  strokeLinecap="round"
-                />
+                {/* Main O ring */}
+                <circle cx="40" cy="40" r="18" fill="none" stroke="url(#logoRing)" strokeWidth="3.5" />
+
+                {/* Golden apostrophe dot — O' belgisi */}
+                <circle cx="57" cy="14" r="4.5" fill="#c8a164" />
+                <circle cx="57" cy="14" r="2" fill="#f8f5ec" opacity="0.7" />
               </svg>
             </div>
 
