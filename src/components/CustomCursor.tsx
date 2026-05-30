@@ -49,7 +49,7 @@ export default function CustomCursor() {
         dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
       }
 
-      const delay = 6; // Elasticity speed (higher is slower/more floaty)
+      const delay = 3; // Elasticity speed — past qiymat tezroq (1=darhol, 10=juda sekin)
       ringX += (mouseX - ringX) / delay;
       ringY += (mouseY - ringY) / delay;
 
