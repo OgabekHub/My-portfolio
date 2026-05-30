@@ -74,11 +74,16 @@ export default function Navbar() {
                 <defs>
                   <linearGradient id="logoBg" x1="0" y1="0" x2="1" y2="1">
                     <stop offset="0%" stopColor="#020617" />
-                    <stop offset="100%" stopColor="#020617" />
+                    <stop offset="100%" stopColor="#0f172a" />
                   </linearGradient>
                   <linearGradient id="logoRing" x1="0" y1="0" x2="1" y2="1">
                     <stop offset="0%" stopColor="#f8f5ec" />
                     <stop offset="45%" stopColor="#c8a164" />
+                    <stop offset="100%" stopColor="#8b6b34" />
+                  </linearGradient>
+                  <linearGradient id="ooGrad" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#f8f5ec" />
+                    <stop offset="50%" stopColor="#c8a164" />
                     <stop offset="100%" stopColor="#8b6b34" />
                   </linearGradient>
                 </defs>
@@ -107,18 +112,34 @@ export default function Navbar() {
                   strokeLinecap="round"
                 />
 
-                {/* OB monogram */}
-                <g
+                {/* OO monogram — Left O (Og'abek) */}
+                <ellipse
+                  cx="29"
+                  cy="41"
+                  rx="10"
+                  ry="13"
                   fill="none"
-                  stroke="#f9fafb"
-                  strokeWidth="2.8"
+                  stroke="url(#ooGrad)"
+                  strokeWidth="2.5"
+                />
+                {/* OO monogram — Right O (Olimjonov) */}
+                <ellipse
+                  cx="51"
+                  cy="41"
+                  rx="10"
+                  ry="13"
+                  fill="none"
+                  stroke="url(#ooGrad)"
+                  strokeWidth="2.5"
+                />
+                {/* Apostrophe mark for O' in Og'abek */}
+                <path
+                  d="M37 25 Q38.5 21.5 40 25"
+                  fill="none"
+                  stroke="#c8a164"
+                  strokeWidth="2.2"
                   strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M34 30 L34 50" />
-                  <path d="M34 32 Q46 32 46 36 Q46 40 34 40" />
-                  <path d="M34 40 Q46 40 46 44 Q46 48 34 48" />
-                </g>
+                />
               </svg>
             </div>
 
