@@ -45,6 +45,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* Base styles */
@@ -52,6 +54,8 @@ body {
   font-family: "Poppins", sans-serif;
   background-color: var(--color-primary);
   color: var(--color-light);
+  overflow-x: hidden;
+  max-width: 100%;
 }
 
 /* Menu button styles */
@@ -2352,7 +2356,7 @@ footer {
 
 @media (max-width: 768px) {
   :root {
-    --container-padding: 0.75rem;
+    --container-padding: 1.25rem;
     --section-spacing: 2rem;
   }
 
@@ -2393,7 +2397,7 @@ footer {
 
 @media (max-width: 480px) {
   :root {
-    --container-padding: 0.5rem;
+    --container-padding: 1rem;
     --section-spacing: 1.5rem;
   }
 
