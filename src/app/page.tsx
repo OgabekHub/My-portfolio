@@ -96,7 +96,7 @@ export default function Home() {
       {/* Back to top button */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-[30px] right-[30px] w-[50px] h-[50px] rounded-full bg-accent text-primary flex items-center justify-center text-lg cursor-pointer transition-all duration-300 z-[999] border-none shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:translate-y-[-5px] hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)]"
+        className="fixed bottom-[20px] right-[20px] md:bottom-[30px] md:right-[30px] w-[50px] h-[50px] rounded-full bg-accent text-primary flex items-center justify-center text-lg cursor-pointer transition-all duration-300 z-[999] border-none shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:translate-y-[-5px] hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)]"
         style={{
           display: showBackToTop ? "flex" : "none",
           opacity: showBackToTop ? 1 : 0,

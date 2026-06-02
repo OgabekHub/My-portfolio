@@ -286,7 +286,7 @@ export default function AiCommandCenter() {
   };
 
   return (
-    <div className="fixed bottom-[20px] right-[20px] md:bottom-[30px] md:right-[95px] z-[999] font-poppins">
+    <div className="fixed bottom-[20px] right-[80px] md:bottom-[30px] md:right-[95px] z-[999] font-poppins">
       {/* Floating Sparkle Pulse Button */}
       <button
         ref={buttonRef}
@@ -306,7 +306,7 @@ export default function AiCommandCenter() {
       {isOpen && (
         <div
           ref={panelRef}
-          className="absolute bottom-[65px] right-0 w-[calc(100vw-40px)] md:w-[380px] max-w-[380px] h-[520px] bg-secondary/85 backdrop-blur-md rounded-2xl border border-accent/20 shadow-[0_15px_50px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden animate-fadeIn"
+          className="fixed bottom-[85px] left-1/2 -translate-x-1/2 md:absolute md:bottom-[65px] md:right-0 md:left-auto md:translate-x-0 w-[calc(100vw-40px)] md:w-[380px] max-w-[380px] h-[520px] bg-secondary/85 backdrop-blur-md rounded-2xl border border-accent/20 shadow-[0_15px_50px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden animate-fadeIn"
         >
           {/* Header */}
           <div className="p-4 border-b border-accent/15 flex items-center justify-between bg-primary/45">
