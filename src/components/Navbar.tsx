@@ -2,21 +2,31 @@
 
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { soundManager } from "@/utils/sound";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const { language, toggleLanguage, t } = useLanguage();
   const [isDark, setIsDark] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     const isLight = !document.documentElement.classList.contains("dark");
     setIsDark(!isLight);
+    setIsMuted(soundManager.getMuteStatus());
   }, []);
+
+  const handleMuteToggle = () => {
+    soundManager.playClick();
+    const nextMuted = soundManager.toggleMute();
+    setIsMuted(nextMuted);
+  };
 
   const handleThemeToggle = () => {
     const nextDark = !isDark;
     setIsDark(nextDark);
+    soundManager.playThemeToggle(nextDark);
     if (nextDark) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
@@ -123,7 +133,11 @@ export default function Navbar() {
             <li>
               <a
                 href="#home"
-                onClick={(e) => handleLinkClick(e, "#home")}
+                onClick={(e) => {
+                  soundManager.playClick();
+                  handleLinkClick(e, "#home");
+                }}
+                onMouseEnter={() => soundManager.playHover()}
                 className="nav-item nav-link"
               >
                 {t.nav.home}
@@ -132,7 +146,11 @@ export default function Navbar() {
             <li>
               <a
                 href="#about"
-                onClick={(e) => handleLinkClick(e, "#about")}
+                onClick={(e) => {
+                  soundManager.playClick();
+                  handleLinkClick(e, "#about");
+                }}
+                onMouseEnter={() => soundManager.playHover()}
                 className="nav-item nav-link"
               >
                 {t.nav.about}
@@ -141,7 +159,11 @@ export default function Navbar() {
             <li>
               <a
                 href="#skills"
-                onClick={(e) => handleLinkClick(e, "#skills")}
+                onClick={(e) => {
+                  soundManager.playClick();
+                  handleLinkClick(e, "#skills");
+                }}
+                onMouseEnter={() => soundManager.playHover()}
                 className="nav-item nav-link"
               >
                 {t.nav.skills}
@@ -150,7 +172,11 @@ export default function Navbar() {
             <li>
               <a
                 href="#projects"
-                onClick={(e) => handleLinkClick(e, "#projects")}
+                onClick={(e) => {
+                  soundManager.playClick();
+                  handleLinkClick(e, "#projects");
+                }}
+                onMouseEnter={() => soundManager.playHover()}
                 className="nav-item nav-link"
               >
                 {t.nav.projects}
@@ -159,7 +185,11 @@ export default function Navbar() {
             <li>
               <a
                 href="#contact"
-                onClick={(e) => handleLinkClick(e, "#contact")}
+                onClick={(e) => {
+                  soundManager.playClick();
+                  handleLinkClick(e, "#contact");
+                }}
+                onMouseEnter={() => soundManager.playHover()}
                 className="nav-item nav-link"
               >
                 {t.nav.contact}
@@ -171,15 +201,30 @@ export default function Navbar() {
             {/* Dark Mode Toggle */}
             <button
               onClick={handleThemeToggle}
+              onMouseEnter={() => soundManager.playHover()}
               className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/60 text-accent transition-all duration-300"
               aria-label="Toggle dark mode"
             >
               <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-lg`}></i>
             </button>
 
+            {/* Sound Toggle */}
+            <button
+              onClick={handleMuteToggle}
+              onMouseEnter={() => soundManager.playHover()}
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/60 text-accent transition-all duration-300"
+              aria-label="Toggle sound"
+            >
+              <i className={`fas ${isMuted ? "fa-volume-mute" : "fa-volume-up"} text-lg`}></i>
+            </button>
+
             {/* Language Switcher */}
             <button
-              onClick={toggleLanguage}
+              onClick={() => {
+                soundManager.playClick();
+                toggleLanguage();
+              }}
+              onMouseEnter={() => soundManager.playHover()}
               className="border border-accent/40 rounded-full px-3 py-1 text-sm font-semibold bg-transparent hover:bg-accent/10 hover:border-accent text-accent transition-all duration-300 min-w-[42px]"
             >
               {language === "uz" ? "EN" : "UZ"}
@@ -188,7 +233,16 @@ export default function Navbar() {
         </div>
 
         {/* Mobile menu button */}
-        <div className="flex items-center space-x-4 md:hidden">
+        <div className="flex items-center space-x-2.5 md:hidden">
+          {/* Sound Toggle for Mobile */}
+          <button
+            onClick={handleMuteToggle}
+            className="w-9 h-9 rounded-full flex items-center justify-center bg-secondary/20 text-accent"
+            aria-label="Toggle sound"
+          >
+            <i className={`fas ${isMuted ? "fa-volume-mute" : "fa-volume-up"} text-base`}></i>
+          </button>
+
           {/* Dark Mode Toggle for Mobile Navbar Header */}
           <button
             onClick={handleThemeToggle}
@@ -200,7 +254,10 @@ export default function Navbar() {
 
           <button
             id="menu-btn"
-            onClick={toggleMenu}
+            onClick={() => {
+              soundManager.playClick();
+              toggleMenu();
+            }}
             className={`${isOpen ? "active" : ""}`}
             aria-label="Toggle menu"
           >
@@ -215,7 +272,11 @@ export default function Navbar() {
           <li>
             <a
               href="#home"
-              onClick={(e) => handleLinkClick(e, "#home")}
+              onClick={(e) => {
+                soundManager.playClick();
+                handleLinkClick(e, "#home");
+              }}
+              onMouseEnter={() => soundManager.playHover()}
               className="nav-item text-lg"
             >
               {t.nav.home}
@@ -224,7 +285,11 @@ export default function Navbar() {
           <li>
             <a
               href="#about"
-              onClick={(e) => handleLinkClick(e, "#about")}
+              onClick={(e) => {
+                soundManager.playClick();
+                handleLinkClick(e, "#about");
+              }}
+              onMouseEnter={() => soundManager.playHover()}
               className="nav-item text-lg"
             >
               {t.nav.about}
@@ -233,7 +298,11 @@ export default function Navbar() {
           <li>
             <a
               href="#skills"
-              onClick={(e) => handleLinkClick(e, "#skills")}
+              onClick={(e) => {
+                soundManager.playClick();
+                handleLinkClick(e, "#skills");
+              }}
+              onMouseEnter={() => soundManager.playHover()}
               className="nav-item text-lg"
             >
               {t.nav.skills}
@@ -242,7 +311,11 @@ export default function Navbar() {
           <li>
             <a
               href="#projects"
-              onClick={(e) => handleLinkClick(e, "#projects")}
+              onClick={(e) => {
+                soundManager.playClick();
+                handleLinkClick(e, "#projects");
+              }}
+              onMouseEnter={() => soundManager.playHover()}
               className="nav-item text-lg"
             >
               {t.nav.projects}
@@ -251,7 +324,11 @@ export default function Navbar() {
           <li>
             <a
               href="#contact"
-              onClick={(e) => handleLinkClick(e, "#contact")}
+              onClick={(e) => {
+                soundManager.playClick();
+                handleLinkClick(e, "#contact");
+              }}
+              onMouseEnter={() => soundManager.playHover()}
               className="nav-item text-lg"
             >
               {t.nav.contact}
@@ -262,9 +339,11 @@ export default function Navbar() {
             {/* Language Switcher for Mobile */}
             <button
               onClick={() => {
+                soundManager.playClick();
                 toggleLanguage();
                 setIsOpen(false);
               }}
+              onMouseEnter={() => soundManager.playHover()}
               className="border border-accent/40 rounded-full px-4 py-1.5 text-base font-semibold text-accent transition-all duration-300"
             >
               {language === "uz" ? "English" : "O'zbekcha"}

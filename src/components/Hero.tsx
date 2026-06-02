@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import InteractiveParticles from "./InteractiveParticles";
+import { soundManager } from "@/utils/sound";
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -62,7 +64,7 @@ export default function Hero() {
   return (
     <section id="home" className="hero min-h-screen flex items-center justify-center bg-primary relative overflow-hidden">
       {/* Animated background particles */}
-      <div className="particles-container absolute inset-0"></div>
+      <InteractiveParticles />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
@@ -84,7 +86,11 @@ export default function Hero() {
             <div className="flex flex-col md:flex-row gap-4 justify-center items-center animate-fadeIn">
               <a
                 href="#contact"
-                onClick={(e) => handleScrollTo(e, "#contact")}
+                onClick={(e) => {
+                  soundManager.playClick();
+                  handleScrollTo(e, "#contact");
+                }}
+                onMouseEnter={() => soundManager.playHover()}
                 className="hero-btn primary"
               >
                 <span>{t.hero.talk}</span>
@@ -92,7 +98,11 @@ export default function Hero() {
               </a>
               <a
                 href="#projects"
-                onClick={(e) => handleScrollTo(e, "#projects")}
+                onClick={(e) => {
+                  soundManager.playClick();
+                  handleScrollTo(e, "#projects");
+                }}
+                onMouseEnter={() => soundManager.playHover()}
                 className="hero-btn secondary"
               >
                 <span>{t.hero.work}</span>
@@ -106,6 +116,8 @@ export default function Hero() {
                 href="https://github.com/OgabekHub"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => soundManager.playClick()}
+                onMouseEnter={() => soundManager.playHover()}
                 className="social-link"
                 aria-label="GitHub"
               >
@@ -115,6 +127,8 @@ export default function Hero() {
                 href="https://www.linkedin.com/in/og-abek-olimjonov-2a52b3364?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BZCdpoYM8SXiYquzPfhXTIg%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => soundManager.playClick()}
+                onMouseEnter={() => soundManager.playHover()}
                 className="social-link"
                 aria-label="LinkedIn"
               >
@@ -124,6 +138,8 @@ export default function Hero() {
                 href="https://t.me/olimjonov_ogabek"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => soundManager.playClick()}
+                onMouseEnter={() => soundManager.playHover()}
                 className="social-link"
                 aria-label="Telegram"
               >
