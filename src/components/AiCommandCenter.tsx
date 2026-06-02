@@ -102,8 +102,26 @@ export default function AiCommandCenter() {
       window.speechSynthesis.cancel();
       const cleanText = text.replace(/[#*`_-]/g, ""); // clean markdown markers
       const utterance = new SpeechSynthesisUtterance(cleanText);
-      // Use Turkish voice for Uzbek text as a highly phonetically natural fallback
-      utterance.lang = language === "uz" ? "tr-TR" : "en-US";
+      
+      const voices = window.speechSynthesis.getVoices();
+      
+      if (language === "uz") {
+        const uzVoice = voices.find(v => v.lang.toLowerCase().startsWith("uz"));
+        if (uzVoice) {
+          utterance.voice = uzVoice;
+          utterance.lang = "uz-UZ";
+        } else {
+          // Fallback to Turkish voice for phonetic similarity
+          const trVoice = voices.find(v => v.lang.toLowerCase().startsWith("tr"));
+          if (trVoice) {
+            utterance.voice = trVoice;
+          }
+          utterance.lang = "tr-TR";
+        }
+      } else {
+        utterance.lang = "en-US";
+      }
+
       utterance.rate = 1.0;
       utterance.pitch = 1.05;
       window.speechSynthesis.speak(utterance);
