@@ -44,6 +44,7 @@ export default function AiCommandCenter() {
   const [isGuestLoading, setIsGuestLoading] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Load comments and settings on mount
   useEffect(() => {
@@ -96,13 +97,12 @@ export default function AiCommandCenter() {
   }, [messages]);
 
   // Voice synthesis read-aloud
-  const speakText = (text: string) => {
-    if (!isVoiceOn || typeof window === "undefined" || !("speechSynthesis" in window)) return;
+  // Fallback to local browser Web Speech API
+  const fallbackSpeakText = (cleanText: string) => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
     try {
       window.speechSynthesis.cancel();
-      const cleanText = text.replace(/[#*`_-]/g, ""); // clean markdown markers
       const utterance = new SpeechSynthesisUtterance(cleanText);
-      
       const voices = window.speechSynthesis.getVoices();
       
       if (language === "uz") {
@@ -111,7 +111,6 @@ export default function AiCommandCenter() {
           utterance.voice = uzVoice;
           utterance.lang = "uz-UZ";
         } else {
-          // Fallback to Turkish voice for phonetic similarity
           const trVoice = voices.find(v => v.lang.toLowerCase().startsWith("tr"));
           if (trVoice) {
             utterance.voice = trVoice;
@@ -121,12 +120,41 @@ export default function AiCommandCenter() {
       } else {
         utterance.lang = "en-US";
       }
-
       utterance.rate = 1.0;
       utterance.pitch = 1.05;
       window.speechSynthesis.speak(utterance);
     } catch (e) {
+      console.warn("SpeechSynthesis fallback error:", e);
+    }
+  };
+
+  // Voice synthesis read-aloud using Google Translate's neural TTS API
+  const speakText = (text: string) => {
+    if (!isVoiceOn || typeof window === "undefined") return;
+    try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
+
+      const cleanText = text.replace(/[#*`_-]/g, ""); // clean markdown markers
+      
+      if (cleanText.length > 200) {
+        fallbackSpeakText(cleanText);
+        return;
+      }
+
+      const encodedText = encodeURIComponent(cleanText);
+      const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=${language === "uz" ? "uz" : "en"}&client=tw-ob`;
+      
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.play().catch((err) => {
+        console.warn("Google TTS audio play failed, falling back:", err);
+        fallbackSpeakText(cleanText);
+      });
+    } catch (e) {
       console.warn("TTS error:", e);
+      fallbackSpeakText(text);
     }
   };
 
