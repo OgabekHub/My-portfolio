@@ -43,6 +43,30 @@ export default function AiCommandCenter() {
   const [isGuestLoading, setIsGuestLoading] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Click outside listener to close the AI panel
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      if (
+        isOpen &&
+        panelRef.current &&
+        !panelRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, [isOpen]);
 
 
   // Load comments and settings on mount
@@ -262,9 +286,10 @@ export default function AiCommandCenter() {
   };
 
   return (
-    <div className="fixed bottom-[30px] right-[95px] z-[999] font-poppins">
+    <div className="fixed bottom-[20px] right-[20px] md:bottom-[30px] md:right-[95px] z-[999] font-poppins">
       {/* Floating Sparkle Pulse Button */}
       <button
+        ref={buttonRef}
         onClick={() => {
           soundManager.playClick();
           setIsOpen(!isOpen);
@@ -279,7 +304,10 @@ export default function AiCommandCenter() {
 
       {/* Floating Panel Panel */}
       {isOpen && (
-        <div className="absolute bottom-[65px] right-0 w-[90vw] max-w-[380px] h-[520px] bg-secondary/85 backdrop-blur-md rounded-2xl border border-accent/20 shadow-[0_15px_50px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden animate-fadeIn">
+        <div
+          ref={panelRef}
+          className="absolute bottom-[65px] right-0 w-[calc(100vw-40px)] md:w-[380px] max-w-[380px] h-[520px] bg-secondary/85 backdrop-blur-md rounded-2xl border border-accent/20 shadow-[0_15px_50px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden animate-fadeIn"
+        >
           {/* Header */}
           <div className="p-4 border-b border-accent/15 flex items-center justify-between bg-primary/45">
             <h3 className="font-playfair font-bold text-accent text-lg flex items-center gap-1.5">
