@@ -286,27 +286,29 @@ export default function AiCommandCenter() {
   };
 
   return (
-    <div className="fixed bottom-[20px] right-[80px] md:bottom-[30px] md:right-[95px] z-[999] font-poppins">
-      {/* Floating Sparkle Pulse Button */}
-      <button
-        ref={buttonRef}
-        onClick={() => {
-          soundManager.playClick();
-          setIsOpen(!isOpen);
-        }}
-        onMouseEnter={() => soundManager.playHover()}
-        className="w-[50px] h-[50px] rounded-full bg-accent text-primary flex items-center justify-center text-xl cursor-pointer transition-all duration-300 shadow-[0_4px_12px_rgba(200,161,100,0.3)] hover:scale-108 animate-pulse hover:shadow-[0_0_15px_#c8a164]"
-        title="AI Command Center"
-        aria-label="AI Copilot"
-      >
-        <i className="fas fa-sparkles text-lg"></i>
-      </button>
+    <>
+      <div className="fixed bottom-[20px] right-[80px] md:bottom-[30px] md:right-[95px] z-[999] font-poppins">
+        {/* Floating Sparkle Pulse Button */}
+        <button
+          ref={buttonRef}
+          onClick={() => {
+            soundManager.playClick();
+            setIsOpen(!isOpen);
+          }}
+          onMouseEnter={() => soundManager.playHover()}
+          className="w-[50px] h-[50px] rounded-full bg-accent text-primary flex items-center justify-center text-xl cursor-pointer transition-all duration-300 shadow-[0_4px_12px_rgba(200,161,100,0.3)] hover:scale-108 animate-pulse hover:shadow-[0_0_15px_#c8a164]"
+          title="AI Command Center"
+          aria-label="AI Copilot"
+        >
+          <i className="fas fa-sparkles text-lg"></i>
+        </button>
+      </div>
 
       {/* Floating Panel Panel */}
       {isOpen && (
         <div
           ref={panelRef}
-          className="fixed bottom-[85px] left-1/2 -translate-x-1/2 md:bottom-[95px] md:right-[95px] md:left-auto md:transform-none w-[calc(100vw-40px)] md:w-[380px] max-w-[380px] h-[520px] bg-secondary/85 backdrop-blur-md rounded-2xl border border-accent/20 shadow-[0_15px_50px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden animate-fadeIn"
+          className="fixed z-[1000] bottom-[85px] left-1/2 -translate-x-1/2 md:bottom-[95px] md:right-[95px] md:left-auto md:transform-none w-[calc(100vw-40px)] md:w-[380px] max-w-[380px] h-[520px] bg-secondary/85 backdrop-blur-md rounded-2xl border border-accent/20 shadow-[0_15px_50px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden animate-fadeIn font-poppins"
         >
           {/* Header */}
           <div className="p-4 border-b border-accent/15 flex items-center justify-between bg-primary/45">
@@ -519,6 +521,6 @@ export default function AiCommandCenter() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
