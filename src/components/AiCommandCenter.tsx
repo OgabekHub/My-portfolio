@@ -363,33 +363,7 @@ export default function AiCommandCenter() {
                   <div ref={messagesEndRef} />
                 </div>
 
-                {/* Predefined Action Chips */}
-                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-accent/10 mt-2">
-                  <button
-                    onClick={() => handleChatSubmit(undefined, "Loyiha bo'limiga o't")}
-                    className="px-2.5 py-1 rounded-full bg-primary/40 border border-accent/10 hover:border-accent text-[10px] text-accent font-medium transition-all"
-                  >
-                    🗺️ {language === "uz" ? "Sayohat" : "Tour"}
-                  </button>
-                  <button
-                    onClick={() => handleChatSubmit(undefined, "Mavzuni kiberpank qil")}
-                    className="px-2.5 py-1 rounded-full bg-primary/40 border border-accent/10 hover:border-accent text-[10px] text-accent font-medium transition-all"
-                  >
-                    🎨 {language === "uz" ? "Kiberpank" : "Cyberpunk"}
-                  </button>
-                  <button
-                    onClick={() => handleChatSubmit(undefined, "Ranglarni yashil botanik qil")}
-                    className="px-2.5 py-1 rounded-full bg-primary/40 border border-accent/10 hover:border-accent text-[10px] text-accent font-medium transition-all"
-                  >
-                    🍃 {language === "uz" ? "Yashil" : "Green"}
-                  </button>
-                  <button
-                    onClick={() => handleChatSubmit(undefined, "Asliy oltin ranglarni tikla")}
-                    className="px-2.5 py-1 rounded-full bg-primary/40 border border-accent/10 hover:border-accent text-[10px] text-accent font-medium transition-all"
-                  >
-                    ⚜️ {language === "uz" ? "Oltin" : "Gold"}
-                  </button>
-                </div>
+
 
                 {/* Chat Form */}
                 <form onSubmit={handleChatSubmit} className="flex gap-2 mt-2">
