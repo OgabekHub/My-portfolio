@@ -24,8 +24,7 @@ export default function AiCommandCenter() {
   const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"chat" | "code" | "guest">("chat");
-  const [isVoiceOn, setIsVoiceOn] = useState(true);
-  const [isListening, setIsListening] = useState(false);
+
 
   // Chat Tab states
   const [messages, setMessages] = useState<Message[]>([]);
@@ -44,7 +43,7 @@ export default function AiCommandCenter() {
   const [isGuestLoading, setIsGuestLoading] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+
 
   // Load comments and settings on mount
   useEffect(() => {
@@ -73,10 +72,7 @@ export default function AiCommandCenter() {
         localStorage.setItem("guest_comments", JSON.stringify(defaultComments));
       }
 
-      const speakPref = localStorage.getItem("voice_enabled");
-      if (speakPref) {
-        setIsVoiceOn(speakPref === "true");
-      }
+
 
       // Default welcome message
       setMessages([
@@ -96,145 +92,7 @@ export default function AiCommandCenter() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  // Voice synthesis read-aloud
-  // Fallback to local browser Web Speech API
-  const fallbackSpeakText = (cleanText: string) => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
-    try {
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      const voices = window.speechSynthesis.getVoices();
-      
-      if (language === "uz") {
-        const uzVoice = voices.find(v => v.lang.toLowerCase().startsWith("uz"));
-        if (uzVoice) {
-          utterance.voice = uzVoice;
-          utterance.lang = "uz-UZ";
-        } else {
-          const trVoice = voices.find(v => v.lang.toLowerCase().startsWith("tr"));
-          if (trVoice) {
-            utterance.voice = trVoice;
-          }
-          utterance.lang = "tr-TR";
-        }
-      } else {
-        utterance.lang = "en-US";
-      }
-      utterance.rate = 1.0;
-      utterance.pitch = 1.05;
-      window.speechSynthesis.speak(utterance);
-    } catch (e) {
-      console.warn("SpeechSynthesis fallback error:", e);
-    }
-  };
 
-  // Voice synthesis read-aloud using Google Translate's neural TTS API
-  const speakText = (text: string) => {
-    if (!isVoiceOn || typeof window === "undefined") return;
-    try {
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-
-      const cleanText = text.replace(/[#*`_-]/g, ""); // clean markdown markers
-      
-      if (cleanText.length > 200) {
-        fallbackSpeakText(cleanText);
-        return;
-      }
-
-      const encodedText = encodeURIComponent(cleanText);
-      const url = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodedText}&tl=${language === "uz" ? "uz" : "en"}&client=tw-ob`;
-      
-      const audio = new Audio(url);
-      audioRef.current = audio;
-      audio.play().catch((err) => {
-        console.warn("Google TTS audio play failed, falling back:", err);
-        fallbackSpeakText(cleanText);
-      });
-    } catch (e) {
-      console.warn("TTS error:", e);
-      fallbackSpeakText(text);
-    }
-  };
-
-  // Toggle read-aloud speech setting
-  const toggleVoice = () => {
-    soundManager.playClick();
-    const nextVal = !isVoiceOn;
-    setIsVoiceOn(nextVal);
-    localStorage.setItem("voice_enabled", String(nextVal));
-    if (!nextVal && typeof window !== "undefined") {
-      window.speechSynthesis.cancel();
-    }
-  };
-
-  // TypeScript definitions for Speech Recognition API
-  interface SpeechRecognitionResultList {
-    [index: number]: {
-      [index: number]: {
-        transcript: string;
-      };
-    };
-  }
-
-  interface SpeechRecognitionEvent {
-    results: SpeechRecognitionResultList;
-  }
-
-  interface SpeechRecognitionInstance {
-    lang: string;
-    interimResults: boolean;
-    maxAlternatives: number;
-    start: () => void;
-    stop: () => void;
-    onresult: (event: SpeechRecognitionEvent) => void;
-    onspeechend: () => void;
-    onerror: () => void;
-  }
-
-  // Microphone speech-to-text voice recognition
-  const startSpeechRecognition = () => {
-    const SpeechRecognition = (window as unknown as { 
-      SpeechRecognition?: new () => SpeechRecognitionInstance; 
-      webkitSpeechRecognition?: new () => SpeechRecognitionInstance; 
-    }).SpeechRecognition || (window as unknown as { 
-      SpeechRecognition?: new () => SpeechRecognitionInstance; 
-      webkitSpeechRecognition?: new () => SpeechRecognitionInstance; 
-    }).webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      alert(language === "uz" 
-        ? "Kechirasiz, sizning brauzeringizda ovozni aniqlash xizmati ishlamaydi. Google Chrome'dan foydalanishni tavsiya qilamiz." 
-        : "Sorry, speech recognition is not supported in this browser. We recommend using Google Chrome."
-      );
-      return;
-    }
-
-    soundManager.playClick();
-    const recognition = new SpeechRecognition();
-    recognition.lang = language === "uz" ? "uz-UZ" : "en-US";
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    setIsListening(true);
-    recognition.start();
-
-    recognition.onresult = (event: SpeechRecognitionEvent) => {
-      const speechResult = event.results[0][0].transcript;
-      setInput(speechResult);
-      setIsListening(false);
-    };
-
-    recognition.onspeechend = () => {
-      recognition.stop();
-      setIsListening(false);
-    };
-
-    recognition.onerror = () => {
-      setIsListening(false);
-    };
-  };
 
   // Process structured actions (scroll UI, inject custom theme CSS variables)
   const executeAiActions = (
@@ -294,13 +152,11 @@ export default function AiCommandCenter() {
       const aiReply = data.reply || "Xatolik yuz berdi.";
 
       setMessages((prev) => [...prev, { sender: "ai", text: aiReply, timestamp: new Date() }]);
-      speakText(aiReply);
       executeAiActions(data.action, data.scrollTarget, data.themeColors);
     } catch {
       // Offline fallback
       const fallback = handleLocalFallback(activeMsg, "chat") as ChatResponse;
       setMessages((prev) => [...prev, { sender: "ai", text: fallback.reply, timestamp: new Date() }]);
-      speakText(fallback.reply);
       executeAiActions(fallback.action, fallback.scrollTarget, fallback.themeColors);
     } finally {
       setIsChatLoading(false);
@@ -434,15 +290,6 @@ export default function AiCommandCenter() {
             {/* Controls */}
             <div className="flex items-center gap-3">
               <button
-                onClick={toggleVoice}
-                className={`w-7 h-7 rounded-md flex items-center justify-center transition-all ${
-                  isVoiceOn ? "bg-accent/20 text-accent" : "bg-primary/20 text-light/40"
-                }`}
-                title={language === "uz" ? "Ovozli o'qishni yoqish/o'chirish" : "Voice read-aloud toggle"}
-              >
-                <i className={`fas ${isVoiceOn ? "fa-volume-up" : "fa-volume-mute"} text-xs`}></i>
-              </button>
-              <button
                 onClick={() => {
                   soundManager.playClick();
                   setIsOpen(false);
@@ -552,18 +399,8 @@ export default function AiCommandCenter() {
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
                       placeholder={language === "uz" ? "Assistentdan so'rang..." : "Ask copilot..."}
-                      className="w-full bg-primary/60 text-light border border-accent/20 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-accent pr-8"
+                      className="w-full bg-primary/60 text-light border border-accent/20 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-accent"
                     />
-                    <button
-                      type="button"
-                      onClick={startSpeechRecognition}
-                      className={`absolute right-2.5 w-6 h-6 rounded-full flex items-center justify-center transition-all ${
-                        isListening ? "text-red-500 animate-bounce" : "text-light/40 hover:text-accent"
-                      }`}
-                      title={language === "uz" ? "Ovozli buyruq yuborish" : "Voice input command"}
-                    >
-                      <i className="fas fa-microphone text-sm"></i>
-                    </button>
                   </div>
                   <button
                     type="submit"

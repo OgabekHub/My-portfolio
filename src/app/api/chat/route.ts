@@ -83,7 +83,7 @@ export async function POST(req: Request) {
     const promptText = mode === "code" ? `Code:\n${code}\n\nMessage: ${message || "Review this code"}` : message;
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: {
@@ -101,6 +101,9 @@ export async function POST(req: Request) {
           ],
           generationConfig: {
             responseMimeType: "application/json",
+            thinkingConfig: {
+              thinkingBudget: 0,
+            },
           },
         }),
       }
