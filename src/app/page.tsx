@@ -8,6 +8,7 @@ import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import AiCommandCenter from "@/components/AiCommandCenter";
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -90,6 +91,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <AiCommandCenter />
 
       {/* Back to top button */}
       <button
