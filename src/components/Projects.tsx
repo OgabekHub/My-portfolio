@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { soundManager } from "@/utils/sound";
 
 export default function Projects() {
   const { t } = useLanguage();
@@ -68,7 +69,11 @@ export default function Projects() {
           ].map((btn) => (
             <button
               key={btn.id}
-              onClick={() => setFilter(btn.id)}
+              onClick={() => {
+                soundManager.playClick();
+                setFilter(btn.id);
+              }}
+              onMouseEnter={() => soundManager.playHover()}
               className={`px-5 py-2 rounded-full border text-sm font-semibold transition-all duration-300 ${
                 filter === btn.id
                   ? "bg-accent border-accent text-primary shadow-lg shadow-accent/25"
@@ -98,6 +103,8 @@ export default function Projects() {
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => soundManager.playClick()}
+                    onMouseEnter={() => soundManager.playHover()}
                     className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center hover:bg-light hover:text-primary transition-all duration-300 shadow-md"
                     aria-label="View on GitHub"
                   >
@@ -107,6 +114,8 @@ export default function Projects() {
                     href={project.demo}
                     target={project.demo.startsWith("#") ? "_self" : "_blank"}
                     rel={project.demo.startsWith("#") ? "" : "noopener noreferrer"}
+                    onClick={() => soundManager.playClick()}
+                    onMouseEnter={() => soundManager.playHover()}
                     className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center hover:bg-light hover:text-primary transition-all duration-300 shadow-md"
                     aria-label="View live demo"
                   >

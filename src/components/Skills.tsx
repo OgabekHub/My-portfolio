@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { soundManager } from "@/utils/sound";
 
 export default function Skills() {
   const { t } = useLanguage();
@@ -75,7 +76,11 @@ export default function Skills() {
         <div className="flex justify-center mb-16">
           <div className="bg-primary/50 border border-accent/15 p-1 rounded-full flex items-center shadow-inner">
             <button
-              onClick={() => setViewMode("badges")}
+              onClick={() => {
+                soundManager.playClick();
+                setViewMode("badges");
+              }}
+              onMouseEnter={() => soundManager.playHover()}
               className={`px-6 py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 ${
                 viewMode === "badges"
                   ? "bg-accent text-primary shadow-md"
@@ -85,7 +90,11 @@ export default function Skills() {
               {t.skills.badgesView}
             </button>
             <button
-              onClick={() => setViewMode("progress")}
+              onClick={() => {
+                soundManager.playClick();
+                setViewMode("progress");
+              }}
+              onMouseEnter={() => soundManager.playHover()}
               className={`px-6 py-2 rounded-full text-xs md:text-sm font-semibold transition-all duration-300 ${
                 viewMode === "progress"
                   ? "bg-accent text-primary shadow-md"
@@ -109,7 +118,11 @@ export default function Skills() {
                 /* Badges view */
                 <div className="tech-badges">
                   {category.badges.map((badge, bIdx) => (
-                    <span key={bIdx} className="tech-badge flex items-center">
+                    <span
+                      key={bIdx}
+                      onMouseEnter={() => soundManager.playHover()}
+                      className="tech-badge flex items-center"
+                    >
                       {renderIcon(badge.icon)}
                       <span>{badge.name}</span>
                     </span>

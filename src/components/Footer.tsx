@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import { soundManager } from "@/utils/sound";
 
 export default function Footer() {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
@@ -90,6 +91,8 @@ export default function Footer() {
                 href="https://github.com/OgabekHub"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => soundManager.playClick()}
+                onMouseEnter={() => soundManager.playHover()}
                 className="footer-social-link"
                 aria-label="GitHub"
               >
@@ -99,6 +102,8 @@ export default function Footer() {
                 href="https://www.linkedin.com/in/og-abek-olimjonov-2a52b3364?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BZCdpoYM8SXiYquzPfhXTIg%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => soundManager.playClick()}
+                onMouseEnter={() => soundManager.playHover()}
                 className="footer-social-link"
                 aria-label="LinkedIn"
               >
@@ -108,6 +113,8 @@ export default function Footer() {
                 href="https://t.me/olimjonov_ogabek"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => soundManager.playClick()}
+                onMouseEnter={() => soundManager.playHover()}
                 className="footer-social-link"
                 aria-label="Telegram"
               >
@@ -121,27 +128,67 @@ export default function Footer() {
             <h3 className="footer-title">{t.footer.quickLinks}</h3>
             <ul className="footer-links font-poppins">
               <li>
-                <a href="#home" onClick={(e) => handleScrollTo(e, "#home")} aria-label="Home">
+                <a
+                  href="#home"
+                  onClick={(e) => {
+                    soundManager.playClick();
+                    handleScrollTo(e, "#home");
+                  }}
+                  onMouseEnter={() => soundManager.playHover()}
+                  aria-label="Home"
+                >
                   {t.nav.home}
                 </a>
               </li>
               <li>
-                <a href="#about" onClick={(e) => handleScrollTo(e, "#about")} aria-label="About">
+                <a
+                  href="#about"
+                  onClick={(e) => {
+                    soundManager.playClick();
+                    handleScrollTo(e, "#about");
+                  }}
+                  onMouseEnter={() => soundManager.playHover()}
+                  aria-label="About"
+                >
                   {t.nav.about}
                 </a>
               </li>
               <li>
-                <a href="#skills" onClick={(e) => handleScrollTo(e, "#skills")} aria-label="Skills">
+                <a
+                  href="#skills"
+                  onClick={(e) => {
+                    soundManager.playClick();
+                    handleScrollTo(e, "#skills");
+                  }}
+                  onMouseEnter={() => soundManager.playHover()}
+                  aria-label="Skills"
+                >
                   {t.nav.skills}
                 </a>
               </li>
               <li>
-                <a href="#projects" onClick={(e) => handleScrollTo(e, "#projects")} aria-label="Projects">
+                <a
+                  href="#projects"
+                  onClick={(e) => {
+                    soundManager.playClick();
+                    handleScrollTo(e, "#projects");
+                  }}
+                  onMouseEnter={() => soundManager.playHover()}
+                  aria-label="Projects"
+                >
                   {t.nav.projects}
                 </a>
               </li>
               <li>
-                <a href="#contact" onClick={(e) => handleScrollTo(e, "#contact")} aria-label="Contact">
+                <a
+                  href="#contact"
+                  onClick={(e) => {
+                    soundManager.playClick();
+                    handleScrollTo(e, "#contact");
+                  }}
+                  onMouseEnter={() => soundManager.playHover()}
+                  aria-label="Contact"
+                >
                   {t.nav.contact}
                 </a>
               </li>

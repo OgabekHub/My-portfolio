@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import emailjs from "@emailjs/browser";
+import { soundManager } from "@/utils/sound";
 
 export default function Contact() {
   const router = useRouter();
@@ -105,6 +106,8 @@ export default function Contact() {
                   href="https://github.com/OgabekHub"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => soundManager.playClick()}
+                  onMouseEnter={() => soundManager.playHover()}
                   className="social-link"
                   aria-label="GitHub"
                 >
@@ -114,6 +117,8 @@ export default function Contact() {
                   href="https://www.linkedin.com/in/og-abek-olimjonov-2a52b3364?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BZCdpoYM8SXiYquzPfhXTIg%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => soundManager.playClick()}
+                  onMouseEnter={() => soundManager.playHover()}
                   className="social-link"
                   aria-label="LinkedIn"
                 >
@@ -123,6 +128,8 @@ export default function Contact() {
                   href="https://t.me/olimjonov_ogabek"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => soundManager.playClick()}
+                  onMouseEnter={() => soundManager.playHover()}
                   className="social-link"
                   aria-label="Telegram"
                 >
@@ -141,6 +148,7 @@ export default function Contact() {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    onFocus={() => soundManager.playHover()}
                     className="form-input bg-primary/50 text-light border border-accent/20 rounded-xl p-3 focus:outline-none focus:border-accent text-sm"
                     placeholder={t.contact.namePlaceholder}
                     required
@@ -153,6 +161,7 @@ export default function Contact() {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    onFocus={() => soundManager.playHover()}
                     className="form-input bg-primary/50 text-light border border-accent/20 rounded-xl p-3 focus:outline-none focus:border-accent text-sm"
                     placeholder={t.contact.emailPlaceholder}
                     required
@@ -165,6 +174,7 @@ export default function Contact() {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
+                    onFocus={() => soundManager.playHover()}
                     className="form-input bg-primary/50 text-light border border-accent/20 rounded-xl p-3 focus:outline-none focus:border-accent text-sm"
                     placeholder={t.contact.subjectPlaceholder}
                     required
@@ -176,15 +186,18 @@ export default function Contact() {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
+                    onFocus={() => soundManager.playHover()}
                     className="form-input bg-primary/50 text-light border border-accent/20 rounded-xl p-3 focus:outline-none focus:border-accent text-sm"
                     rows={4}
                     placeholder={t.contact.messagePlaceholder}
                     required
                   ></textarea>
                 </div>
-                <button
+                 <button
                   type="submit"
                   disabled={isSending}
+                  onClick={() => soundManager.playClick()}
+                  onMouseEnter={() => soundManager.playHover()}
                   className={`submit-btn w-full py-3 rounded-xl bg-accent text-primary font-bold hover:bg-light hover:text-primary transition-all duration-300 flex items-center justify-center gap-2 ${
                     isSending ? "opacity-75 cursor-not-allowed" : ""
                   }`}
