@@ -2617,3 +2617,19 @@ footer {
     cursor: none !important;
   }
 }
+
+/* AI Copilot Mobile Slide-Up Animation */
+@keyframes slideUpMobile {
+  from {
+    transform: translate(-50%, 100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+.animate-slideUpMobile {
+  animation: slideUpMobile 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}

@@ -218,6 +218,22 @@ export default function Navbar() {
               <i className={`fas ${isMuted ? "fa-volume-mute" : "fa-volume-up"} text-lg`}></i>
             </button>
 
+            {/* AI Copilot Sparkles Button */}
+            <button
+              onClick={() => {
+                soundManager.playClick();
+                window.dispatchEvent(new CustomEvent("toggle-ai-copilot"));
+              }}
+              onMouseEnter={() => soundManager.playHover()}
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/60 text-accent transition-all duration-300 relative group"
+              aria-label="AI Copilot"
+              title="AI Copilot"
+            >
+              <i className="fas fa-sparkles text-lg text-accent group-hover:scale-110 transition-all"></i>
+              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-accent rounded-full border-2 border-primary animate-ping"></span>
+              <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-accent rounded-full border-2 border-primary"></span>
+            </button>
+
             {/* Language Switcher */}
             <button
               onClick={() => {
@@ -250,6 +266,21 @@ export default function Navbar() {
             aria-label="Toggle dark mode"
           >
             <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-base`}></i>
+          </button>
+
+          {/* AI Copilot Sparkles Button for Mobile */}
+          <button
+            onClick={() => {
+              soundManager.playClick();
+              window.dispatchEvent(new CustomEvent("toggle-ai-copilot"));
+            }}
+            className="w-9 h-9 rounded-full flex items-center justify-center bg-secondary/20 text-accent relative"
+            aria-label="AI Copilot"
+            title="AI Copilot"
+          >
+            <i className="fas fa-sparkles text-base text-accent"></i>
+            <span className="absolute top-0.5 right-0.5 w-2.5 h-2.5 bg-accent rounded-full border border-primary animate-ping"></span>
+            <span className="absolute top-0.5 right-0.5 w-2.5 h-2.5 bg-accent rounded-full border border-primary"></span>
           </button>
 
           <button
