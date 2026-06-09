@@ -435,7 +435,7 @@ export default function AiCommandCenter() {
                       </>
                     ) : (
                       <>
-                        <i className="fas fa-magic mr-1"></i>
+                        <i className="fa-solid fa-wand-magic-sparkles mr-1"></i>
                         <span>{language === "uz" ? "Kodni Tahlil Qilish" : "Run Code Analysis"}</span>
                       </>
                     )}

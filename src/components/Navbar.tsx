@@ -229,7 +229,7 @@ export default function Navbar() {
               aria-label="AI Copilot"
               title="AI Copilot"
             >
-              <i className="fas fa-magic text-lg text-accent group-hover:scale-110 transition-all"></i>
+              <i className="fa-solid fa-wand-magic-sparkles text-lg text-accent group-hover:scale-110 transition-all"></i>
               <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-accent rounded-full border-2 border-primary animate-ping"></span>
               <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-accent rounded-full border-2 border-primary"></span>
             </button>
@@ -249,38 +249,20 @@ export default function Navbar() {
         </div>
 
         {/* Mobile menu button */}
-        <div className="flex items-center space-x-2.5 md:hidden">
-          {/* Sound Toggle for Mobile */}
-          <button
-            onClick={handleMuteToggle}
-            className="w-9 h-9 rounded-full flex items-center justify-center bg-secondary/20 text-accent"
-            aria-label="Toggle sound"
-          >
-            <i className={`fas ${isMuted ? "fa-volume-mute" : "fa-volume-up"} text-base`}></i>
-          </button>
-
-          {/* Dark Mode Toggle for Mobile Navbar Header */}
-          <button
-            onClick={handleThemeToggle}
-            className="w-9 h-9 rounded-full flex items-center justify-center bg-secondary/20 text-accent"
-            aria-label="Toggle dark mode"
-          >
-            <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-base`}></i>
-          </button>
-
+        <div className="flex items-center space-x-3 md:hidden">
           {/* AI Copilot Magic/Sparkles Button for Mobile */}
           <button
             onClick={() => {
               soundManager.playClick();
               window.dispatchEvent(new CustomEvent("toggle-ai-copilot"));
             }}
-            className="w-9 h-9 rounded-full flex items-center justify-center bg-secondary/20 text-accent relative"
+            className="w-9 h-9 rounded-full flex items-center justify-center bg-secondary/20 text-accent relative hover:bg-secondary/40 active:scale-95 transition-all"
             aria-label="AI Copilot"
             title="AI Copilot"
           >
-            <i className="fas fa-magic text-base text-accent"></i>
-            <span className="absolute top-0.5 right-0.5 w-2.5 h-2.5 bg-accent rounded-full border border-primary animate-ping"></span>
-            <span className="absolute top-0.5 right-0.5 w-2.5 h-2.5 bg-accent rounded-full border border-primary"></span>
+            <i className="fa-solid fa-wand-magic-sparkles text-base text-accent"></i>
+            <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-accent rounded-full border border-primary animate-ping"></span>
+            <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-accent rounded-full border border-primary"></span>
           </button>
 
           <button
@@ -366,7 +348,27 @@ export default function Navbar() {
             </a>
           </li>
 
-          <li className="pt-4 border-t border-gray-600/20 w-[60%] flex justify-center space-x-6">
+          <li className="pt-4 border-t border-gray-600/20 w-[60%] flex justify-center space-x-5">
+            {/* Dark Mode Toggle for Mobile Drawer */}
+            <button
+              onClick={handleThemeToggle}
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/40 text-accent transition-all duration-300 border border-accent/15"
+              aria-label="Toggle dark mode"
+            >
+              <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-base`}></i>
+            </button>
+
+            {/* Sound Toggle for Mobile Drawer */}
+            <button
+              onClick={handleMuteToggle}
+              className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/40 text-accent transition-all duration-300 border border-accent/15"
+              aria-label="Toggle sound"
+            >
+              <i className={`fas ${isMuted ? "fa-volume-mute" : "fa-volume-up"} text-base`}></i>
+            </button>
+          </li>
+
+          <li className="flex justify-center w-[60%] pb-2">
             {/* Language Switcher for Mobile */}
             <button
               onClick={() => {
@@ -375,7 +377,7 @@ export default function Navbar() {
                 setIsOpen(false);
               }}
               onMouseEnter={() => soundManager.playHover()}
-              className="border border-accent/40 rounded-full px-4 py-1.5 text-base font-semibold text-accent transition-all duration-300"
+              className="border border-accent/40 rounded-full px-5 py-1.5 text-sm font-semibold bg-transparent hover:bg-accent/10 text-accent transition-all duration-300 min-w-[110px]"
             >
               {language === "uz" ? "English" : "O'zbekcha"}
             </button>
