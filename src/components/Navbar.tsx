@@ -348,7 +348,7 @@ export default function Navbar() {
             </a>
           </li>
 
-          <li className="pt-4 border-t border-gray-600/20 w-[60%] flex justify-center space-x-5">
+          <li className="pt-4 border-t border-gray-600/20 w-[80%] flex items-center justify-center space-x-4 pb-2">
             {/* Dark Mode Toggle for Mobile Drawer */}
             <button
               onClick={handleThemeToggle}
@@ -366,9 +366,7 @@ export default function Navbar() {
             >
               <i className={`fas ${isMuted ? "fa-volume-mute" : "fa-volume-up"} text-base`}></i>
             </button>
-          </li>
 
-          <li className="flex justify-center w-[60%] pb-2">
             {/* Language Switcher for Mobile */}
             <button
               onClick={() => {
@@ -377,7 +375,7 @@ export default function Navbar() {
                 setIsOpen(false);
               }}
               onMouseEnter={() => soundManager.playHover()}
-              className="border border-accent/40 rounded-full px-5 py-1.5 text-sm font-semibold bg-transparent hover:bg-accent/10 text-accent transition-all duration-300 min-w-[110px]"
+              className="h-10 px-4 rounded-full flex items-center justify-center border border-accent/40 text-xs font-semibold bg-transparent hover:bg-accent/10 text-accent transition-all duration-300 min-w-[100px]"
             >
               {language === "uz" ? "English" : "O'zbekcha"}
             </button>
