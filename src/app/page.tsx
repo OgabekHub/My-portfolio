@@ -4,11 +4,13 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import StatsSection from "@/components/StatsSection";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AiCommandCenter from "@/components/AiCommandCenter";
+import SplashScreen from "@/components/SplashScreen";
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -82,10 +84,12 @@ export default function Home() {
         style={{ width: `${scrollProgress}%` }}
       ></div>
 
+      <SplashScreen />
       <Navbar />
       <main>
         <Hero />
         <About />
+        <StatsSection />
         <Skills />
         <Projects />
         <Contact />

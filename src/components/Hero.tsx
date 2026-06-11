@@ -1,10 +1,51 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import InteractiveParticles from "./InteractiveParticles";
 import { soundManager } from "@/utils/sound";
+
+/* -- Magnetic Button Wrapper -- */
+function MagneticBtn({ children, className }: { children: React.ReactNode; className?: string }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const STRENGTH = 0.38;
+  const RADIUS = 80;
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = wrapRef.current;
+    if (!el || window.innerWidth < 1024) return;
+    const rect = el.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < RADIUS) {
+      const force = (RADIUS - dist) / RADIUS;
+      el.style.transform = `translate(${dx * STRENGTH * force}px, ${dy * STRENGTH * force}px)`;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    const el = wrapRef.current;
+    if (!el) return;
+    el.style.transform = "translate(0px, 0px)";
+    el.style.transition = "transform 0.55s cubic-bezier(0.16,1,0.3,1)";
+    setTimeout(() => { if (el) el.style.transition = ""; }, 550);
+  };
+
+  return (
+    <div
+      ref={wrapRef}
+      className={`magnetic-wrap ${className || ""}`}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function Hero() {
   const { t } = useLanguage();
@@ -85,30 +126,34 @@ export default function Hero() {
               <span className="typing-text">{currentText}</span>
             </p>
             <div className="flex flex-col md:flex-row gap-4 justify-center items-center animate-fadeIn">
-              <a
-                href="#contact"
-                onClick={(e) => {
-                  soundManager.playClick();
-                  handleScrollTo(e, "#contact");
-                }}
-                onMouseEnter={() => soundManager.playHover()}
-                className="hero-btn primary"
-              >
-                <span>{t.hero.talk}</span>
-                <i className="fas fa-arrow-right ml-2"></i>
-              </a>
-              <a
-                href="#projects"
-                onClick={(e) => {
-                  soundManager.playClick();
-                  handleScrollTo(e, "#projects");
-                }}
-                onMouseEnter={() => soundManager.playHover()}
-                className="hero-btn secondary"
-              >
-                <span>{t.hero.work}</span>
-                <i className="fas fa-project-diagram ml-2"></i>
-              </a>
+              <MagneticBtn>
+                <a
+                  href="#contact"
+                  onClick={(e) => {
+                    soundManager.playClick();
+                    handleScrollTo(e, "#contact");
+                  }}
+                  onMouseEnter={() => soundManager.playHover()}
+                  className="hero-btn primary"
+                >
+                  <span>{t.hero.talk}</span>
+                  <i className="fas fa-arrow-right ml-2"></i>
+                </a>
+              </MagneticBtn>
+              <MagneticBtn>
+                <a
+                  href="#projects"
+                  onClick={(e) => {
+                    soundManager.playClick();
+                    handleScrollTo(e, "#projects");
+                  }}
+                  onMouseEnter={() => soundManager.playHover()}
+                  className="hero-btn secondary"
+                >
+                  <span>{t.hero.work}</span>
+                  <i className="fas fa-project-diagram ml-2"></i>
+                </a>
+              </MagneticBtn>
             </div>
 
             {/* Social Media Links */}

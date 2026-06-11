@@ -1,15 +1,151 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
 
+// --- 3D Tilt Card Sub-component ---
+interface ProjectItem {
+  id: number;
+  title: string;
+  desc: string;
+  techs: string[];
+  tags: string[];
+  image: string;
+  github: string;
+  demo: string;
+}
+
+function TiltCard({ project }: { project: ProjectItem }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const glareRef = useRef<HTMLDivElement>(null);
+  const [style, setStyle] = useState<React.CSSProperties>({
+    transform: "rotateX(0deg) rotateY(0deg)",
+    transition: "transform 0.1s ease, box-shadow 0.1s ease",
+    boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
+  });
+
+  const MAX_TILT = 12; // degrees
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    const glare = glareRef.current;
+    if (!card) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+
+    const rotateY = ((x - cx) / cx) * MAX_TILT;
+    const rotateX = -((y - cy) / cy) * MAX_TILT;
+
+    setStyle({
+      transform: `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03,1.03,1.03)`,
+      transition: "transform 0.08s ease, box-shadow 0.08s ease",
+      boxShadow: `${-rotateY * 0.8}px ${rotateX * 0.8}px 32px rgba(200,161,100,0.14), 0 16px 48px rgba(0,0,0,0.2)`,
+    });
+
+    // Glare follows mouse
+    if (glare) {
+      const glareX = (x / rect.width) * 100;
+      const glareY = (y / rect.height) * 100;
+      glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.10) 0%, transparent 65%)`;
+      glare.style.opacity = "1";
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setStyle({
+      transform: "rotateX(0deg) rotateY(0deg) scale3d(1,1,1)",
+      transition: "transform 0.45s cubic-bezier(0.16,1,0.3,1), box-shadow 0.45s ease",
+      boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
+    });
+    if (glareRef.current) {
+      glareRef.current.style.opacity = "0";
+    }
+  };
+
+  return (
+    <div
+      ref={cardRef}
+      className="tilt-card project-card bg-secondary border border-accent/10 rounded-2xl overflow-hidden shadow-md hover:border-accent/40 relative"
+      style={style}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Glare overlay */}
+      <div
+        ref={glareRef}
+        className="tilt-glare"
+        style={{ opacity: 0, background: "transparent" }}
+      />
+
+      {/* Image */}
+      <div className="project-image relative overflow-hidden group aspect-video">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+        <div className="project-overlay absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-4 transition-opacity duration-300">
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => soundManager.playClick()}
+            onMouseEnter={() => soundManager.playHover()}
+            className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center hover:bg-light hover:text-primary transition-all duration-300 shadow-md"
+            aria-label="View on GitHub"
+          >
+            <i className="fab fa-github text-xl"></i>
+          </a>
+          <a
+            href={project.demo}
+            target={project.demo.startsWith("#") ? "_self" : "_blank"}
+            rel={project.demo.startsWith("#") ? "" : "noopener noreferrer"}
+            onClick={() => soundManager.playClick()}
+            onMouseEnter={() => soundManager.playHover()}
+            className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center hover:bg-light hover:text-primary transition-all duration-300 shadow-md"
+            aria-label="View live demo"
+          >
+            <i className="fas fa-external-link-alt text-lg"></i>
+          </a>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="project-content p-6">
+        <h3 className="project-title text-xl font-bold font-playfair text-accent mb-3">
+          {project.title}
+        </h3>
+        <p className="project-description text-sm text-light/80 leading-relaxed mb-4">
+          {project.desc}
+        </p>
+        <div className="project-tech flex flex-wrap gap-2">
+          {project.techs.map((techItem, tIdx) => (
+            <span
+              key={tIdx}
+              className="px-3 py-1 rounded-md bg-primary/60 text-accent text-xs font-semibold border border-accent/10"
+            >
+              {techItem}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// --- Main Projects Component ---
 export default function Projects() {
   const { t } = useLanguage();
   const [filter, setFilter] = useState<string>("all");
 
-  // Local assets data mapped by project id
   const projectsData = [
     {
       id: 1,
@@ -31,20 +167,15 @@ export default function Projects() {
     },
   ];
 
-  // Combine translations items with asset links
   const combinedProjects = t.projects.items.map((item) => {
     const data = projectsData.find((d) => d.id === item.id) || {
       image: "",
       github: "",
       demo: "",
     };
-    return {
-      ...item,
-      ...data,
-    };
+    return { ...item, ...data };
   });
 
-  // Filter projects based on selected category tag
   const filteredProjects = combinedProjects.filter((project) => {
     if (filter === "all") return true;
     return project.tags.includes(filter);
@@ -60,7 +191,7 @@ export default function Projects() {
           </span>
         </h2>
 
-        {/* Filter Tab Buttons */}
+        {/* Filter buttons */}
         <div className="flex justify-center flex-wrap gap-4 mb-16 mt-8">
           {[
             { id: "all", label: t.projects.all },
@@ -86,66 +217,10 @@ export default function Projects() {
           ))}
         </div>
 
-        {/* Projects Grid with fade/scale transitions */}
+        {/* Projects Grid with 3D tilt */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
           {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="project-card bg-secondary border border-accent/10 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:border-accent/40 transition-all duration-500 ease-in-out transform hover:-translate-y-2"
-            >
-              <div className="project-image relative overflow-hidden group aspect-video">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-                <div className="project-overlay absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-4 transition-opacity duration-300">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => soundManager.playClick()}
-                    onMouseEnter={() => soundManager.playHover()}
-                    className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center hover:bg-light hover:text-primary transition-all duration-300 shadow-md"
-                    aria-label="View on GitHub"
-                  >
-                    <i className="fab fa-github text-xl"></i>
-                  </a>
-                  <a
-                    href={project.demo}
-                    target={project.demo.startsWith("#") ? "_self" : "_blank"}
-                    rel={project.demo.startsWith("#") ? "" : "noopener noreferrer"}
-                    onClick={() => soundManager.playClick()}
-                    onMouseEnter={() => soundManager.playHover()}
-                    className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center hover:bg-light hover:text-primary transition-all duration-300 shadow-md"
-                    aria-label="View live demo"
-                  >
-                    <i className="fas fa-external-link-alt text-lg"></i>
-                  </a>
-                </div>
-              </div>
-
-              <div className="project-content p-6">
-                <h3 className="project-title text-xl font-bold font-playfair text-accent mb-3">
-                  {project.title}
-                </h3>
-                <p className="project-description text-sm text-light/80 leading-relaxed mb-4">
-                  {project.desc}
-                </p>
-                <div className="project-tech flex flex-wrap gap-2">
-                  {project.techs.map((techItem, tIdx) => (
-                    <span
-                      key={tIdx}
-                      className="px-3 py-1 rounded-md bg-primary/60 text-accent text-xs font-semibold border border-accent/10"
-                    >
-                      {techItem}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <TiltCard key={project.id} project={project} />
           ))}
         </div>
       </div>
