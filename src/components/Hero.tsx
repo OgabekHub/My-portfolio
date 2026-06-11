@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import InteractiveParticles from "./InteractiveParticles";
 import { soundManager } from "@/utils/sound";
@@ -151,10 +152,14 @@ export default function Hero() {
           {/* Profile Image */}
           <div className="md:w-1/2 flex justify-center">
             <div className="hero-image-container">
-              <img
+              <Image
                 src="/img/Portrait of Michael Mando in a Black Suit Jacket.png"
                 alt="Og'abek Olimjonov"
                 className="hero-image animate-fadeIn"
+                width={500}
+                height={500}
+                priority
+                style={{ objectFit: "cover" }}
               />
             </div>
           </div>

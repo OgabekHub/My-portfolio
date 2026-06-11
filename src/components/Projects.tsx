@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
 
@@ -93,10 +94,12 @@ export default function Projects() {
               className="project-card bg-secondary border border-accent/10 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:border-accent/40 transition-all duration-500 ease-in-out transform hover:-translate-y-2"
             >
               <div className="project-image relative overflow-hidden group aspect-video">
-                <img
+                <Image
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <div className="project-overlay absolute inset-0 bg-primary/80 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-4 transition-opacity duration-300">
                   <a

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function About() {
@@ -19,10 +20,13 @@ export default function About() {
           {/* Profile Image */}
           <div className="md:w-1/3 flex justify-center">
             <div className="about-image-container">
-              <img
+              <Image
                 src="/img/Portrait of Michael Mando in a Black Suit Jacket.png"
                 alt="Og'abek Olimjonov"
                 className="about-image"
+                width={400}
+                height={400}
+                style={{ objectFit: "cover" }}
               />
               <div className="about-image-overlay"></div>
             </div>
