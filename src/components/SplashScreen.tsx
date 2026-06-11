@@ -68,11 +68,15 @@ export default function SplashScreen() {
             strokeDasharray="3 6"
             strokeLinecap="round"
           />
-          {/* Main O ring */}
-          <circle cx="40" cy="40" r="18" fill="none" stroke="url(#splashRing)" strokeWidth="3.5" />
-          {/* Apostrophe dot — O' belgisi */}
-          <circle cx="57" cy="14" r="4.5" fill="#c8a164" />
-          <circle cx="57" cy="14" r="2" fill="#f8f5ec" opacity="0.7" />
+          {/* OO Monogram (Konsept A) */}
+          {/* Left O: Bold, solid representation */}
+          <circle cx="28.5" cy="40" r="8.5" fill="none" stroke="url(#splashRing)" strokeWidth="4" />
+
+          {/* Center dot separator */}
+          <circle cx="40.5" cy="40" r="1.8" fill="url(#splashRing)" />
+
+          {/* Right O: Fine stroke with top-right cut representing apostrophe */}
+          <path d="M 54.4 32.0 A 8.5 8.5 0 1 1 59.5 37.1" fill="none" stroke="url(#splashRing)" strokeWidth="2" strokeLinecap="round" />
         </svg>
       </div>
 
