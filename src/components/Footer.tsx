@@ -69,15 +69,12 @@ export default function Footer() {
                       strokeLinecap="round"
                     />
 
-                    {/* OO Monogram (Konsept A) */}
-                    {/* Left O: Bold, solid representation */}
-                    <circle cx="28.5" cy="40" r="8.5" fill="none" stroke="url(#logoRingFooter)" strokeWidth="4" />
+                    {/* Main O ring */}
+                    <circle cx="40" cy="40" r="18" fill="none" stroke="url(#logoRingFooter)" strokeWidth="3.5" />
 
-                    {/* Center dot separator */}
-                    <circle cx="40.5" cy="40" r="1.8" fill="url(#logoRingFooter)" />
-
-                    {/* Right O: Fine stroke with top-right cut representing apostrophe */}
-                    <path d="M 54.4 32.0 A 8.5 8.5 0 1 1 59.5 37.1" fill="none" stroke="url(#logoRingFooter)" strokeWidth="2" strokeLinecap="round" />
+                    {/* Golden apostrophe dot — O' belgisi */}
+                    <circle cx="57" cy="14" r="4.5" fill="#c8a164" />
+                    <circle cx="57" cy="14" r="2" fill="#f8f5ec" opacity="0.7" />
                   </svg>
                 </div>
                 <div className="logo-details opacity-0 transition-all duration-500">
