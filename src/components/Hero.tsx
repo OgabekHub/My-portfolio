@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import InteractiveParticles from "./InteractiveParticles";
+import FloatingCode from "./FloatingCode";
 import { soundManager } from "@/utils/sound";
 
 /* -- Magnetic Button Wrapper -- */
@@ -55,6 +56,11 @@ export default function Hero() {
   const [currentText, setCurrentText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Parallax refs
+  const heroRef = useRef<HTMLElement>(null);
+  const textLayerRef = useRef<HTMLDivElement>(null);
+  const imageLayerRef = useRef<HTMLDivElement>(null);
+
   // Reset typewriter when words array changes (language toggle)
   useEffect(() => {
     setWordIndex(0);
@@ -88,6 +94,43 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, [currentText, isDeleting, wordIndex, words]);
 
+  // 3D Parallax on mouse move
+  useEffect(() => {
+    const hero = heroRef.current;
+    const textLayer = textLayerRef.current;
+    const imageLayer = imageLayerRef.current;
+    if (!hero || !textLayer || !imageLayer) return;
+
+    // Skip on mobile
+    if (window.innerWidth < 768) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = hero.getBoundingClientRect();
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const dx = (e.clientX - rect.left - cx) / cx; // -1 to 1
+      const dy = (e.clientY - rect.top - cy) / cy;   // -1 to 1
+
+      // Text moves gently
+      textLayer.style.transform = `translate3d(${dx * -10}px, ${dy * -6}px, 0)`;
+      // Image moves more
+      imageLayer.style.transform = `translate3d(${dx * 18}px, ${dy * 10}px, 0)`;
+    };
+
+    const handleMouseLeave = () => {
+      textLayer.style.transform = "translate3d(0,0,0)";
+      imageLayer.style.transform = "translate3d(0,0,0)";
+    };
+
+    hero.addEventListener("mousemove", handleMouseMove);
+    hero.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      hero.removeEventListener("mousemove", handleMouseMove);
+      hero.removeEventListener("mouseleave", handleMouseLeave);
+    };
+  }, []);
+
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     const targetElement = document.querySelector(targetId);
@@ -104,14 +147,26 @@ export default function Hero() {
   };
 
   return (
-    <section id="home" className="hero min-h-screen flex items-center justify-center bg-primary relative overflow-hidden">
+    <section ref={heroRef} id="home" className="hero min-h-screen flex items-center justify-center bg-primary relative overflow-hidden">
+      {/* Floating code lines */}
+      <FloatingCode />
+
       {/* Animated background particles */}
       <InteractiveParticles />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-          {/* Text Content */}
-          <div className="text-center m-auto md:text-center md:w-1/2">
+          {/* Text Content — parallax layer */}
+          <div
+            ref={textLayerRef}
+            className="text-center m-auto md:text-center md:w-1/2 hero-parallax-text"
+          >
+            {/* Available for Work badge */}
+            <div className="available-badge mb-5">
+              <span className="available-dot" />
+              <span>Available for opportunities</span>
+            </div>
+
             <div className="mb-4 text-accent font-medium tracking-wider animate-fadeIn">
               {t.hero.role}
             </div>
@@ -194,8 +249,11 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Profile Image */}
-          <div className="md:w-1/2 flex justify-center">
+          {/* Profile Image — parallax layer (moves more) */}
+          <div
+            ref={imageLayerRef}
+            className="md:w-1/2 flex justify-center hero-parallax-image"
+          >
             <div className="hero-image-container">
               <Image
                 src="/img/Portrait of Michael Mando in a Black Suit Jacket.png"

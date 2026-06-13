@@ -15,6 +15,7 @@ interface Sparkle {
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
+  const orbRef = useRef<HTMLDivElement>(null);
   const sparkleCanvasRef = useRef<HTMLCanvasElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isHidden, setIsHidden] = useState(true);
@@ -28,8 +29,9 @@ export default function CustomCursor() {
 
     const dot = dotRef.current;
     const ring = ringRef.current;
+    const orb = orbRef.current;
     const canvas = sparkleCanvasRef.current;
-    if (!dot || !ring || !canvas) return;
+    if (!dot || !ring || !orb || !canvas) return;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -38,6 +40,9 @@ export default function CustomCursor() {
     let mouseY = 0;
     let ringX = 0;
     let ringY = 0;
+    let orbX = 0;
+    let orbY = 0;
+    let hidden = true;
     let lastSpawnTime = 0;
     const sparkles: Sparkle[] = [];
 
@@ -52,14 +57,17 @@ export default function CustomCursor() {
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
+      hidden = false;
       setIsHidden(false);
     };
 
     const onMouseLeave = () => {
+      hidden = true;
       setIsHidden(true);
     };
 
     const onMouseEnter = () => {
+      hidden = false;
       setIsHidden(false);
     };
 
@@ -90,25 +98,28 @@ export default function CustomCursor() {
 
     window.addEventListener("mouseover", handleMouseOver);
 
-    // Main animation loop — cursor + sparkles
+    // Main animation loop — cursor + sparkles + orb
     let animationFrameId: number;
 
     const animate = (timestamp: number) => {
       // -- Cursor dot (instant) --
-      if (dot) {
-        dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
-      }
+      dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
 
       // -- Cursor ring (elastic delay) --
       const delay = 3;
       ringX += (mouseX - ringX) / delay;
       ringY += (mouseY - ringY) / delay;
-      if (ring) {
-        ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
-      }
+      ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+
+      // -- Orb glow (very slow follow — dreamy lag) --
+      const orbDelay = 10;
+      orbX += (mouseX - orbX) / orbDelay;
+      orbY += (mouseY - orbY) / orbDelay;
+      orb.style.transform = `translate3d(${orbX}px, ${orbY}px, 0)`;
+      orb.style.opacity = hidden ? "0" : "1";
 
       // -- Spawn sparkles every ~28ms when mouse is active --
-      if (!isHidden && timestamp - lastSpawnTime > 28 && mouseX > 0) {
+      if (!hidden && timestamp - lastSpawnTime > 28 && mouseX > 0) {
         for (let i = 0; i < 2; i++) {
           sparkles.push({
             x: mouseX + (Math.random() - 0.5) * 10,
@@ -166,6 +177,9 @@ export default function CustomCursor() {
 
   return (
     <>
+      {/* Gradient orb glow — slowest follower */}
+      <div ref={orbRef} className="cursor-orb" aria-hidden="true" />
+
       {/* Sparkle trail canvas */}
       <canvas ref={sparkleCanvasRef} className="sparkle-canvas" aria-hidden="true" />
 

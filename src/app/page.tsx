@@ -38,7 +38,7 @@ export default function Home() {
 
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.15,
+      threshold: 0.12,
       rootMargin: "0px",
     };
 
@@ -56,6 +56,21 @@ export default function Home() {
       });
     }, observerOptions);
 
+    // Cinematic stagger observer for project cards
+    const staggerObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const cards = entry.target.querySelectorAll(".project-card, .skill-card, .about-card");
+          cards.forEach((card, i) => {
+            setTimeout(() => {
+              card.classList.add("visible");
+            }, i * 120);
+          });
+          staggerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
     // Query elements to observe
     const observedElements = document.querySelectorAll(
       "section, .about-image-container, .about-card, .about-goals, .skill-card, .project-card, .contact-info, .contact-form, footer"
@@ -63,10 +78,16 @@ export default function Home() {
 
     observedElements.forEach((el) => observer.observe(el));
 
+    // Stagger containers
+    const staggerContainers = document.querySelectorAll("#projects .grid, #skills .grid, #about .grid");
+    staggerContainers.forEach((el) => staggerObserver.observe(el));
+
     return () => {
       observer.disconnect();
+      staggerObserver.disconnect();
     };
   }, []);
+
 
   const scrollToTop = () => {
     window.scrollTo({
