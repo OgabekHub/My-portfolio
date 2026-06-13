@@ -161,12 +161,6 @@ export default function Hero() {
             ref={textLayerRef}
             className="text-center m-auto md:text-center md:w-1/2 hero-parallax-text"
           >
-            {/* Available for Work badge */}
-            <div className="available-badge mb-5">
-              <span className="available-dot" />
-              <span>Available for opportunities</span>
-            </div>
-
             <div className="mb-4 text-accent font-medium tracking-wider animate-fadeIn">
               {t.hero.role}
             </div>

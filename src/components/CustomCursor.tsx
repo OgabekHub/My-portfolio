@@ -43,6 +43,8 @@ export default function CustomCursor() {
     let orbX = 0;
     let orbY = 0;
     let hidden = true;
+    let isMoving = false;
+    let moveTimeout: ReturnType<typeof setTimeout> | null = null;
     let lastSpawnTime = 0;
     const sparkles: Sparkle[] = [];
 
@@ -58,11 +60,17 @@ export default function CustomCursor() {
       mouseX = e.clientX;
       mouseY = e.clientY;
       hidden = false;
+      isMoving = true;
       setIsHidden(false);
+      // Stop spawning sparkles 80ms after mouse stops
+      if (moveTimeout) clearTimeout(moveTimeout);
+      moveTimeout = setTimeout(() => { isMoving = false; }, 80);
     };
 
     const onMouseLeave = () => {
       hidden = true;
+      isMoving = false;
+      if (moveTimeout) clearTimeout(moveTimeout);
       setIsHidden(true);
     };
 
@@ -118,8 +126,8 @@ export default function CustomCursor() {
       orb.style.transform = `translate3d(${orbX}px, ${orbY}px, 0)`;
       orb.style.opacity = hidden ? "0" : "1";
 
-      // -- Spawn sparkles every ~28ms when mouse is active --
-      if (!hidden && timestamp - lastSpawnTime > 28 && mouseX > 0) {
+      // -- Spawn sparkles ONLY when mouse is actively moving --
+      if (isMoving && !hidden && timestamp - lastSpawnTime > 28 && mouseX > 0) {
         for (let i = 0; i < 2; i++) {
           sparkles.push({
             x: mouseX + (Math.random() - 0.5) * 10,
@@ -170,6 +178,7 @@ export default function CustomCursor() {
       document.removeEventListener("mouseleave", onMouseLeave);
       document.removeEventListener("mouseenter", onMouseEnter);
       window.removeEventListener("mouseover", handleMouseOver);
+      if (moveTimeout) clearTimeout(moveTimeout);
       cancelAnimationFrame(animationFrameId);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
