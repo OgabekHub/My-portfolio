@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import InteractiveParticles from "./InteractiveParticles";
 import { soundManager } from "@/utils/sound";
 
 /* -- Magnetic Button Wrapper -- */
@@ -109,6 +110,9 @@ export default function Hero() {
 
   return (
     <section ref={heroRef} id="home" className="hero min-h-screen flex items-center justify-center bg-primary relative overflow-hidden">
+      {/* Animated background particles */}
+      <InteractiveParticles />
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
           {/* Text Content */}
