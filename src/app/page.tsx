@@ -10,6 +10,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AiCommandCenter from "@/components/AiCommandCenter";
 import SplashScreen from "@/components/SplashScreen";
+import StatsSection from "@/components/StatsSection";
 
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -109,6 +110,7 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <StatsSection />
         <Skills />
         <Projects />
         <Contact />
