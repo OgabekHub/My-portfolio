@@ -33,6 +33,15 @@ export default function MusicPlayer() {
     }
   }, [volume]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.load();
+      if (isPlaying) {
+        audioRef.current.play().catch(e => console.log("Audio play failed:", e));
+      }
+    }
+  }, [currentTrackIndex]);
+
   const togglePlay = () => {
     if (audioRef.current) {
       if (isPlaying) {
@@ -45,23 +54,11 @@ export default function MusicPlayer() {
   };
 
   const nextTrack = () => {
-    const nextIndex = (currentTrackIndex + 1) % LOFI_TRACKS.length;
-    setCurrentTrackIndex(nextIndex);
-    if (isPlaying && audioRef.current) {
-      setTimeout(() => {
-        audioRef.current?.play().catch(e => console.log("Audio play failed:", e));
-      }, 50);
-    }
+    setCurrentTrackIndex((prev) => (prev + 1) % LOFI_TRACKS.length);
   };
 
   const prevTrack = () => {
-    const prevIndex = (currentTrackIndex - 1 + LOFI_TRACKS.length) % LOFI_TRACKS.length;
-    setCurrentTrackIndex(prevIndex);
-    if (isPlaying && audioRef.current) {
-      setTimeout(() => {
-        audioRef.current?.play().catch(e => console.log("Audio play failed:", e));
-      }, 50);
-    }
+    setCurrentTrackIndex((prev) => (prev - 1 + LOFI_TRACKS.length) % LOFI_TRACKS.length);
   };
 
   const handleAudioEnded = () => {
