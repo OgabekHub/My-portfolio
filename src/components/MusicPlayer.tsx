@@ -4,19 +4,19 @@ import React, { useState, useRef, useEffect } from "react";
 
 const LOFI_TRACKS = [
   {
-    title: "Chill Electronic 1",
-    artist: "SoundHelix",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+    title: "Jazz Lofi Study",
+    artist: "ChillHop",
+    url: "/audio/jazz-lofi-1.mp3",
   },
   {
-    title: "Chill Electronic 2",
-    artist: "SoundHelix",
-    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+    title: "Coffee Shop Jazz",
+    artist: "Lofi Vibes",
+    url: "/audio/jazz-lofi-2.mp3",
   },
   {
-    title: "Eine kleine Nachtmusik",
-    artist: "W.A. Mozart",
-    url: "https://upload.wikimedia.org/wikipedia/commons/2/24/Mozart_-_Eine_kleine_Nachtmusik_-_1._Allegro.ogg",
+    title: "Midnight Jazz Chill",
+    artist: "Study Beats",
+    url: "/audio/jazz-lofi-3.mp3",
   }
 ];
 
