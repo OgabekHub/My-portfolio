@@ -4,14 +4,14 @@ import React, { useState, useRef, useEffect } from "react";
 
 const LOFI_TRACKS = [
   {
-    title: "Moonlight Sonata",
-    artist: "Beethoven",
-    url: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Beethoven-Moonlight-Sonata.ogg",
+    title: "Chill Electronic 1",
+    artist: "SoundHelix",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   },
   {
-    title: "Cello Suite No. 1",
-    artist: "J.S. Bach",
-    url: "https://upload.wikimedia.org/wikipedia/commons/3/30/J.S._Bach_-_Suite_No._1_in_G_Major%2C_Pr%C3%A9lude.ogg",
+    title: "Chill Electronic 2",
+    artist: "SoundHelix",
+    url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
   },
   {
     title: "Eine kleine Nachtmusik",
