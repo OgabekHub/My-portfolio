@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
 
@@ -65,6 +65,24 @@ export default function Navbar() {
     }
   };
 
+  const clickCountRef = useRef(0);
+  const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleLogoClick = () => {
+    clickCountRef.current += 1;
+    
+    if (clickCountRef.current === 5) {
+      soundManager.playClick();
+      window.dispatchEvent(new CustomEvent('easter-egg-trigger'));
+      clickCountRef.current = 0;
+    }
+
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+    clickTimerRef.current = setTimeout(() => {
+      clickCountRef.current = 0;
+    }, 1500);
+  };
+
   return (
     <nav className="fixed w-full bg-primary/95 backdrop-blur-sm shadow-lg z-50 border-b border-secondary/20">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -76,7 +94,10 @@ export default function Navbar() {
         >
           <a
             href="#home"
-            onClick={(e) => handleLinkClick(e, "#home")}
+            onClick={(e) => {
+              handleLinkClick(e, "#home");
+              handleLogoClick();
+            }}
             className="flex items-center space-x-2"
           >
             <div className="logo-circle">

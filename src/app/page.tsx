@@ -10,7 +10,8 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AiCommandCenter from "@/components/AiCommandCenter";
 import SplashScreen from "@/components/SplashScreen";
-
+import MusicPlayer from "@/components/MusicPlayer";
+import EasterEggGame from "@/components/EasterEggGame";
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -115,6 +116,8 @@ export default function Home() {
       </main>
       <Footer />
       <AiCommandCenter />
+      <MusicPlayer />
+      <EasterEggGame />
 
       {/* Back to top button */}
       <button
