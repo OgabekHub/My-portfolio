@@ -4,19 +4,19 @@ import React, { useState, useRef, useEffect } from "react";
 
 const LOFI_TRACKS = [
   {
-    title: "Lofi Study",
-    artist: "FASSounds",
-    url: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3",
+    title: "Moonlight Sonata",
+    artist: "Beethoven",
+    url: "https://upload.wikimedia.org/wikipedia/commons/c/c8/Beethoven-Moonlight-Sonata.ogg",
   },
   {
-    title: "Chillout Lofi",
-    artist: "BoDleasons",
-    url: "https://cdn.pixabay.com/download/audio/2022/04/27/audio_69bc74900a.mp3?filename=chillout-lofi-107775.mp3",
+    title: "Cello Suite No. 1",
+    artist: "J.S. Bach",
+    url: "https://upload.wikimedia.org/wikipedia/commons/3/30/J.S._Bach_-_Suite_No._1_in_G_Major%2C_Pr%C3%A9lude.ogg",
   },
   {
-    title: "Lofi Ambient",
-    artist: "Playsound",
-    url: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_a165f90f23.mp3?filename=lofi-ambient-115312.mp3",
+    title: "Eine kleine Nachtmusik",
+    artist: "W.A. Mozart",
+    url: "https://upload.wikimedia.org/wikipedia/commons/2/24/Mozart_-_Eine_kleine_Nachtmusik_-_1._Allegro.ogg",
   }
 ];
 
