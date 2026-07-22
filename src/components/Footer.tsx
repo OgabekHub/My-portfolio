@@ -3,6 +3,9 @@
 import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
+import dynamic from "next/dynamic";
+
+const GalaxyLogo = dynamic(() => import("./GalaxyLogo"), { ssr: false });
 
 export default function Footer() {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
@@ -39,43 +42,8 @@ export default function Footer() {
                 onClick={(e) => handleScrollTo(e, "#home")}
                 className="flex items-center space-x-2"
               >
-                <div className="logo-circle">
-                  <svg className="face-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <linearGradient id="logoBgFooter" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#020617" />
-                        <stop offset="100%" stopColor="#0f172a" />
-                      </linearGradient>
-                      <linearGradient id="logoRingFooter" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0%" stopColor="#f8f5ec" />
-                        <stop offset="45%" stopColor="#c8a164" />
-                        <stop offset="100%" stopColor="#8b6b34" />
-                      </linearGradient>
-                    </defs>
-
-                    {/* Dark background */}
-                    <circle cx="40" cy="40" r="38" fill="url(#logoBgFooter)" />
-
-                    {/* Outer border ring */}
-                    <circle cx="40" cy="40" r="37" fill="none" stroke="url(#logoRingFooter)" strokeWidth="1.5" opacity="0.5" />
-
-                    {/* Inner decorative dashed ring */}
-                    <circle
-                      cx="40" cy="40" r="29"
-                      fill="none"
-                      stroke="rgba(200,161,100,0.18)"
-                      strokeWidth="1"
-                      strokeDasharray="3 6"
-                      strokeLinecap="round"
-                    />
-
-                    {/* Main O ring */}
-                    <circle cx="40" cy="40" r="18" fill="none" stroke="url(#logoRingFooter)" strokeWidth="3.5" />
-
-                    {/* Golden apostrophe dot — O' belgisi */}
-                    <circle cx="57" cy="14" r="4.5" fill="#c8a164" />
-                    <circle cx="57" cy="14" r="2" fill="#f8f5ec" opacity="0.7" />
-                  </svg>
+                <div className="logo-circle" style={{ background: "transparent", overflow: "hidden" }}>
+                  <GalaxyLogo size={48} />
                 </div>
                 <div className="logo-details opacity-0 transition-all duration-500">
                   <span className="text-accent font-playfair tracking-wide">Og&apos;abek</span>

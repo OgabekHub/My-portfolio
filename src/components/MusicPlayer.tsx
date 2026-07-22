@@ -53,7 +53,7 @@ export default function MusicPlayer() {
         audio.addEventListener("canplay", playWhenReady, { once: true });
       }
     }
-  }, [currentTrackIndex]);
+  }, [currentTrackIndex, volume]);
 
   const togglePlay = () => {
     const audio = audioRef.current;
