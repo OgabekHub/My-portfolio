@@ -5,7 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
 import dynamic from "next/dynamic";
 
-const GalaxyLogo = dynamic(() => import("./GalaxyLogo"), { ssr: false });
+const ParticleLogo = dynamic(() => import("./ParticleLogo"), { ssr: false });
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -103,8 +103,8 @@ export default function Navbar() {
             }}
             className="flex items-center space-x-2"
           >
-            <div className="logo-circle" style={{ background: "transparent", overflow: "hidden" }}>
-              <GalaxyLogo size={48} />
+            <div className="logo-circle" style={{ background: "transparent" }}>
+              <ParticleLogo size={56} />
             </div>
 
             <div className="logo-details opacity-0 transition-all duration-500">
