@@ -26,6 +26,7 @@ export default function MusicPlayer() {
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const wantToPlayRef = useRef(false);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -33,48 +34,70 @@ export default function MusicPlayer() {
     }
   }, [volume]);
 
+  // When track changes and audio element remounts, auto-play if needed
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.load();
-      if (isPlaying) {
-        audioRef.current.play().catch(e => console.log("Audio play failed:", e));
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.volume = volume;
+    
+    if (wantToPlayRef.current) {
+      const playWhenReady = () => {
+        audio.play().then(() => {
+          setIsPlaying(true);
+        }).catch(e => console.log("Auto-play failed:", e));
+      };
+      
+      if (audio.readyState >= 2) {
+        playWhenReady();
+      } else {
+        audio.addEventListener("canplay", playWhenReady, { once: true });
       }
     }
   }, [currentTrackIndex]);
 
   const togglePlay = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch(e => console.log("Audio play failed:", e));
-      }
-      setIsPlaying(!isPlaying);
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (isPlaying) {
+      audio.pause();
+      wantToPlayRef.current = false;
+      setIsPlaying(false);
+    } else {
+      wantToPlayRef.current = true;
+      audio.play().then(() => {
+        setIsPlaying(true);
+      }).catch(e => console.log("Play failed:", e));
     }
   };
 
   const nextTrack = () => {
+    wantToPlayRef.current = isPlaying;
+    setIsPlaying(false);
     setCurrentTrackIndex((prev) => (prev + 1) % LOFI_TRACKS.length);
   };
 
   const prevTrack = () => {
+    wantToPlayRef.current = isPlaying;
+    setIsPlaying(false);
     setCurrentTrackIndex((prev) => (prev - 1 + LOFI_TRACKS.length) % LOFI_TRACKS.length);
   };
 
   const handleAudioEnded = () => {
-    nextTrack();
+    wantToPlayRef.current = true;
+    setCurrentTrackIndex((prev) => (prev + 1) % LOFI_TRACKS.length);
   };
 
   return (
     <div className={`fixed bottom-[20px] left-[20px] md:bottom-[30px] md:left-[30px] z-[998] transition-all duration-500 flex items-end ${isOpen ? 'w-[280px]' : 'w-[50px]'}`}>
       
-      {/* Hidden Audio Element */}
+      {/* Audio Element - key forces remount on track change */}
       <audio 
+        key={currentTrackIndex}
         ref={audioRef}
         src={LOFI_TRACKS[currentTrackIndex].url}
+        preload="auto"
         onEnded={handleAudioEnded}
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
       />
 
       <div className={`flex items-center gap-3 bg-secondary/90 backdrop-blur-md rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.3)] border border-accent/20 p-2 overflow-hidden transition-all duration-500 w-full`}>
