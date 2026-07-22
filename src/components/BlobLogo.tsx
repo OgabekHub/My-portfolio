@@ -20,13 +20,12 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
       className="group"
     >
       <style dangerouslySetInnerHTML={{ __html: `
-        @keyframes liquid-blob {
-          0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-          50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-        }
-        @keyframes rotate-gradient {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+        @keyframes logo-morphing {
+          0%   { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
+          25%  { border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%; }
+          50%  { border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%; }
+          75%  { border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%; }
+          100% { border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%; }
         }
       `}} />
       
@@ -36,13 +35,14 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
           position: "absolute",
           width: "100%",
           height: "100%",
-          background: "linear-gradient(45deg, #0d0d2b, #38bdf8, #a78bfa, #c8a164)",
-          backgroundSize: "400% 400%",
-          animation: "liquid-blob 6s ease-in-out infinite, rotate-gradient 12s linear infinite",
-          boxShadow: "0 0 15px rgba(56, 189, 248, 0.4), inset 0 0 10px rgba(200, 161, 100, 0.2)",
-          transition: "all 0.5s ease",
+          background: "linear-gradient(135deg, rgba(20,20,25,0.8), rgba(10,10,15,0.6))",
+          border: "1.5px solid #c8a164",
+          animation: "logo-morphing 10s ease-in-out infinite",
+          boxShadow: "0 0 10px rgba(200, 161, 100, 0.1), inset 0 0 15px rgba(200, 161, 100, 0.05)",
+          transition: "all 0.4s ease",
+          backdropFilter: "blur(4px)"
         }}
-        className="group-hover:scale-110 group-hover:brightness-125"
+        className="group-hover:scale-105 group-hover:border-[#e2c08d] group-hover:shadow-[0_0_15px_rgba(200,161,100,0.3)]"
       />
 
       {/* The inner text (O/) */}
@@ -52,12 +52,11 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
           zIndex: 10,
           fontFamily: "Poppins, sans-serif",
           fontWeight: "bold",
-          fontSize: size * 0.4,
+          fontSize: size * 0.38,
           color: "#ffffff",
-          textShadow: "0px 2px 4px rgba(0,0,0,0.5)",
           display: "flex",
           alignItems: "center",
-          letterSpacing: "-1px"
+          letterSpacing: "-0.5px"
         }}
       >
         O<span style={{ color: "#c8a164" }}>/</span>
