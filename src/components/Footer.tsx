@@ -5,7 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
 import dynamic from "next/dynamic";
 
-const ParticleLogo = dynamic(() => import("./ParticleLogo"), { ssr: false });
+const BlobLogo = dynamic(() => import("./BlobLogo"), { ssr: false });
 
 export default function Footer() {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
@@ -43,7 +43,7 @@ export default function Footer() {
                 className="flex items-center space-x-2"
               >
                 <div className="logo-circle" style={{ background: "transparent" }}>
-                  <ParticleLogo size={56} />
+                  <BlobLogo size={56} />
                 </div>
                 <div className="logo-details opacity-0 transition-all duration-500">
                   <span className="text-accent font-playfair tracking-wide">Og&apos;abek</span>
