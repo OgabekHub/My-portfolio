@@ -530,19 +530,16 @@ body {
 .logo-circle {
   width: 48px;
   height: 48px;
-  border-radius: 999px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   position: relative;
-  overflow: hidden;
-  background: radial-gradient(circle at 20% 10%, rgba(200, 161, 100, 0.14), transparent 55%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
-  box-shadow: 0 0 0 1px rgba(200, 161, 100, 0.22), 0 10px 22px rgba(0, 0, 0, 0.45);
+  /* background and border removed to allow inner morphing blob to show */
   transform: rotate(0deg);
-  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, background 0.3s ease;
+  transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 
 .logo-circle::before {
   content: "";
