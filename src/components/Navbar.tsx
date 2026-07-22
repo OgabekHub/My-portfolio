@@ -101,9 +101,42 @@ export default function Navbar() {
             className="flex items-center space-x-2"
           >
             <div className="logo-circle">
-              <span className="font-poppins text-2xl font-light text-light flex items-center justify-center translate-y-[-1px] translate-x-[2px]">
-                O<span className="text-accent text-xl font-bold -translate-y-0.5 ml-0.5">/</span>
-              </span>
+              <svg className="face-svg" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="logoBg" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#020617" />
+                    <stop offset="100%" stopColor="#0f172a" />
+                  </linearGradient>
+                  <linearGradient id="logoRing" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#f8f5ec" />
+                    <stop offset="45%" stopColor="#c8a164" />
+                    <stop offset="100%" stopColor="#8b6b34" />
+                  </linearGradient>
+                </defs>
+
+                {/* Dark background */}
+                <circle cx="40" cy="40" r="38" fill="url(#logoBg)" />
+
+                {/* Outer border ring */}
+                <circle cx="40" cy="40" r="37" fill="none" stroke="url(#logoRing)" strokeWidth="1.5" opacity="0.5" />
+
+                {/* Inner decorative dashed ring */}
+                <circle
+                  cx="40" cy="40" r="29"
+                  fill="none"
+                  stroke="rgba(200,161,100,0.18)"
+                  strokeWidth="1"
+                  strokeDasharray="3 6"
+                  strokeLinecap="round"
+                />
+
+                {/* Main O ring */}
+                <circle cx="40" cy="40" r="18" fill="none" stroke="url(#logoRing)" strokeWidth="3.5" />
+
+                {/* Golden apostrophe dot — O' belgisi */}
+                <circle cx="57" cy="14" r="4.5" fill="#c8a164" />
+                <circle cx="57" cy="14" r="2" fill="#f8f5ec" opacity="0.7" />
+              </svg>
             </div>
 
             <div className="logo-details opacity-0 transition-all duration-500">
