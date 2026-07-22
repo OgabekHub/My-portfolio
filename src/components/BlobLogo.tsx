@@ -33,22 +33,6 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
         }
       `}} />
       
-      {/* The animated liquid blob background matching hero section */}
-      <div
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          background: "linear-gradient(45deg, rgba(20,20,25,0.9), rgba(10,10,15,0.7))",
-          border: "2px solid #c8a164",
-          animation: "logo-morphing 10s ease-in-out infinite, float-wobble 6s ease-in-out infinite",
-          boxShadow: "0 0 15px rgba(200, 161, 100, 0.15), inset 0 0 10px rgba(200, 161, 100, 0.1)",
-          transition: "all 0.3s ease",
-          backdropFilter: "blur(4px)"
-        }}
-        className="group-hover:scale-105 group-hover:border-[#e2c08d] group-hover:shadow-[0_0_20px_rgba(200,161,100,0.4)]"
-      />
-
       {/* The inner text (O/) */}
       <div 
         style={{
@@ -62,7 +46,8 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
           alignItems: "center",
           justifyContent: "center",
           textShadow: "0 2px 4px rgba(0,0,0,0.8)",
-          letterSpacing: "-1px"
+          letterSpacing: "-1px",
+          animation: "float-wobble 6s ease-in-out infinite",
         }}
         className="group-hover:scale-110 transition-transform"
       >
