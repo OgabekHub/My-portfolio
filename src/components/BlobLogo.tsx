@@ -34,24 +34,7 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
         className="group-hover:scale-105 group-hover:brightness-110"
       />
 
-      {/* The inner text */}
-      <div 
-        style={{
-          position: "absolute",
-          zIndex: 10,
-          fontFamily: "'Playfair Display', serif",
-          fontWeight: "800",
-          fontSize: size * 0.4,
-          color: "#0f172a",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          letterSpacing: "-1px"
-        }}
-        className="group-hover:scale-110 transition-transform"
-      >
-        O
-      </div>
+
     </div>
   );
 }
