@@ -50,7 +50,7 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
         }}
         className="group-hover:scale-110 transition-transform"
       >
-        O/
+        O
       </div>
     </div>
   );

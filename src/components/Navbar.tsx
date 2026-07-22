@@ -103,7 +103,7 @@ export default function Navbar() {
             }}
             className="flex items-center space-x-2"
           >
-            <div className="logo-circle" style={{ background: "transparent" }}>
+            <div className="w-[56px] h-[56px] flex items-center justify-center flex-shrink-0 relative">
               <BlobLogo size={56} />
             </div>
 
