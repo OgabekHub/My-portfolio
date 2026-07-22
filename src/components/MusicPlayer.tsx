@@ -4,18 +4,18 @@ import React, { useState, useRef, useEffect } from "react";
 
 const LOFI_TRACKS = [
   {
-    title: "Jazz Lofi Study",
-    artist: "ChillHop",
+    title: "The Departure",
+    artist: "Max Richter",
     url: "/audio/jazz-lofi-1.mp3",
   },
   {
-    title: "Coffee Shop Jazz",
-    artist: "Lofi Vibes",
+    title: "Comptine d'Un Autre Été",
+    artist: "Yann Tiersen",
     url: "/audio/jazz-lofi-2.mp3",
   },
   {
-    title: "Midnight Jazz Chill",
-    artist: "Study Beats",
+    title: "Una Mattina",
+    artist: "Olga Scheps",
     url: "/audio/jazz-lofi-3.mp3",
   }
 ];
