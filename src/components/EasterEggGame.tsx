@@ -1,21 +1,30 @@
 "use client";
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
-// Grid size for the snake game
-const GRID_SIZE = 20;
-const CELL_SIZE = 20;
+type Player = 'X' | 'O' | null;
+
+const WINNING_LINES = [
+  [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+  [0, 3, 6], [1, 4, 7], [2, 5, 8], // Cols
+  [0, 4, 8], [2, 4, 6]             // Diagonals
+];
+
+function calculateWinner(squares: Player[]) {
+  for (let i = 0; i < WINNING_LINES.length; i++) {
+    const [a, b, c] = WINNING_LINES[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
 
 export default function EasterEggGame() {
   const [isActive, setIsActive] = useState(false);
-  const [snake, setSnake] = useState([{ x: 10, y: 10 }]);
-  const [food, setFood] = useState({ x: 5, y: 5 });
-  const [direction, setDirection] = useState({ x: 1, y: 0 });
-  const [score, setScore] = useState(0);
-  const [gameOver, setGameOver] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  
-  const gameAreaRef = useRef<HTMLDivElement>(null);
+  const [board, setBoard] = useState<Player[]>(Array(9).fill(null));
+  const [isPlayerTurn, setIsPlayerTurn] = useState(true);
+  const [winner, setWinner] = useState<Player | 'DRAW'>(null);
   
   // Listen for the custom event to start the easter egg
   useEffect(() => {
@@ -29,106 +38,99 @@ export default function EasterEggGame() {
   }, []);
 
   const resetGame = () => {
-    setSnake([{ x: 10, y: 10 }]);
-    setFood({ x: Math.floor(Math.random() * GRID_SIZE), y: Math.floor(Math.random() * GRID_SIZE) });
-    setDirection({ x: 1, y: 0 });
-    setScore(0);
-    setGameOver(false);
-    setIsPaused(false);
+    setBoard(Array(9).fill(null));
+    setIsPlayerTurn(true);
+    setWinner(null);
   };
 
   const closeGame = () => {
     setIsActive(false);
-    setIsPaused(true);
   };
 
-  const moveSnake = useCallback(() => {
-    if (gameOver || isPaused || !isActive) return;
-
-    setSnake((prevSnake) => {
-      const head = { ...prevSnake[0] };
-      head.x += direction.x;
-      head.y += direction.y;
-
-      // Check collision with walls
-      if (head.x < 0 || head.x >= GRID_SIZE || head.y < 0 || head.y >= GRID_SIZE) {
-        setGameOver(true);
-        return prevSnake;
-      }
-
-      // Check collision with self
-      if (prevSnake.some(segment => segment.x === head.x && segment.y === head.y)) {
-        setGameOver(true);
-        return prevSnake;
-      }
-
-      const newSnake = [head, ...prevSnake];
-
-      // Check food collision
-      if (head.x === food.x && head.y === food.y) {
-        setScore(s => s + 10);
-        setFood({
-          x: Math.floor(Math.random() * GRID_SIZE),
-          y: Math.floor(Math.random() * GRID_SIZE)
-        });
-      } else {
-        newSnake.pop(); // Remove tail if no food eaten
-      }
-
-      return newSnake;
-    });
-  }, [direction, food, gameOver, isPaused, isActive]);
-
-  // Handle keyboard inputs
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (!isActive) return;
-      
-      // Prevent scrolling when playing
-      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " "].includes(e.key)) {
-        e.preventDefault();
-      }
-
-      switch (e.key) {
-        case 'ArrowUp':
-        case 'w':
-          if (direction.y === 0) setDirection({ x: 0, y: -1 });
-          break;
-        case 'ArrowDown':
-        case 's':
-          if (direction.y === 0) setDirection({ x: 0, y: 1 });
-          break;
-        case 'ArrowLeft':
-        case 'a':
-          if (direction.x === 0) setDirection({ x: -1, y: 0 });
-          break;
-        case 'ArrowRight':
-        case 'd':
-          if (direction.x === 0) setDirection({ x: 1, y: 0 });
-          break;
-        case ' ':
-          if (gameOver) resetGame();
-          else setIsPaused(!isPaused);
-          break;
-        case 'Escape':
-          closeGame();
-          break;
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [direction, isActive, gameOver, isPaused]);
-
-  // Game loop
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-    if (isActive && !gameOver && !isPaused) {
-      intervalId = setInterval(moveSnake, 120 - Math.min(score, 80)); // Gets slightly faster
+  const checkGameEnd = useCallback((currentBoard: Player[]) => {
+    const w = calculateWinner(currentBoard);
+    if (w) {
+      setWinner(w);
+      return true;
     }
-    return () => clearInterval(intervalId);
-  }, [isActive, gameOver, isPaused, moveSnake, score]);
+    if (!currentBoard.includes(null)) {
+      setWinner('DRAW');
+      return true;
+    }
+    return false;
+  }, []);
 
+  // Computer's turn
+  useEffect(() => {
+    if (!isActive || isPlayerTurn || winner) return;
+
+    const timer = setTimeout(() => {
+      setBoard(prevBoard => {
+        const newBoard = [...prevBoard];
+        
+        // 1. Try to win
+        let moveFound = false;
+        for (let i = 0; i < WINNING_LINES.length; i++) {
+          const [a, b, c] = WINNING_LINES[i];
+          const line = [newBoard[a], newBoard[b], newBoard[c]];
+          if (line.filter(cell => cell === 'O').length === 2 && line.includes(null)) {
+            const emptyIdx = WINNING_LINES[i][line.indexOf(null)];
+            newBoard[emptyIdx] = 'O';
+            moveFound = true;
+            break;
+          }
+        }
+
+        // 2. Try to block player
+        if (!moveFound) {
+          for (let i = 0; i < WINNING_LINES.length; i++) {
+            const [a, b, c] = WINNING_LINES[i];
+            const line = [newBoard[a], newBoard[b], newBoard[c]];
+            if (line.filter(cell => cell === 'X').length === 2 && line.includes(null)) {
+              const emptyIdx = WINNING_LINES[i][line.indexOf(null)];
+              newBoard[emptyIdx] = 'O';
+              moveFound = true;
+              break;
+            }
+          }
+        }
+
+        // 3. Play center if available
+        if (!moveFound && newBoard[4] === null) {
+          newBoard[4] = 'O';
+          moveFound = true;
+        }
+
+        // 4. Play random empty square
+        if (!moveFound) {
+          const emptyIndices = newBoard.map((val, idx) => val === null ? idx : null).filter(val => val !== null) as number[];
+          if (emptyIndices.length > 0) {
+            const randomIdx = emptyIndices[Math.floor(Math.random() * emptyIndices.length)];
+            newBoard[randomIdx] = 'O';
+          }
+        }
+
+        checkGameEnd(newBoard);
+        setIsPlayerTurn(true);
+        return newBoard;
+      });
+    }, 600); // Small delay to feel like computer is "thinking"
+
+    return () => clearTimeout(timer);
+  }, [isActive, isPlayerTurn, winner, checkGameEnd]);
+
+  const handleCellClick = (index: number) => {
+    if (!isActive || !isPlayerTurn || winner || board[index]) return;
+
+    const newBoard = [...board];
+    newBoard[index] = 'X';
+    setBoard(newBoard);
+    
+    const gameEnded = checkGameEnd(newBoard);
+    if (!gameEnded) {
+      setIsPlayerTurn(false);
+    }
+  };
 
   if (!isActive) return null;
 
@@ -143,77 +145,52 @@ export default function EasterEggGame() {
         </button>
       </div>
 
-      <div className="mb-4 text-center">
-        <h2 className="text-3xl font-bold text-accent mb-2 tracking-widest animate-pulse">
-          HACKER MODE ACTIVATED
+      <div className="mb-8 text-center">
+        <h2 className="text-3xl font-bold text-accent mb-2 tracking-widest">
+          TIC-TAC-TOE
         </h2>
-        <p className="text-green-400">Catch the bugs. Score: {score}</p>
+        <p className={isPlayerTurn && !winner ? "text-green-400" : "text-white/50"}>
+          {winner ? "Game Over" : isPlayerTurn ? "Your turn (X)" : "System is thinking..."}
+        </p>
       </div>
 
-      <div 
-        ref={gameAreaRef}
-        className="relative bg-[#0f172a] border-2 border-accent shadow-[0_0_20px_rgba(200,161,100,0.3)]"
-        style={{ 
-          width: GRID_SIZE * CELL_SIZE, 
-          height: GRID_SIZE * CELL_SIZE 
-        }}
-      >
-        {/* Snake rendering */}
-        {snake.map((segment, index) => (
-          <div
-            key={index}
-            className="absolute rounded-sm"
-            style={{
-              left: segment.x * CELL_SIZE,
-              top: segment.y * CELL_SIZE,
-              width: CELL_SIZE,
-              height: CELL_SIZE,
-              backgroundColor: index === 0 ? '#c8a164' : '#f8f5ec',
-              opacity: index === 0 ? 1 : 0.8,
-              border: '1px solid #0f172a'
-            }}
-          />
-        ))}
-
-        {/* Food (Bug) rendering */}
-        <div
-          className="absolute flex items-center justify-center text-red-500 animate-bounce"
-          style={{
-            left: food.x * CELL_SIZE,
-            top: food.y * CELL_SIZE,
-            width: CELL_SIZE,
-            height: CELL_SIZE,
-            fontSize: '14px'
-          }}
-        >
-          <i className="fas fa-bug"></i>
+      <div className="bg-[#0f172a] p-4 rounded-xl border border-secondary/30 shadow-[0_0_30px_rgba(200,161,100,0.15)] relative">
+        <div className="grid grid-cols-3 gap-3">
+          {board.map((cell, index) => (
+            <button
+              key={index}
+              onClick={() => handleCellClick(index)}
+              disabled={!!cell || !isPlayerTurn || !!winner}
+              className={`w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center text-5xl sm:text-6xl rounded-lg bg-[#020617] border border-secondary/20 transition-all duration-300
+                ${!cell && isPlayerTurn && !winner ? 'hover:bg-secondary/10 cursor-pointer' : 'cursor-default'}
+                ${cell === 'X' ? 'text-accent shadow-[inset_0_0_15px_rgba(200,161,100,0.2)]' : cell === 'O' ? 'text-white shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]' : ''}
+              `}
+            >
+              <span className={cell ? "animate-in zoom-in duration-300" : ""}>
+                {cell}
+              </span>
+            </button>
+          ))}
         </div>
 
-        {/* Game Over Screen */}
-        {gameOver && (
-          <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center text-center">
-            <h3 className="text-red-500 text-2xl font-bold mb-2">SYSTEM CRASHED</h3>
-            <p className="text-white mb-4">Final Score: {score}</p>
+        {/* Game Over Overlay */}
+        {winner && (
+          <div className="absolute inset-0 bg-[#0f172a]/80 backdrop-blur-sm rounded-xl flex flex-col items-center justify-center animate-in fade-in duration-500">
+            <h3 className={`text-4xl font-bold mb-6 ${winner === 'X' ? 'text-accent' : winner === 'O' ? 'text-red-400' : 'text-white'}`}>
+              {winner === 'X' ? 'YOU WIN!' : winner === 'O' ? 'SYSTEM WINS' : 'DRAW'}
+            </h3>
             <button 
               onClick={resetGame}
-              className="px-4 py-2 bg-accent/20 border border-accent text-accent hover:bg-accent hover:text-primary transition-colors uppercase tracking-wider text-sm"
+              className="px-6 py-3 rounded-full bg-accent text-[#0f172a] font-bold hover:bg-light transition-colors uppercase tracking-wider text-sm shadow-[0_0_15px_rgba(200,161,100,0.4)]"
             >
-              Reboot (Space)
+              Play Again
             </button>
           </div>
         )}
-
-        {/* Paused Screen */}
-        {isPaused && !gameOver && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <h3 className="text-white text-xl font-bold tracking-widest">PAUSED</h3>
-          </div>
-        )}
       </div>
 
-      <div className="mt-6 text-white/50 text-xs text-center">
-        <p>Use W, A, S, D or Arrows to move.</p>
-        <p>Press Space to pause/resume. Press Esc to exit.</p>
+      <div className="mt-8 text-white/40 text-xs text-center max-w-md">
+        <p>You discovered the hidden easter egg! Can you beat the system?</p>
       </div>
     </div>
   );
