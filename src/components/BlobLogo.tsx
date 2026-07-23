@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 interface BlobLogoProps {
   size?: number;
@@ -30,11 +31,22 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
           animation: "morphing 10s ease-in-out infinite",
           transition: "all 0.3s ease",
           boxShadow: "0 0 15px rgba(200, 161, 100, 0.4)",
+          overflow: "hidden",
         }}
         className="group-hover:scale-105 group-hover:brightness-110"
-      />
-
-
+      >
+        {/* Logo image inside the blob */}
+        <Image
+          src="/img/logo.png"
+          alt="Logo"
+          fill
+          style={{
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
+          priority
+        />
+      </div>
     </div>
   );
 }
