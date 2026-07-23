@@ -135,11 +135,11 @@ export default function EasterEggGame() {
   if (!isActive) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#020617]/90 backdrop-blur-sm flex flex-col items-center justify-center font-mono">
+    <div className="fixed inset-0 z-[9999] bg-[#020617]/90 backdrop-blur-sm flex flex-col items-center justify-center font-mono cursor-auto">
       <div className="absolute top-8 right-8">
         <button 
           onClick={closeGame}
-          className="text-white/50 hover:text-white transition-colors p-2 text-xl"
+          className="clickable text-white/50 hover:text-white transition-colors p-2 text-xl"
         >
           <i className="fas fa-times"></i>
         </button>
@@ -162,7 +162,7 @@ export default function EasterEggGame() {
               onClick={() => handleCellClick(index)}
               disabled={!!cell || !isPlayerTurn || !!winner}
               className={`w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center text-5xl sm:text-6xl rounded-lg bg-[#020617] border border-secondary/20 transition-all duration-300
-                ${!cell && isPlayerTurn && !winner ? 'hover:bg-secondary/10 cursor-pointer' : 'cursor-default'}
+                ${!cell && isPlayerTurn && !winner ? 'clickable hover:bg-secondary/10 cursor-pointer' : 'cursor-default'}
                 ${cell === 'X' ? 'text-accent shadow-[inset_0_0_15px_rgba(200,161,100,0.2)]' : cell === 'O' ? 'text-white shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]' : ''}
               `}
             >
@@ -181,7 +181,7 @@ export default function EasterEggGame() {
             </h3>
             <button 
               onClick={resetGame}
-              className="px-6 py-3 rounded-full bg-accent text-[#0f172a] font-bold hover:bg-light transition-colors uppercase tracking-wider text-sm shadow-[0_0_15px_rgba(200,161,100,0.4)]"
+              className="clickable px-6 py-3 rounded-full bg-accent text-[#0f172a] font-bold hover:bg-light transition-colors uppercase tracking-wider text-sm shadow-[0_0_15px_rgba(200,161,100,0.4)]"
             >
               Play Again
             </button>
