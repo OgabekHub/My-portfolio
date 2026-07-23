@@ -41,8 +41,10 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
           alt="Logo"
           fill
           style={{
-            objectFit: "cover",
+            objectFit: "contain",
             objectPosition: "center",
+            transform: "scale(1.6)",
+            transformOrigin: "center",
           }}
           priority
         />
