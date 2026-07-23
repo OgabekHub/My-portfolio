@@ -21,9 +21,9 @@ export const metadata: Metadata = {
   title: "Olimjonov Og'abek | Frontend Developer",
   description: "Og'abek Olimjonov - Frontend Developer Portfolio",
   icons: {
-    icon: "/img/logo.png",
-    shortcut: "/img/logo.png",
-    apple: "/img/logo.png",
+    icon: "/img/favicon.png",
+    shortcut: "/img/favicon.png",
+    apple: "/img/favicon.png",
   },
 };
 

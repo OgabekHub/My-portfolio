@@ -43,7 +43,7 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
           style={{
             objectFit: "contain",
             objectPosition: "center",
-            transform: "scale(1.6)",
+            transform: "scale(1.2)",
             transformOrigin: "center",
           }}
           priority
