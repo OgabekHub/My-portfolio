@@ -96,7 +96,9 @@ export const translations = {
         }
       ],
       liveDemo: "Saytni ko'rish",
-      gitHub: "Kodni ko'rish"
+      gitHub: "Kodni ko'rish",
+      showMore: "Ko'proq ko'rish",
+      showLess: "Yig'ish"
     },
     contact: {
       title: "Men bilan bog'lanish",
@@ -225,7 +227,9 @@ export const translations = {
         }
       ],
       liveDemo: "Live Demo",
-      gitHub: "View Code"
+      gitHub: "View Code",
+      showMore: "Show More",
+      showLess: "Show Less"
     },
     contact: {
       title: "Contact Me",

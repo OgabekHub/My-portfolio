@@ -145,7 +145,13 @@ function TiltCard({ project }: { project: ProjectItem }) {
 export default function Projects() {
   const { t } = useLanguage();
   const [filter, setFilter] = useState<string>("all");
+  const [showAll, setShowAll] = useState<boolean>(false);
 
+  const INITIAL_COUNT = 3; // Boshlang'ich ko'rinadigan loyihalar soni
+
+  // 💡 YANGI LOYIHA QO'SHISH UCHUN YO'RIQNOMA:
+  // 1. Shu yerda yangi loyiha id, rasm (image) va linklarni (github, demo) qo'shing.
+  // 2. keyin `src/data/translations.ts` faylidagi hamyurtimiz (uz) va inglizchi (en) bo'shlashdagi projects -> items ichiga ham xuddi shunday id bilan nomi va ta'rifini qo'shib ketasiz!
   const projectsData = [
     {
       id: 1,
@@ -181,6 +187,8 @@ export default function Projects() {
     return project.tags.includes(filter);
   });
 
+  const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, INITIAL_COUNT);
+
   return (
     <section id="projects" className="py-20 bg-primary/40 relative">
       <div className="container mx-auto px-4">
@@ -204,6 +212,7 @@ export default function Projects() {
               onClick={() => {
                 soundManager.playClick();
                 setFilter(btn.id);
+                setShowAll(false); // Filter o'zgartirilganda yana 3 ta loyiha holatiga qaytadi
               }}
               onMouseEnter={() => soundManager.playHover()}
               className={`px-5 py-2 rounded-full border text-sm font-semibold transition-all duration-300 ${
@@ -219,10 +228,37 @@ export default function Projects() {
 
         {/* Projects Grid with 3D tilt */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
-          {filteredProjects.map((project) => (
+          {displayedProjects.map((project) => (
             <TiltCard key={project.id} project={project} />
           ))}
         </div>
+
+        {/* Show More / Show Less Button */}
+        {filteredProjects.length > INITIAL_COUNT && (
+          <div className="mt-14 flex justify-center animate-in fade-in duration-500">
+            <button
+              onClick={() => {
+                soundManager.playClick();
+                setShowAll(!showAll);
+              }}
+              onMouseEnter={() => soundManager.playHover()}
+              className="clickable group relative px-8 py-3.5 rounded-full bg-[#0f172a] border border-accent/30 text-accent font-semibold text-sm hover:bg-accent hover:text-primary transition-all duration-300 shadow-[0_0_20px_rgba(200,161,100,0.15)] hover:shadow-[0_0_30px_rgba(200,161,100,0.4)] flex items-center gap-3 overflow-hidden cursor-pointer"
+            >
+              <span>
+                {showAll
+                  ? t.projects.showLess
+                  : `${t.projects.showMore} (+${filteredProjects.length - INITIAL_COUNT})`}
+              </span>
+              <i
+                className={`fas fa-chevron-${
+                  showAll ? "up" : "down"
+                } text-xs transition-transform duration-300 ${
+                  showAll ? "group-hover:-translate-y-1" : "group-hover:translate-y-1"
+                }`}
+              ></i>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
