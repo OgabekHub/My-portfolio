@@ -257,7 +257,7 @@ export default function Projects() {
                 setShowAll(!showAll);
               }}
               onMouseEnter={() => soundManager.playHover()}
-              className="clickable group relative px-8 py-3.5 rounded-full bg-[#0f172a] border border-accent/30 text-accent font-semibold text-sm hover:bg-accent hover:text-primary transition-all duration-300 shadow-[0_0_20px_rgba(200,161,100,0.15)] hover:shadow-[0_0_30px_rgba(200,161,100,0.4)] flex items-center gap-3 overflow-hidden cursor-pointer"
+              className="hero-btn secondary group flex items-center gap-2 cursor-pointer text-sm font-semibold transition-all duration-300 shadow-md"
             >
               <span>
                 {showAll
