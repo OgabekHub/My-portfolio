@@ -71,7 +71,7 @@ function TiltCard({ project }: { project: ProjectItem }) {
   return (
     <div
       ref={cardRef}
-      className="tilt-card project-card bg-secondary border border-accent/10 rounded-2xl overflow-hidden shadow-md hover:border-accent/40 relative"
+      className="tilt-card project-card visible bg-secondary border border-accent/10 rounded-2xl overflow-hidden shadow-md hover:border-accent/40 relative animate-in fade-in duration-500"
       style={style}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
