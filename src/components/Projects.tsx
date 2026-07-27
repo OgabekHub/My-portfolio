@@ -147,7 +147,7 @@ export default function Projects() {
   const [filter, setFilter] = useState<string>("all");
   const [showAll, setShowAll] = useState<boolean>(false);
 
-  const INITIAL_COUNT = 3; // Boshlang'ich ko'rinadigan loyihalar soni
+  const INITIAL_COUNT = 6; // Boshlang'ich ko'rinadigan loyihalar soni (2 ta qatgirma - 6 ta loyihagacha bemalol ochiq ko'rinadi!)
 
   // 💡 YANGI LOYIHA QO'SHISH UCHUN YO'RIQNOMA:
   // 1. Shu yerda yangi loyiha id, rasm (image) va linklarni (github, demo) qo'shing.
@@ -179,6 +179,18 @@ export default function Projects() {
     },
     {
       id: 5,
+      image: "/img/nexusdevs.png",
+      github: "https://github.com/OgabekHub/nexusdevs",
+      demo: "https://nexusdevs-xi.vercel.app/",
+    },
+    {
+      id: 6,
+      image: "/img/taskflow.png",
+      github: "https://github.com/OgabekHub",
+      demo: "#",
+    },
+    {
+      id: 7,
       image: "/img/portfolio card.jpg",
       github: "https://github.com/OgabekHub",
       demo: "https://my-portfolio-card.netlify.app/",
@@ -199,7 +211,7 @@ export default function Projects() {
 
   const filteredProjects = combinedProjects.filter((project) => {
     if (filter === "all") return true;
-    return project.tags.includes(filter);
+    return project.tags?.includes(filter);
   });
 
   const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, INITIAL_COUNT);
@@ -227,7 +239,11 @@ export default function Projects() {
               onClick={() => {
                 soundManager.playClick();
                 setFilter(btn.id);
-                setShowAll(false); // Filter o'zgartirilganda yana 3 ta loyiha holatiga qaytadi
+                if (btn.id === "all") {
+                  setShowAll(true);
+                } else {
+                  setShowAll(false);
+                }
               }}
               onMouseEnter={() => soundManager.playHover()}
               className={`px-5 py-2 rounded-full border text-sm font-semibold transition-all duration-300 ${
