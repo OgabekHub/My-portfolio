@@ -155,9 +155,9 @@ export default function Projects() {
   const projectsData = [
     {
       id: 1,
-      image: "/img/portfolio card.jpg",
-      github: "https://github.com/OgabekHub",
-      demo: "https://my-portfolio-card.netlify.app/",
+      image: "/img/devcommons.png",
+      github: "https://github.com/OgabekHub/devcommons",
+      demo: "https://devcommons.vercel.app/",
     },
     {
       id: 2,
@@ -170,6 +170,12 @@ export default function Projects() {
       image: "/img/faxrmebel.png",
       github: "https://github.com/OgabekHub",
       demo: "https://faxr-mebel.vercel.app/",
+    },
+    {
+      id: 4,
+      image: "/img/zetrastore.png",
+      github: "https://github.com/OgabekHub/zetra-store",
+      demo: "https://zetra-store-one.vercel.app/",
     },
   ];
 
