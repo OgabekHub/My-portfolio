@@ -107,20 +107,6 @@ export const translations = {
           desc: "Nexus Devs – Zamonaviy IT agentlik va dasturiy yechimlar dizayn korxonasi sayti. Yuqori unumdorlik va mukammal UI/UX dizayn asosida qurilgan maxsus sahifa.",
           tags: ["react", "design"],
           techs: ["React", "Next.js", "Tailwind CSS", "UI/UX"]
-        },
-        {
-          id: 6,
-          title: "TaskFlow – Vazifalarni Boshqarish Tizimi",
-          desc: "TaskFlow – Jamoa va shaxsiy loyihalar uchun ilg'or vazifa (task) va vaqt boshqaruvi platformasi. Kanban doskalar, real vaqt sinxronlash va chiroyli dizaynni o'z ichiga oladi.",
-          tags: ["react", "design"],
-          techs: ["React", "Vite", "Tailwind CSS", "Zustand"]
-        },
-        {
-          id: 7,
-          title: "Portfolio vizitka kartasi",
-          desc: "Shaxsiy Vizitka Kartasi – Barchasi Bitta Profil. Telegram, GitHub va asosiy portfolio saytimga to'g'ridan-to'g'ri havolalarni o'z ichiga olgan oddiy va toza vizitka kartasi. HTML va CSS yordamida to'liq moslashuvchan (responsive) qilib qurilgan.",
-          tags: ["vanilla", "design"],
-          techs: ["HTML", "CSS"]
         }
       ],
       liveDemo: "Saytni ko'rish",
@@ -266,20 +252,6 @@ export const translations = {
           desc: "Nexus Devs – Modern IT agency and software solutions portal featuring state-of-the-art UI/UX animations and high-performance frontend architecture.",
           tags: ["react", "design"],
           techs: ["React", "Next.js", "Tailwind CSS", "UI/UX"]
-        },
-        {
-          id: 6,
-          title: "TaskFlow Productivity App",
-          desc: "TaskFlow – Advanced task and time management system for developers and creative teams. Includes interactive Kanban boards, smooth drag-and-drop, and crisp state management.",
-          tags: ["react", "design"],
-          techs: ["React", "Vite", "Tailwind CSS", "Zustand"]
-        },
-        {
-          id: 7,
-          title: "Portfolio Card",
-          desc: "My Portfolio Card – All in One Profile. A simple and clean portfolio card that includes direct links to my Telegram, GitHub, and full portfolio website. Fully responsive and built with HTML & CSS.",
-          tags: ["vanilla", "design"],
-          techs: ["HTML", "CSS"]
         }
       ],
       liveDemo: "Live Demo",

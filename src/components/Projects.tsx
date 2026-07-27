@@ -183,18 +183,6 @@ export default function Projects() {
       github: "https://github.com/OgabekHub/nexusdevs",
       demo: "https://nexusdevs-xi.vercel.app/",
     },
-    {
-      id: 6,
-      image: "/img/taskflow.png",
-      github: "https://github.com/OgabekHub",
-      demo: "#",
-    },
-    {
-      id: 7,
-      image: "/img/portfolio card.jpg",
-      github: "https://github.com/OgabekHub",
-      demo: "https://my-portfolio-card.netlify.app/",
-    },
   ];
 
   // Loyihalar ro'yxatini to'g'ri o'qish hamda tarjima berilmagan taqdirda ham hechnima yo'qolmasligini ta'minlash:
