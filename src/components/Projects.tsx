@@ -147,7 +147,7 @@ export default function Projects() {
   const [filter, setFilter] = useState<string>("all");
   const [showAll, setShowAll] = useState<boolean>(false);
 
-  const INITIAL_COUNT = 6; // Boshlang'ich ko'rinadigan loyihalar soni (2 ta qatgirma - 6 ta loyihagacha bemalol ochiq ko'rinadi!)
+  const INITIAL_COUNT = 3; // Boshlang'ich ko'rinadigan loyihalar soni
 
   // 💡 YANGI LOYIHA QO'SHISH UCHUN YO'RIQNOMA:
   // 1. Shu yerda yangi loyiha id, rasm (image) va linklarni (github, demo) qo'shing.
@@ -227,11 +227,7 @@ export default function Projects() {
               onClick={() => {
                 soundManager.playClick();
                 setFilter(btn.id);
-                if (btn.id === "all") {
-                  setShowAll(true);
-                } else {
-                  setShowAll(false);
-                }
+                setShowAll(false);
               }}
               onMouseEnter={() => soundManager.playHover()}
               className={`px-5 py-2 rounded-full border text-sm font-semibold transition-all duration-300 ${
