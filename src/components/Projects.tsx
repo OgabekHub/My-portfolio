@@ -177,15 +177,24 @@ export default function Projects() {
       github: "https://github.com/OgabekHub/zetra-store",
       demo: "https://zetra-store-one.vercel.app/",
     },
+    {
+      id: 5,
+      image: "/img/portfolio card.jpg",
+      github: "https://github.com/OgabekHub",
+      demo: "https://my-portfolio-card.netlify.app/",
+    },
   ];
 
-  const combinedProjects = t.projects.items.map((item) => {
-    const data = projectsData.find((d) => d.id === item.id) || {
-      image: "",
-      github: "",
-      demo: "",
+  // Loyihalar ro'yxatini to'g'ri o'qish hamda tarjima berilmagan taqdirda ham hechnima yo'qolmasligini ta'minlash:
+  const combinedProjects = projectsData.map((data) => {
+    const item = t.projects.items.find((item) => item.id === data.id) || {
+      id: data.id,
+      title: `Project #${data.id}`,
+      desc: "Loyiha haqida batafsil...",
+      tags: ["react", "design"],
+      techs: ["Next.js", "Tailwind"],
     };
-    return { ...item, ...data };
+    return { ...data, ...item };
   });
 
   const filteredProjects = combinedProjects.filter((project) => {

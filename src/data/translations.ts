@@ -75,10 +75,10 @@ export const translations = {
       items: [
         {
           id: 1,
-          title: "Portfolio vizitka kartasi",
-          desc: "Shaxsiy Vizitka Kartasi – Barchasi Bitta Profil. Telegram, GitHub va asosiy portfolio saytimga to'g'ridan-to'g'ri havolalarni o'z ichiga olgan oddiy va toza vizitka kartasi. HTML va CSS yordamida to'liq moslashuvchan (responsive) qilib qurilgan.",
-          tags: ["vanilla", "design"],
-          techs: ["HTML", "CSS"]
+          title: "DevCommons – Dasturchilar Platformasi",
+          desc: "Dasturchilar o'z kod parchalari (snippets), sun'iy intellekt promtlari va loyihalarini o'zaro bepul bo'lishadigan ochiq platforma. Next.js va Tailwind CSS yordamida yaratilgan zamonaviy hamjamiyat portal.",
+          tags: ["react", "design"],
+          techs: ["React", "Next.js", "Tailwind CSS", "TypeScript"]
         },
         {
           id: 2,
@@ -93,6 +93,20 @@ export const translations = {
           desc: "Faxr Mebel – Zamonaviy mebel fabrikasining katalog veb-sayti. Mijozlarga oshxona, mehmonxona va yotoqxona uchun premium mebellarni onlayn ko'rish va buyurtma berish imkonini beruvchi chiroyli va qulay platforma.",
           tags: ["react", "design"],
           techs: ["React", "Vite", "Tailwind", "Framer Motion"]
+        },
+        {
+          id: 4,
+          title: "Zetra Store – Onlayn Do'kon",
+          desc: "Zetra Store – Zamonaviy elektron savdo (E-commerce) platformasi. Foydalanuvchilarga eng so'nggi mahsulotlarni qulay katalogda ko'rish, saralash va tezgi buyurtma berish imkonini taqdim etuvchi zamonaviy internet do'kon.",
+          tags: ["react", "design"],
+          techs: ["React", "Next.js", "Tailwind CSS", "E-commerce"]
+        },
+        {
+          id: 5,
+          title: "Portfolio vizitka kartasi",
+          desc: "Shaxsiy Vizitka Kartasi – Barchasi Bitta Profil. Telegram, GitHub va asosiy portfolio saytimga to'g'ridan-to'g'ri havolalarni o'z ichiga olgan oddiy va toza vizitka kartasi. HTML va CSS yordamida to'liq moslashuvchan (responsive) qilib qurilgan.",
+          tags: ["vanilla", "design"],
+          techs: ["HTML", "CSS"]
         }
       ],
       liveDemo: "Saytni ko'rish",
@@ -206,10 +220,10 @@ export const translations = {
       items: [
         {
           id: 1,
-          title: "Portfolio card",
-          desc: "My Portfolio Card – All in One Profile. A simple and clean portfolio card that includes direct links to my Telegram, GitHub, and full portfolio website. Fully responsive and built with HTML & CSS.",
-          tags: ["vanilla", "design"],
-          techs: ["HTML", "CSS"]
+          title: "DevCommons Platform",
+          desc: "An open platform where developers share their code snippets, AI prompts, and useful architectural resources for free. Built with Next.js, Tailwind CSS, and full interactive UI features.",
+          tags: ["react", "design"],
+          techs: ["React", "Next.js", "Tailwind CSS", "TypeScript"]
         },
         {
           id: 2,
@@ -224,6 +238,20 @@ export const translations = {
           desc: "Faxr Mebel – Catalog and showcase website for a modern furniture factory. An elegant platform for clients to browse and order premium kitchen, bedroom, and living room furniture online.",
           tags: ["react", "design"],
           techs: ["React", "Vite", "Tailwind", "Framer Motion"]
+        },
+        {
+          id: 4,
+          title: "Zetra Store E-Commerce",
+          desc: "Zetra Store – A modern electronic commerce platform featuring dynamic product catalogs, seamless filtering, and responsive shopping cart workflows for an elite shopping experience.",
+          tags: ["react", "design"],
+          techs: ["React", "Next.js", "Tailwind CSS", "E-commerce"]
+        },
+        {
+          id: 5,
+          title: "Portfolio Card",
+          desc: "My Portfolio Card – All in One Profile. A simple and clean portfolio card that includes direct links to my Telegram, GitHub, and full portfolio website. Fully responsive and built with HTML & CSS.",
+          tags: ["vanilla", "design"],
+          techs: ["HTML", "CSS"]
         }
       ],
       liveDemo: "Live Demo",
