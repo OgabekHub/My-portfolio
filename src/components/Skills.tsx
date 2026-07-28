@@ -72,13 +72,6 @@ export default function Skills() {
           </span>
         </h2>
 
-        {/* Architect sketch note */}
-        <div className="flex justify-center mb-6 animate-fadeIn">
-          <span className="sketch-note text-center">
-            {"/* "}<i className="fas fa-cubes text-accent mr-1.5"></i> Tooling & tech stack mastered for enterprise solutions{" */"}
-          </span>
-        </div>
-
         {/* View Mode Toggle Switcher */}
         <div className="flex justify-center mb-16">
           <div className="bg-primary/50 border border-accent/15 p-1 rounded-full flex items-center shadow-inner">

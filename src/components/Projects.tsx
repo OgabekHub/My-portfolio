@@ -217,13 +217,6 @@ export default function Projects() {
           </span>
         </h2>
 
-        {/* Architect sketch annotation */}
-        <div className="flex justify-center mb-2 animate-fadeIn">
-          <span className="sketch-note text-center">
-            {"/* "}<i className="fas fa-pencil-ruler text-accent mr-1.5"></i> System architecture blueprints & live builds{" */"}
-          </span>
-        </div>
-
         {/* Filter buttons */}
         <div className="flex justify-center flex-wrap gap-4 mb-16 mt-8">
           {[

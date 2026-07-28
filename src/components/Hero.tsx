@@ -121,7 +121,6 @@ export default function Hero() {
               <span className="sketch-box px-5 py-1.5 bg-primary/70 text-accent font-mono text-sm tracking-wider inline-flex items-center gap-2">
                 <i className="fas fa-terminal text-xs"></i>
                 {t.hero.role}
-                <span className="text-xs text-accent/80">✏️</span>
               </span>
             </div>
             <h1 className="text-4xl md:text-6xl font-playfair font-bold mb-6 text-light hero-title leading-tight">
@@ -188,13 +187,6 @@ export default function Hero() {
                   <i className="fas fa-project-diagram ml-2"></i>
                 </a>
               </MagneticBtn>
-            </div>
-
-            {/* Developer Architecture Annotation */}
-            <div className="mt-5 animate-fadeIn flex items-center justify-center">
-              <span className="sketch-note">
-                {"/* "}<i className="fas fa-code text-accent mr-1"></i> Architecting modern high-performance web systems{" */"}
-              </span>
             </div>
 
             {/* Social Media Links */}
