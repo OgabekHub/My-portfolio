@@ -72,6 +72,13 @@ export default function Skills() {
           </span>
         </h2>
 
+        {/* Architect sketch note */}
+        <div className="flex justify-center mb-6 animate-fadeIn">
+          <span className="sketch-note text-center">
+            {"/* "}<i className="fas fa-cubes text-accent mr-1.5"></i> Tooling & tech stack mastered for enterprise solutions{" */"}
+          </span>
+        </div>
+
         {/* View Mode Toggle Switcher */}
         <div className="flex justify-center mb-16">
           <div className="bg-primary/50 border border-accent/15 p-1 rounded-full flex items-center shadow-inner">
@@ -108,7 +115,7 @@ export default function Skills() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skillCategories.map((category, idx) => (
-            <div key={idx} className="skill-card">
+            <div key={idx} className="skill-card sketch-hover">
               <div className="skill-icon">
                 <i className={`fas ${category.icon}`}></i>
               </div>
@@ -121,7 +128,7 @@ export default function Skills() {
                     <span
                       key={bIdx}
                       onMouseEnter={() => soundManager.playHover()}
-                      className="tech-badge flex items-center"
+                      className="tech-badge flex items-center sketch-hover"
                     >
                       {renderIcon(badge.icon)}
                       <span>{badge.name}</span>

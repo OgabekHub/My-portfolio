@@ -76,6 +76,9 @@ function TiltCard({ project }: { project: ProjectItem }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
+      {/* Hand-drawn sketchy dashed hover border */}
+      <div className="sketch-card-border" />
+
       {/* Glare overlay */}
       <div
         ref={glareRef}
@@ -130,7 +133,7 @@ function TiltCard({ project }: { project: ProjectItem }) {
           {project.techs.map((techItem, tIdx) => (
             <span
               key={tIdx}
-              className="px-3 py-1 rounded-md bg-primary/60 text-accent text-xs font-semibold border border-accent/10"
+              className="px-3 py-1 rounded-md bg-primary/60 text-accent text-xs font-semibold border border-accent/10 sketch-hover"
             >
               {techItem}
             </span>
@@ -213,6 +216,13 @@ export default function Projects() {
             {t.projects.title.split(" ").slice(1).join(" ")}
           </span>
         </h2>
+
+        {/* Architect sketch annotation */}
+        <div className="flex justify-center mb-2 animate-fadeIn">
+          <span className="sketch-note text-center">
+            {"/* "}<i className="fas fa-pencil-ruler text-accent mr-1.5"></i> System architecture blueprints & live builds{" */"}
+          </span>
+        </div>
 
         {/* Filter buttons */}
         <div className="flex justify-center flex-wrap gap-4 mb-16 mt-8">

@@ -117,15 +117,44 @@ export default function Hero() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
           {/* Text Content */}
           <div className="text-center m-auto md:text-center md:w-1/2">
-            <div className="mb-4 text-accent font-medium tracking-wider animate-fadeIn">
-              {t.hero.role}
+            <div className="mb-6 animate-fadeIn inline-block">
+              <span className="sketch-box px-5 py-1.5 bg-primary/70 text-accent font-mono text-sm tracking-wider inline-flex items-center gap-2">
+                <i className="fas fa-terminal text-xs"></i>
+                {t.hero.role}
+                <span className="text-xs text-accent/80">✏️</span>
+              </span>
             </div>
             <h1 className="text-4xl md:text-6xl font-playfair font-bold mb-6 text-light hero-title leading-tight">
               <span className="text-accent animate-slideRight">{t.hero.hello}</span>
               <br />
               <span className="animate-slideLeft">{t.hero.im}</span>
               <br />
-              <span className="animate-slideRight">{t.hero.surname}</span>
+              <span className="animate-slideRight relative inline-block">
+                {t.hero.surname}
+                {/* Hand-sketched SVG underline */}
+                <svg
+                  className="w-full h-4 text-accent mt-1 sketch-underline-svg overflow-visible block"
+                  viewBox="0 0 300 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M 5 12 Q 75 4, 150 12 T 295 10"
+                    stroke="currentColor"
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M 25 18 Q 140 10, 260 16"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeOpacity="0.7"
+                  />
+                </svg>
+              </span>
             </h1>
             <p className="text-lg md:text-xl font-poppins text-light/80 mb-8 animate-fadeIn h-[32px]">
               <span className="typing-text">{currentText}</span>
@@ -139,7 +168,7 @@ export default function Hero() {
                     handleScrollTo(e, "#contact");
                   }}
                   onMouseEnter={() => soundManager.playHover()}
-                  className="hero-btn primary"
+                  className="hero-btn primary sketch-hover"
                 >
                   <span>{t.hero.talk}</span>
                   <i className="fas fa-arrow-right ml-2"></i>
@@ -153,12 +182,19 @@ export default function Hero() {
                     handleScrollTo(e, "#projects");
                   }}
                   onMouseEnter={() => soundManager.playHover()}
-                  className="hero-btn secondary"
+                  className="hero-btn secondary sketch-hover"
                 >
                   <span>{t.hero.work}</span>
                   <i className="fas fa-project-diagram ml-2"></i>
                 </a>
               </MagneticBtn>
+            </div>
+
+            {/* Developer Architecture Annotation */}
+            <div className="mt-5 animate-fadeIn flex items-center justify-center">
+              <span className="sketch-note">
+                {"/* "}<i className="fas fa-code text-accent mr-1"></i> Architecting modern high-performance web systems{" */"}
+              </span>
             </div>
 
             {/* Social Media Links */}
