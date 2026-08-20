@@ -4,7 +4,9 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
+import Timeline from "@/components/Timeline";
 import Skills from "@/components/Skills";
+import StatsSection from "@/components/StatsSection";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -17,23 +19,27 @@ export default function Home() {
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      // Update scroll progress bar
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        const scrolled = (window.scrollY / totalHeight) * 100;
-        setScrollProgress(scrolled);
-      }
+    let ticking = false;
 
-      // Show/hide back to top button
-      if (window.scrollY > 300) {
-        setShowBackToTop(true);
-      } else {
-        setShowBackToTop(false);
-      }
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        // Update scroll progress bar
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (totalHeight > 0) {
+          const scrolled = (window.scrollY / totalHeight) * 100;
+          setScrollProgress(scrolled);
+        }
+
+        // Show/hide back to top button
+        setShowBackToTop(window.scrollY > 300);
+        ticking = false;
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -110,6 +116,8 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <Timeline />
+        <StatsSection />
         <Skills />
         <Projects />
         <Contact />

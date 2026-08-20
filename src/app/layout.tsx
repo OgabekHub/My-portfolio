@@ -18,8 +18,59 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Olimjonov Og'abek | Frontend Developer",
-  description: "Og'abek Olimjonov - Frontend Developer Portfolio",
+  title: "Og'abek Olimjonov | Frontend Developer Portfolio",
+  description:
+    "Og'abek Olimjonov — Junior Frontend Developer specializing in React.js, Next.js, and modern web technologies. View my projects, skills, and get in touch.",
+  keywords: [
+    "Og'abek Olimjonov",
+    "Frontend Developer",
+    "React Developer",
+    "Next.js",
+    "Portfolio",
+    "Web Developer",
+    "Uzbekistan",
+    "Namangan",
+    "UI/UX",
+    "JavaScript",
+  ],
+  authors: [{ name: "Og'abek Olimjonov" }],
+  creator: "Og'abek Olimjonov",
+  metadataBase: new URL("https://ogabek.vercel.app"),
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://ogabek.vercel.app",
+    siteName: "Og'abek Olimjonov Portfolio",
+    title: "Og'abek Olimjonov | Frontend Developer",
+    description:
+      "Junior Frontend Developer specializing in React.js, Next.js, and modern web technologies.",
+    images: [
+      {
+        url: "/img/O.A logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Og'abek Olimjonov - Frontend Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Og'abek Olimjonov | Frontend Developer",
+    description:
+      "Junior Frontend Developer specializing in React.js, Next.js, and modern web technologies.",
+    images: ["/img/O.A logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/img/favicon.png",
     shortcut: "/img/favicon.png",

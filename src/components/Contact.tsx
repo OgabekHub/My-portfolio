@@ -30,8 +30,8 @@ export default function Contact() {
 
     try {
       await emailjs.send(
-        "service_5o3o1i8",
-        "template_goumrk5",
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
         {
           name: formData.name,
           email: formData.email,
@@ -40,7 +40,7 @@ export default function Contact() {
           from_name: "Og'abek Olimjonov",
           reply_to: "olimjonov.ogabek.dev@gmail.com",
         },
-        "35xgz0k7Rt9b7KEbF" // EmailJS public key
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
       // Reset form and redirect to thank-you route
