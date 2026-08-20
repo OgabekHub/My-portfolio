@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Timeline from "@/components/Timeline";
 import Skills from "@/components/Skills";
 import StatsSection from "@/components/StatsSection";
 import Projects from "@/components/Projects";
@@ -116,7 +115,6 @@ export default function Home() {
       <main>
         <Hero />
         <About />
-        <Timeline />
         <StatsSection />
         <Skills />
         <Projects />
