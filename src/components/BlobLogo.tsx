@@ -26,11 +26,11 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
           position: "absolute",
           width: "100%",
           height: "100%",
-          background: "linear-gradient(45deg, #c8a164, #e2c08d)",
+          background: "linear-gradient(135deg, #ffffff, #e8e8e8)",
           borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70%",
           animation: "morphing 10s ease-in-out infinite",
           transition: "all 0.3s ease",
-          boxShadow: "0 0 15px rgba(200, 161, 100, 0.4)",
+          boxShadow: "0 0 15px rgba(200, 161, 100, 0.35)",
           overflow: "hidden",
         }}
         className="group-hover:scale-105 group-hover:brightness-110"
@@ -43,7 +43,7 @@ export default function BlobLogo({ size = 56 }: BlobLogoProps) {
           style={{
             objectFit: "contain",
             objectPosition: "center",
-            transform: "scale(1.2)",
+            transform: "scale(0.75)",
             transformOrigin: "center",
           }}
           priority
