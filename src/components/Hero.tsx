@@ -144,14 +144,6 @@ export default function Hero() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
-                  <path
-                    d="M 25 18 Q 140 10, 260 16"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeOpacity="0.7"
-                  />
                 </svg>
               </span>
             </h1>
