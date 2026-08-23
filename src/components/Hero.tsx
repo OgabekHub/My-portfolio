@@ -109,7 +109,7 @@ export default function Hero() {
   };
 
   return (
-    <section ref={heroRef} id="home" className="hero min-h-screen flex items-center justify-center bg-primary relative overflow-hidden">
+    <section ref={heroRef} id="home" className="hero min-h-screen flex items-center justify-center bg-primary relative overflow-hidden pt-20 md:pt-0">
       {/* Animated background particles */}
       <InteractiveParticles />
 
