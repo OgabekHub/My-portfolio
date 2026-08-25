@@ -3,7 +3,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
+import { resetAiTheme } from "@/utils/theme";
+import { scrollToSection } from "@/utils/scroll";
+import { NAV_LINKS } from "@/data/navLinks";
 import dynamic from "next/dynamic";
+import { FaBars, FaMoon, FaSun, FaVolumeHigh, FaVolumeXmark, FaWandMagicSparkles, FaXmark } from "react-icons/fa6";
 
 const BlobLogo = dynamic(() => import("./BlobLogo"), { ssr: false });
 
@@ -30,6 +34,9 @@ export default function Navbar() {
     const nextDark = !isDark;
     setIsDark(nextDark);
     soundManager.playThemeToggle(nextDark);
+
+    // AI o'rnatgan inline ranglarni tozalash — bo'lmasa bu tugma ta'sirsiz qoladi
+    resetAiTheme();
     if (nextDark) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");
@@ -46,26 +53,7 @@ export default function Navbar() {
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     setIsOpen(false);
-
-    if (targetId === "#") {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-      return;
-    }
-
-    const targetElement = document.querySelector(targetId);
-    if (targetElement) {
-      const offset = 80; // Navbar height
-      const targetPosition =
-        targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: targetPosition,
-        behavior: "smooth",
-      });
-    }
+    scrollToSection(targetId);
   };
 
   const clickCountRef = useRef(0);
@@ -119,71 +107,21 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8 font-poppins">
           <ul className="flex space-x-8">
-            <li>
-              <a
-                href="#home"
-                onClick={(e) => {
-                  soundManager.playClick();
-                  handleLinkClick(e, "#home");
-                }}
-                onMouseEnter={() => soundManager.playHover()}
-                className="nav-item nav-link"
-              >
-                {t.nav.home}
-              </a>
-            </li>
-            <li>
-              <a
-                href="#about"
-                onClick={(e) => {
-                  soundManager.playClick();
-                  handleLinkClick(e, "#about");
-                }}
-                onMouseEnter={() => soundManager.playHover()}
-                className="nav-item nav-link"
-              >
-                {t.nav.about}
-              </a>
-            </li>
-            <li>
-              <a
-                href="#skills"
-                onClick={(e) => {
-                  soundManager.playClick();
-                  handleLinkClick(e, "#skills");
-                }}
-                onMouseEnter={() => soundManager.playHover()}
-                className="nav-item nav-link"
-              >
-                {t.nav.skills}
-              </a>
-            </li>
-            <li>
-              <a
-                href="#projects"
-                onClick={(e) => {
-                  soundManager.playClick();
-                  handleLinkClick(e, "#projects");
-                }}
-                onMouseEnter={() => soundManager.playHover()}
-                className="nav-item nav-link"
-              >
-                {t.nav.projects}
-              </a>
-            </li>
-            <li>
-              <a
-                href="#contact"
-                onClick={(e) => {
-                  soundManager.playClick();
-                  handleLinkClick(e, "#contact");
-                }}
-                onMouseEnter={() => soundManager.playHover()}
-                className="nav-item nav-link"
-              >
-                {t.nav.contact}
-              </a>
-            </li>
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={(e) => {
+                    soundManager.playClick();
+                    handleLinkClick(e, link.href);
+                  }}
+                  onMouseEnter={() => soundManager.playHover()}
+                  className="nav-item nav-link"
+                >
+                  {t.nav[link.key]}
+                </a>
+              </li>
+            ))}
           </ul>
 
           <div className="flex items-center space-x-4 border-l border-gray-600/30 pl-6">
@@ -194,7 +132,7 @@ export default function Navbar() {
               className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/60 text-accent transition-all duration-300"
               aria-label="Toggle dark mode"
             >
-              <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-lg`}></i>
+              {isDark ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
             </button>
 
             {/* Sound Toggle */}
@@ -204,7 +142,7 @@ export default function Navbar() {
               className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/60 text-accent transition-all duration-300"
               aria-label="Toggle sound"
             >
-              <i className={`fas ${isMuted ? "fa-volume-mute" : "fa-volume-up"} text-lg`}></i>
+              {isMuted ? <FaVolumeXmark className="text-lg" /> : <FaVolumeHigh className="text-lg" />}
             </button>
 
             {/* AI Copilot Magic/Sparkles Button */}
@@ -218,7 +156,7 @@ export default function Navbar() {
               aria-label="AI Copilot"
               title="AI Copilot"
             >
-              <i className="fa-solid fa-wand-magic-sparkles text-lg text-accent group-hover:scale-110 transition-all"></i>
+              <FaWandMagicSparkles className="text-lg text-accent group-hover:scale-110 transition-all" />
               <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-accent rounded-full border-2 border-primary animate-ping"></span>
               <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-accent rounded-full border-2 border-primary"></span>
             </button>
@@ -249,7 +187,7 @@ export default function Navbar() {
             aria-label="AI Copilot"
             title="AI Copilot"
           >
-            <i className="fa-solid fa-wand-magic-sparkles text-base text-accent"></i>
+            <FaWandMagicSparkles className="text-base text-accent" />
             <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-accent rounded-full border border-primary animate-ping"></span>
             <span className="absolute top-0.5 right-0.5 w-2 h-2 bg-accent rounded-full border border-primary"></span>
           </button>
@@ -262,80 +200,32 @@ export default function Navbar() {
             }}
             className={`${isOpen ? "active" : ""}`}
             aria-label="Toggle menu"
+            aria-expanded={isOpen}
+            aria-controls="mobile-nav"
           >
-            <i className={`fas ${isOpen ? "fa-times" : "fa-bars"}`}></i>
+            {isOpen ? <FaXmark /> : <FaBars />}
           </button>
         </div>
       </div>
 
       {/* Mobile Navigation */}
-      <div className={`mobile-nav md:hidden ${isOpen ? "active" : ""}`}>
+      <div id="mobile-nav" className={`mobile-nav md:hidden ${isOpen ? "active" : ""}`}>
         <ul className="flex flex-col items-center space-y-4 py-6 font-poppins">
-          <li>
-            <a
-              href="#home"
-              onClick={(e) => {
-                soundManager.playClick();
-                handleLinkClick(e, "#home");
-              }}
-              onMouseEnter={() => soundManager.playHover()}
-              className="nav-item text-lg"
-            >
-              {t.nav.home}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#about"
-              onClick={(e) => {
-                soundManager.playClick();
-                handleLinkClick(e, "#about");
-              }}
-              onMouseEnter={() => soundManager.playHover()}
-              className="nav-item text-lg"
-            >
-              {t.nav.about}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#skills"
-              onClick={(e) => {
-                soundManager.playClick();
-                handleLinkClick(e, "#skills");
-              }}
-              onMouseEnter={() => soundManager.playHover()}
-              className="nav-item text-lg"
-            >
-              {t.nav.skills}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#projects"
-              onClick={(e) => {
-                soundManager.playClick();
-                handleLinkClick(e, "#projects");
-              }}
-              onMouseEnter={() => soundManager.playHover()}
-              className="nav-item text-lg"
-            >
-              {t.nav.projects}
-            </a>
-          </li>
-          <li>
-            <a
-              href="#contact"
-              onClick={(e) => {
-                soundManager.playClick();
-                handleLinkClick(e, "#contact");
-              }}
-              onMouseEnter={() => soundManager.playHover()}
-              className="nav-item text-lg"
-            >
-              {t.nav.contact}
-            </a>
-          </li>
+          {NAV_LINKS.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                onClick={(e) => {
+                  soundManager.playClick();
+                  handleLinkClick(e, link.href);
+                }}
+                onMouseEnter={() => soundManager.playHover()}
+                className="nav-item text-lg"
+              >
+                {t.nav[link.key]}
+              </a>
+            </li>
+          ))}
 
           <li className="pt-4 border-t border-gray-600/20 w-[80%] flex items-center justify-center space-x-4 pb-2">
             {/* Dark Mode Toggle for Mobile Drawer */}
@@ -344,7 +234,7 @@ export default function Navbar() {
               className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/40 text-accent transition-all duration-300 border border-accent/15"
               aria-label="Toggle dark mode"
             >
-              <i className={`fas ${isDark ? "fa-sun" : "fa-moon"} text-base`}></i>
+              {isDark ? <FaSun className="text-base" /> : <FaMoon className="text-base" />}
             </button>
 
             {/* Sound Toggle for Mobile Drawer */}
@@ -353,7 +243,7 @@ export default function Navbar() {
               className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/40 text-accent transition-all duration-300 border border-accent/15"
               aria-label="Toggle sound"
             >
-              <i className={`fas ${isMuted ? "fa-volume-mute" : "fa-volume-up"} text-base`}></i>
+              {isMuted ? <FaVolumeXmark className="text-base" /> : <FaVolumeHigh className="text-base" />}
             </button>
 
             {/* Language Switcher for Mobile */}

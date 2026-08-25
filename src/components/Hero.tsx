@@ -5,6 +5,8 @@ import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import InteractiveParticles from "./InteractiveParticles";
 import { soundManager } from "@/utils/sound";
+import { scrollToSection } from "@/utils/scroll";
+import { FaArrowRight, FaChevronDown, FaDiagramProject, FaGithub, FaLinkedin, FaTelegram, FaTerminal } from "react-icons/fa6";
 
 /* -- Magnetic Button Wrapper -- */
 function MagneticBtn({ children, className }: { children: React.ReactNode; className?: string }) {
@@ -95,17 +97,7 @@ export default function Hero() {
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
-    const targetElement = document.querySelector(targetId);
-    if (targetElement) {
-      const offset = 80;
-      const targetPosition =
-        targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: targetPosition,
-        behavior: "smooth",
-      });
-    }
+    scrollToSection(targetId);
   };
 
   return (
@@ -119,7 +111,7 @@ export default function Hero() {
           <div className="text-center m-auto md:text-center md:w-1/2">
             <div className="mb-6 animate-fadeIn inline-block">
               <span className="sketch-box px-5 py-1.5 bg-primary/70 text-accent font-mono text-sm tracking-wider inline-flex items-center gap-2">
-                <i className="fas fa-terminal text-xs"></i>
+                <FaTerminal className="text-xs" />
                 {t.hero.role}
               </span>
             </div>
@@ -162,7 +154,7 @@ export default function Hero() {
                   className="hero-btn primary sketch-hover"
                 >
                   <span>{t.hero.talk}</span>
-                  <i className="fas fa-arrow-right ml-2"></i>
+                  <FaArrowRight className="ml-2" />
                 </a>
               </MagneticBtn>
               <MagneticBtn>
@@ -176,7 +168,7 @@ export default function Hero() {
                   className="hero-btn secondary sketch-hover"
                 >
                   <span>{t.hero.work}</span>
-                  <i className="fas fa-project-diagram ml-2"></i>
+                  <FaDiagramProject className="ml-2" />
                 </a>
               </MagneticBtn>
             </div>
@@ -192,7 +184,7 @@ export default function Hero() {
                 className="social-link"
                 aria-label="GitHub"
               >
-                <i className="fab fa-github"></i>
+                <FaGithub />
               </a>
               <a
                 href="https://www.linkedin.com/in/og-abek-olimjonov-2a52b3364?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BZCdpoYM8SXiYquzPfhXTIg%3D%3D"
@@ -203,7 +195,7 @@ export default function Hero() {
                 className="social-link"
                 aria-label="LinkedIn"
               >
-                <i className="fab fa-linkedin"></i>
+                <FaLinkedin />
               </a>
               <a
                 href="https://t.me/olimjonov_ogabek"
@@ -214,7 +206,7 @@ export default function Hero() {
                 className="social-link"
                 aria-label="Telegram"
               >
-                <i className="fab fa-telegram"></i>
+                <FaTelegram />
               </a>
             </div>
           </div>
@@ -239,7 +231,7 @@ export default function Hero() {
       {/* Scroll indicator */}
       <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
         <a href="#about" onClick={(e) => handleScrollTo(e, "#about")} aria-label="Scroll to About section">
-          <i className="fas fa-chevron-down text-accent text-2xl cursor-pointer"></i>
+          <FaChevronDown className="text-accent text-2xl cursor-pointer" />
         </a>
       </div>
     </section>

@@ -3,7 +3,10 @@
 import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
+import { scrollToSection } from "@/utils/scroll";
+import { NAV_LINKS } from "@/data/navLinks";
 import dynamic from "next/dynamic";
+import { FaEnvelope, FaGithub, FaHeart, FaLinkedin, FaLocationDot, FaPhone, FaTelegram } from "react-icons/fa6";
 
 const BlobLogo = dynamic(() => import("./BlobLogo"), { ssr: false });
 
@@ -13,17 +16,7 @@ export default function Footer() {
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
-    const targetElement = document.querySelector(targetId);
-    if (targetElement) {
-      const offset = 80;
-      const targetPosition =
-        targetElement.getBoundingClientRect().top + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: targetPosition,
-        behavior: "smooth",
-      });
-    }
+    scrollToSection(targetId);
   };
 
   return (
@@ -64,7 +57,7 @@ export default function Footer() {
                 className="footer-social-link"
                 aria-label="GitHub"
               >
-                <i className="fab fa-github"></i>
+                <FaGithub />
               </a>
               <a
                 href="https://www.linkedin.com/in/og-abek-olimjonov-2a52b3364?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BZCdpoYM8SXiYquzPfhXTIg%3D%3D"
@@ -75,7 +68,7 @@ export default function Footer() {
                 className="footer-social-link"
                 aria-label="LinkedIn"
               >
-                <i className="fab fa-linkedin"></i>
+                <FaLinkedin />
               </a>
               <a
                 href="https://t.me/olimjonov_ogabek"
@@ -86,7 +79,7 @@ export default function Footer() {
                 className="footer-social-link"
                 aria-label="Telegram"
               >
-                <i className="fab fa-telegram"></i>
+                <FaTelegram />
               </a>
             </div>
           </div>
@@ -95,71 +88,20 @@ export default function Footer() {
           <div>
             <h3 className="footer-title">{t.footer.quickLinks}</h3>
             <ul className="footer-links font-poppins">
-              <li>
-                <a
-                  href="#home"
-                  onClick={(e) => {
-                    soundManager.playClick();
-                    handleScrollTo(e, "#home");
-                  }}
-                  onMouseEnter={() => soundManager.playHover()}
-                  aria-label="Home"
-                >
-                  {t.nav.home}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#about"
-                  onClick={(e) => {
-                    soundManager.playClick();
-                    handleScrollTo(e, "#about");
-                  }}
-                  onMouseEnter={() => soundManager.playHover()}
-                  aria-label="About"
-                >
-                  {t.nav.about}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#skills"
-                  onClick={(e) => {
-                    soundManager.playClick();
-                    handleScrollTo(e, "#skills");
-                  }}
-                  onMouseEnter={() => soundManager.playHover()}
-                  aria-label="Skills"
-                >
-                  {t.nav.skills}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#projects"
-                  onClick={(e) => {
-                    soundManager.playClick();
-                    handleScrollTo(e, "#projects");
-                  }}
-                  onMouseEnter={() => soundManager.playHover()}
-                  aria-label="Projects"
-                >
-                  {t.nav.projects}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#contact"
-                  onClick={(e) => {
-                    soundManager.playClick();
-                    handleScrollTo(e, "#contact");
-                  }}
-                  onMouseEnter={() => soundManager.playHover()}
-                  aria-label="Contact"
-                >
-                  {t.nav.contact}
-                </a>
-              </li>
+              {NAV_LINKS.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={(e) => {
+                      soundManager.playClick();
+                      handleScrollTo(e, link.href);
+                    }}
+                    onMouseEnter={() => soundManager.playHover()}
+                  >
+                    {t.nav[link.key]}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -168,15 +110,15 @@ export default function Footer() {
             <h3 className="footer-title">{t.footer.info}</h3>
             <ul className="footer-contact font-poppins">
               <li>
-                <i className="fas fa-envelope" aria-hidden="true"></i>
+                <FaEnvelope aria-hidden="true" />
                 <span className="text-sm">olimjonov.ogabek.dev@gmail.com</span>
               </li>
               <li>
-                <i className="fas fa-phone" aria-hidden="true"></i>
+                <FaPhone aria-hidden="true" />
                 <span className="text-sm">+998 97 064 04 24</span>
               </li>
               <li>
-                <i className="fas fa-map-marker-alt" aria-hidden="true"></i>
+                <FaLocationDot aria-hidden="true" />
                 <span className="text-sm">Namangan, Uzbekistan</span>
               </li>
             </ul>
@@ -191,7 +133,7 @@ export default function Footer() {
             </p>
             <div className="mt-4 md:mt-0">
               <p className="text-xs text-light/50">
-                {t.footer.madeWith} <i className="fas fa-heart text-accent" aria-hidden="true"></i> by Og&apos;abek
+                {t.footer.madeWith} <FaHeart className="text-accent" aria-hidden="true" /> by Og&apos;abek
               </p>
             </div>
           </div>

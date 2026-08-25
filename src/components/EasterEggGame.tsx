@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { FaCheck, FaChevronLeft, FaLockOpen, FaNetworkWired, FaTableCellsLarge, FaXmark } from "react-icons/fa6";
 
 // --- SYSTEM SYNC (Lights Out) TYPES & LOGIC ---
 const GRID_SIZE = 4;
@@ -109,6 +110,16 @@ export default function EasterEggGame() {
     return () => window.removeEventListener('easter-egg-trigger', handleTrigger);
   }, []);
 
+  // Escape bilan overlay'ni yopish
+  useEffect(() => {
+    if (!isActive) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsActive(false);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isActive]);
+
   const initLights = () => {
     setLightsBoard(generateSolvableBoard());
     setLightsWon(false);
@@ -151,13 +162,14 @@ export default function EasterEggGame() {
   if (!isActive) return null;
 
   return (
-    <div className="fixed inset-0 z-[9999] bg-[#020617]/95 backdrop-blur-md flex flex-col items-center justify-center font-mono cursor-auto selection:bg-accent/30">
+    <div role="dialog" aria-modal="true" aria-label="Hacker OS mini-o'yinlar" className="fixed inset-0 z-[9999] bg-[#020617]/95 backdrop-blur-md flex flex-col items-center justify-center font-mono cursor-auto selection:bg-accent/30">
       <div className="absolute top-8 right-8">
         <button 
           onClick={closeOverlay}
           className="clickable text-white/50 hover:text-accent transition-colors p-2 text-xl"
+          aria-label="Yopish"
         >
-          <i className="fas fa-times"></i>
+          <FaXmark />
         </button>
       </div>
 
@@ -177,7 +189,7 @@ export default function EasterEggGame() {
                 className="clickable group p-6 rounded-xl bg-[#0f172a] border border-secondary/20 hover:border-accent hover:shadow-[0_0_20px_rgba(200,161,100,0.15)] transition-all text-left flex flex-col gap-4"
               >
                 <div className="w-12 h-12 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  <i className="fas fa-th-large"></i>
+                  <FaTableCellsLarge />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">System Sync</h3>
@@ -190,7 +202,7 @@ export default function EasterEggGame() {
                 className="clickable group p-6 rounded-xl bg-[#0f172a] border border-secondary/20 hover:border-accent hover:shadow-[0_0_20px_rgba(200,161,100,0.15)] transition-all text-left flex flex-col gap-4"
               >
                 <div className="w-12 h-12 rounded-lg bg-accent/10 text-accent flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
-                  <i className="fas fa-network-wired"></i>
+                  <FaNetworkWired />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white mb-2">Data Flow</h3>
@@ -209,7 +221,7 @@ export default function EasterEggGame() {
                   onClick={() => setView('menu')}
                   className="clickable text-white/50 hover:text-white text-sm uppercase tracking-wider mb-2 flex items-center gap-2 transition-colors"
                 >
-                  <i className="fas fa-chevron-left"></i> Main Menu
+                  <FaChevronLeft /> Main Menu
                 </button>
                 <h2 className="text-3xl font-bold text-white">System Sync</h2>
               </div>
@@ -236,7 +248,7 @@ export default function EasterEggGame() {
               {lightsWon && (
                 <div className="absolute inset-0 bg-[#0f172a]/90 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center animate-in fade-in duration-500">
                   <div className="w-16 h-16 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-3xl mb-4">
-                    <i className="fas fa-check"></i>
+                    <FaCheck />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2">System Synced!</h3>
                   <p className="text-white/60 mb-6">Completed in {lightsMoves} moves</p>
@@ -260,7 +272,7 @@ export default function EasterEggGame() {
                   onClick={() => setView('menu')}
                   className="clickable text-white/50 hover:text-white text-sm uppercase tracking-wider mb-2 flex items-center gap-2 transition-colors"
                 >
-                  <i className="fas fa-chevron-left"></i> Main Menu
+                  <FaChevronLeft /> Main Menu
                 </button>
                 <h2 className="text-3xl font-bold text-white">Data Flow</h2>
               </div>
@@ -301,7 +313,7 @@ export default function EasterEggGame() {
               {pipesWon && (
                 <div className="absolute inset-0 bg-[#0f172a]/90 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center animate-in fade-in duration-500">
                   <div className="w-16 h-16 rounded-full bg-green-500/20 text-green-400 flex items-center justify-center text-3xl mb-4">
-                    <i className="fas fa-lock-open"></i>
+                    <FaLockOpen />
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-2">Connection Secured!</h3>
                   <p className="text-white/60 mb-6">Completed in {pipesMoves} rotations</p>

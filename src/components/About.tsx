@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { FaBullseye, FaCode, FaFilePdf, FaHeart, FaUpRightFromSquare } from "react-icons/fa6";
 
 export default function About() {
   const { t } = useLanguage();
@@ -43,7 +44,7 @@ export default function About() {
                 {/* Skills Card */}
                 <div className="about-card bg-secondary/40 border border-accent/15 p-6 rounded-2xl backdrop-blur-sm">
                   <div className="about-card-icon text-accent text-2xl mb-4">
-                    <i className="fas fa-code"></i>
+                    <FaCode />
                   </div>
                   <h3 className="text-xl font-bold text-accent mb-3">{t.about.coreSkillsTitle}</h3>
                   <ul className="list-disc list-inside space-y-2 text-light/80 text-sm">
@@ -56,7 +57,7 @@ export default function About() {
                 {/* Interests Card */}
                 <div className="about-card bg-secondary/40 border border-accent/15 p-6 rounded-2xl backdrop-blur-sm">
                   <div className="about-card-icon text-accent text-2xl mb-4">
-                    <i className="fas fa-heart"></i>
+                    <FaHeart />
                   </div>
                   <h3 className="text-xl font-bold text-accent mb-3">{t.about.interestsTitle}</h3>
                   <ul className="list-disc list-inside space-y-2 text-light/80 text-sm">
@@ -70,7 +71,7 @@ export default function About() {
               {/* Goals Banner */}
               <div className="about-goals bg-secondary/35 border border-accent/15 p-6 rounded-2xl flex items-start gap-4">
                 <div className="about-goals-icon text-accent text-3xl mt-1">
-                  <i className="fas fa-bullseye"></i>
+                  <FaBullseye />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-accent mb-2">{t.about.goalsTitle}</h3>
@@ -89,9 +90,9 @@ export default function About() {
                   className="resume-download-btn inline-flex items-center gap-2"
                   id="about-resume-btn"
                 >
-                  <i className="fas fa-file-pdf"></i>
+                  <FaFilePdf />
                   <span>{t.about.viewResume}</span>
-                  <i className="fas fa-external-link-alt text-xs"></i>
+                  <FaUpRightFromSquare className="text-xs" />
                 </a>
               </div>
             </div>
