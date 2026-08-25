@@ -1,8 +1,73 @@
 import { NextResponse } from "next/server";
+import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
+
+const VALID_MODES = ["chat", "code", "sentiment"] as const;
+const MAX_MESSAGE_LENGTH = 1000;
+const MAX_CODE_LENGTH = 5000;
+
+/** So'rov shu saytdan kelganini tekshirish (dev'da localhost'ga ruxsat). */
+function isAllowedOrigin(req: Request): boolean {
+  const origin = req.headers.get("origin");
+
+  // Origin sarlavhasisiz so'rovlar (same-origin fetch, curl) — bloklamaymiz,
+  // ular baribir rate limit ostida.
+  if (!origin) return true;
+
+  try {
+    const { hostname } = new URL(origin);
+    if (hostname === "localhost" || hostname === "127.0.0.1") return true;
+    return hostname === "ogabek.vercel.app" || hostname.endsWith(".vercel.app");
+  } catch {
+    return false;
+  }
+}
 
 export async function POST(req: Request) {
   try {
+    // --- 1. Origin tekshiruvi ---
+    if (!isAllowedOrigin(req)) {
+      return NextResponse.json({ error: "Forbidden origin" }, { status: 403 });
+    }
+
+    // --- 2. Rate limit: 10 so'rov / daqiqa har bir IP uchun ---
+    const { allowed, retryAfterSec } = checkRateLimit(getClientIp(req));
+    if (!allowed) {
+      return NextResponse.json(
+        { error: "Juda ko'p so'rov yuborildi. Birozdan so'ng qayta urinib ko'ring." },
+        { status: 429, headers: { "Retry-After": String(retryAfterSec) } }
+      );
+    }
+
     const { message, mode, code } = await req.json();
+
+    // --- 3. Input validatsiyasi (Gemini'ga so'rov yuborishdan OLDIN) ---
+    if (mode !== undefined && !VALID_MODES.includes(mode)) {
+      return NextResponse.json({ error: "Invalid mode" }, { status: 400 });
+    }
+
+    if (message !== undefined && typeof message !== "string") {
+      return NextResponse.json({ error: "message must be a string" }, { status: 400 });
+    }
+
+    if (typeof message === "string" && message.length > MAX_MESSAGE_LENGTH) {
+      return NextResponse.json(
+        { error: `Xabar juda uzun (maksimal ${MAX_MESSAGE_LENGTH} belgi).` },
+        { status: 400 }
+      );
+    }
+
+    if (mode === "code") {
+      if (typeof code !== "string" || !code.trim()) {
+        return NextResponse.json({ error: "code is required" }, { status: 400 });
+      }
+      if (code.length > MAX_CODE_LENGTH) {
+        return NextResponse.json(
+          { error: `Kod juda uzun (maksimal ${MAX_CODE_LENGTH} belgi).` },
+          { status: 400 }
+        );
+      }
+    }
+
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
@@ -122,8 +187,16 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Empty response from AI model" }, { status: 500 });
     }
 
-    const parsedJson = JSON.parse(responseText.trim());
-    return NextResponse.json(parsedJson);
+    try {
+      return NextResponse.json(JSON.parse(responseText.trim()));
+    } catch {
+      // Gemini JSON o'rniga oddiy matn qaytardi — mijoz lokal fallback'ga tushsin
+      console.error("Gemini returned non-JSON response:", responseText.slice(0, 200));
+      return NextResponse.json(
+        { error: "AI model returned malformed JSON" },
+        { status: 502 }
+      );
+    }
   } catch (error) {
     console.error("Error in API chat route:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
