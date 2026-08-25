@@ -16,6 +16,12 @@ export default function CustomCursor() {
     );
     if (isMobile) return;
 
+    // Sichqonchasiz qurilma yoki harakat kamaytirilgan — maxsus kursor kerak emas.
+    // CSS'dagi `cursor: none` ham xuddi shu shartlar ostida qo'llanadi, shuning
+    // uchun foydalanuvchi kursorsiz qolib ketmaydi.
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     const dot = dotRef.current;
     const ring = ringRef.current;
     const orb = orbRef.current;

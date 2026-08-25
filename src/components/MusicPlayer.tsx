@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { FaBackwardStep, FaForwardStep, FaMusic, FaPause, FaPlay, FaVolumeHigh } from "react-icons/fa6";
 
 const LOFI_TRACKS = [
   {
@@ -27,6 +28,9 @@ export default function MusicPlayer() {
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const wantToPlayRef = useRef(false);
+  // Audio faqat foydalanuvchi birinchi marta Play bosgandan keyin yuklanadi.
+  // Ilgari preload="auto" bilan har bir tashrifda ~3MB mp3 tekinga ketardi.
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -58,6 +62,17 @@ export default function MusicPlayer() {
   const togglePlay = () => {
     const audio = audioRef.current;
     if (!audio) return;
+
+    if (!hasInteracted) {
+      setHasInteracted(true);
+      wantToPlayRef.current = true;
+      // src ni shu yerda imperativ o'rnatamiz: setState navbatdagi render'da
+      // ishlaydi, play() esa hozir kerak (brauzer autoplay siyosati foydalanuvchi
+      // bosishi bilan bir xil tick'da chaqirilishini talab qiladi).
+      audio.src = LOFI_TRACKS[currentTrackIndex].url;
+      audio.play().then(() => setIsPlaying(true)).catch((e) => console.log("Play failed:", e));
+      return;
+    }
 
     if (isPlaying) {
       audio.pause();
@@ -95,8 +110,8 @@ export default function MusicPlayer() {
       <audio 
         key={currentTrackIndex}
         ref={audioRef}
-        src={LOFI_TRACKS[currentTrackIndex].url}
-        preload="auto"
+        src={hasInteracted ? LOFI_TRACKS[currentTrackIndex].url : undefined}
+        preload="none"
         onEnded={handleAudioEnded}
       />
 
@@ -108,7 +123,7 @@ export default function MusicPlayer() {
           className={`w-[34px] h-[34px] rounded-full flex-shrink-0 flex items-center justify-center bg-primary text-accent transition-all hover:scale-105 ${isPlaying && !isOpen ? 'animate-pulse' : ''}`}
           title="Lofi Player"
         >
-          <i className={`fas fa-music ${isPlaying ? 'animate-spin' : ''}`} style={{ animationDuration: '3s' }}></i>
+          <FaMusic className={isPlaying ? 'animate-spin' : ''} style={{ animationDuration: '3s' }} />
         </button>
 
         {/* Player Controls */}
@@ -124,17 +139,17 @@ export default function MusicPlayer() {
           
           <div className="flex items-center justify-between pr-2">
             <button onClick={prevTrack} className="text-light/60 hover:text-accent transition-colors text-xs">
-              <i className="fas fa-backward-step"></i>
+              <FaBackwardStep />
             </button>
             <button onClick={togglePlay} className="text-accent hover:text-white transition-colors text-sm mx-2">
-              <i className={`fas ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i>
+              {isPlaying ? <FaPause /> : <FaPlay />}
             </button>
             <button onClick={nextTrack} className="text-light/60 hover:text-accent transition-colors text-xs">
-              <i className="fas fa-forward-step"></i>
+              <FaForwardStep />
             </button>
             
             <div className="flex items-center gap-1 ml-3 border-l border-white/10 pl-2">
-              <i className="fas fa-volume-up text-[10px] text-light/50"></i>
+              <FaVolumeHigh className="text-[10px] text-light/50" />
               <input 
                 type="range" 
                 min="0" max="1" step="0.01" 

@@ -8,6 +8,9 @@ export default function SplashScreen() {
   const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
+    // Harakat kamaytirilgan bo'lsa splash animatsiyasini o'tkazib yuboramiz
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     // Only show once per browser session
     const alreadyShown = sessionStorage.getItem("splash_shown");
     if (alreadyShown) return;

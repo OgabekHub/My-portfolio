@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { LanguageProvider } from "@/context/LanguageContext";
 import CustomCursor from "@/components/CustomCursor";
+import { ToastProvider } from "@/components/Toast";
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://ogabek.vercel.app"),
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "uz_UZ",
     url: "https://ogabek.vercel.app",
     siteName: "Og'abek Olimjonov Portfolio",
     title: "Og'abek Olimjonov | Frontend Developer",
@@ -46,10 +47,10 @@ export const metadata: Metadata = {
       "Junior Frontend Developer specializing in React.js, Next.js, and modern web technologies.",
     images: [
       {
-        url: "/img/O.A logo.png",
+        url: "/img/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Og'abek Olimjonov - Frontend Developer",
+        alt: "Og'abek Olimjonov — Frontend Developer",
       },
     ],
   },
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
     title: "Og'abek Olimjonov | Frontend Developer",
     description:
       "Junior Frontend Developer specializing in React.js, Next.js, and modern web technologies.",
-    images: ["/img/O.A logo.png"],
+    images: ["/img/og-image.png"],
   },
   robots: {
     index: true,
@@ -71,11 +72,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: {
-    icon: "/img/favicon.png",
-    shortcut: "/img/favicon.png",
-    apple: "/img/favicon.png",
-  },
 };
 
 export default function RootLayout({
@@ -83,14 +79,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // lang="uz" — sayt standart holatda o'zbekcha; til almashtirilsa
+  // LanguageProvider <html lang> ni klientda yangilaydi.
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="uz" className="scroll-smooth">
       <head>
-        <link
-          rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-          precedence="default"
-        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -112,8 +105,10 @@ export default function RootLayout({
         className={`${playfair.variable} ${poppins.variable} font-poppins bg-primary text-light antialiased`}
       >
         <LanguageProvider>
-          <CustomCursor />
-          {children}
+          <ToastProvider>
+            <CustomCursor />
+            {children}
+          </ToastProvider>
         </LanguageProvider>
       </body>
     </html>

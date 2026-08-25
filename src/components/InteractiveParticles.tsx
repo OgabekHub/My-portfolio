@@ -22,9 +22,14 @@ export default function InteractiveParticles() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let animationFrameId: number;
+    // Harakatni kamaytirish so'ralgan bo'lsa animatsiyani umuman ishga tushirmaymiz
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let animationFrameId: number | null = null;
     let particles: Particle[] = [];
-    const particleCount = 75;
+    // Mobilda zarracha soni kamroq — bog'lanish tekshiruvi O(n²), 75 ta zarracha
+    // har kadrda 2775 ta masofa hisobini talab qiladi.
+    const particleCount = window.innerWidth < 768 ? 35 : 75;
     const connectionDistance = 115;
     const mouseRadius = 160;
 
@@ -88,6 +93,11 @@ export default function InteractiveParticles() {
       const h = canvas.height;
       const mouse = mouseRef.current;
 
+      // Rang va soyani har bir zarracha uchun emas, bir marta o'rnatamiz
+      ctx.fillStyle = `rgba(200, 161, 100, ${mouse.active ? 0.65 : 0.4})`;
+      ctx.shadowBlur = 4;
+      ctx.shadowColor = "rgba(200, 161, 100, 0.35)";
+
       particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
@@ -115,12 +125,10 @@ export default function InteractiveParticles() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(200, 161, 100, ${mouse.active ? 0.65 : 0.4})`;
-        ctx.shadowBlur = p.radius * 2;
-        ctx.shadowColor = "rgba(200, 161, 100, 0.35)";
         ctx.fill();
-        ctx.shadowBlur = 0;
       });
+
+      ctx.shadowBlur = 0;
 
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
@@ -145,7 +153,28 @@ export default function InteractiveParticles() {
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    animate();
+    const start = () => {
+      if (animationFrameId === null) animationFrameId = requestAnimationFrame(animate);
+    };
+
+    const stop = () => {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    };
+
+    // Tab ko'rinmasa yoki hero ekrandan chiqsa — animatsiyani to'xtatamiz
+    const handleVisibility = () => (document.hidden ? stop() : start());
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    const visibilityObserver = new IntersectionObserver(
+      ([entry]) => (entry.isIntersecting && !document.hidden ? start() : stop()),
+      { threshold: 0 }
+    );
+    visibilityObserver.observe(canvas);
+
+    start();
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
@@ -153,7 +182,9 @@ export default function InteractiveParticles() {
       window.removeEventListener("mouseleave", handleMouseLeave);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleMouseLeave);
-      cancelAnimationFrame(animationFrameId);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      visibilityObserver.disconnect();
+      stop();
     };
   }, []);
 
