@@ -34,3 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# eski vanilla versiya (mahalliy arxiv, repoda kerak emas)
+/vanilla-backup/
+
+# editor
+/.vscode/
