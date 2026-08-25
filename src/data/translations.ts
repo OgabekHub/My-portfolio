@@ -36,76 +36,53 @@ export const translations = {
       goalsTitle: "Mening Maqsadlarim",
       goalsDesc: "Professional dasturchi bo'lib yetishish, xalqaro loyihalarda ishtirok etish va kelajakda o'z IT kompaniyamga asos solish.",
       viewResume: "Rezyumeni Ko'rish",
-      timelineTitle: "Ta'lim va Tajriba",
-      timeline: [
-        {
-          period: "2024 - Hozirgacha",
-          title: "Frontend Dasturlash (Freelance / Amaliyot)",
-          location: "Masofaviy",
-          desc: "React.js, Next.js va Tailwind CSS yordamida turli xil veb-saytlar va foydalanuvchi interfeyslarini yaratish. Loyihalarni optimallashtirish va UI qulayligini ta'minlash."
-        },
-        {
-          period: "2023 - Hozirgacha",
-          title: "Kompyuter Ilmlari va Dasturiy Injiniring",
-          location: "Namangan Davlat Universiteti",
-          desc: "Algoritmlar, ma'lumotlar tuzilmalari, dasturlash asoslari va dasturiy ta'minotni ishlab chiqish metodologiyalarini o'rganish."
-        },
-        {
-          period: "2023 (6 oy)",
-          title: "Frontend Web Development Kursi",
-          location: "IT Akademiya",
-          desc: "HTML, CSS, JavaScript, SASS, Bootstrap, Git va React.js asoslari bo'yicha intensiv ta'lim va ko'plab amaliy loyihalarni ishlab chiqish."
-        }
-      ]
     },
     skills: {
       title: "Mening ko'nikmalarim",
       frontend: "Frontend Texnologiyalari",
       design: "Dizayn Asboblari",
-      tools: "Dasturlash Asboblari va Boshqalar",
-      badgesView: "Ko'nikmalar",
-      progressView: "Darajalar"
+      tools: "Dasturlash Asboblari va Boshqalar"
     },
     projects: {
       title: "Mening Loyihalarim",
       all: "Barchasi",
-      react: "React",
-      vanilla: "Vanilla CSS/JS",
-      design: "Dizayn",
+      filters: {
+        nextjs: "Next.js",
+        react: "React",
+        ai: "Sun'iy intellekt",
+        ecommerce: "Elektron savdo",
+        landing: "Landing / Agentlik",
+      } as Record<string, string>,
+      empty: "Bu turkumda hozircha loyiha yo'q.",
       items: [
         {
           id: 1,
           title: "DevCommons – Dasturchilar Platformasi",
           desc: "Dasturchilar o'z kod parchalari (snippets), sun'iy intellekt promtlari va loyihalarini o'zaro bepul bo'lishadigan ochiq platforma. Next.js va Tailwind CSS yordamida yaratilgan zamonaviy hamjamiyat portal.",
-          tags: ["react", "design"],
           techs: ["React", "Next.js", "Tailwind CSS", "TypeScript"]
         },
         {
           id: 2,
           title: "AgroVision AI Platformasi",
           desc: "AgroVision AI – Qishloq xo'jaligi uchun sun'iy intellekt platformasi. Zamonaviy kompyuter ko'rishi va chuqur o'rganish (YOLOv8 & EfficientNet) modellari yordamida o'simlik turlarini aniqlash, kasalliklarni tashxislash va aqlli ekin tavsiyalarini olish tizimi.",
-          tags: ["react", "design"],
           techs: ["React", "Next.js", "Tailwind", "Python", "YOLOv8"]
         },
         {
           id: 3,
           title: "Faxr Mebel veb-sayti",
           desc: "Faxr Mebel – Zamonaviy mebel fabrikasining katalog veb-sayti. Mijozlarga oshxona, mehmonxona va yotoqxona uchun premium mebellarni onlayn ko'rish va buyurtma berish imkonini beruvchi chiroyli va qulay platforma.",
-          tags: ["react", "design"],
           techs: ["React", "Vite", "Tailwind", "Framer Motion"]
         },
         {
           id: 4,
           title: "Zetra Store – Onlayn Do'kon",
           desc: "Zetra Store – Zamonaviy elektron savdo (E-commerce) platformasi. Foydalanuvchilarga eng so'nggi mahsulotlarni qulay katalogda ko'rish, saralash va tezgi buyurtma berish imkonini taqdim etuvchi zamonaviy internet do'kon.",
-          tags: ["react", "design"],
           techs: ["React", "Next.js", "Tailwind CSS", "E-commerce"]
         },
         {
           id: 5,
           title: "Nexus Devs – Dasturchilar Agentligi",
           desc: "Nexus Devs – Zamonaviy IT agentlik va dasturiy yechimlar dizayn korxonasi sayti. Yuqori unumdorlik va mukammal UI/UX dizayn asosida qurilgan maxsus sahifa.",
-          tags: ["react", "design"],
           techs: ["React", "Next.js", "Tailwind CSS", "UI/UX"]
         }
       ],
@@ -181,76 +158,53 @@ export const translations = {
       goalsTitle: "My Goals",
       goalsDesc: "To become a professional developer, participate in international projects, and establish my own IT company in the future.",
       viewResume: "View My Resume",
-      timelineTitle: "Education & Experience",
-      timeline: [
-        {
-          period: "2024 - Present",
-          title: "Frontend Developer (Freelance / Internship)",
-          location: "Remote",
-          desc: "Building websites and user interfaces using React.js, Next.js, and Tailwind CSS. Optimizing performance and ensuring user experience (UX) quality."
-        },
-        {
-          period: "2023 - Present",
-          title: "Computer Science & Software Engineering",
-          location: "Namangan State University",
-          desc: "Studying algorithms, data structures, programming fundamentals, and software development methodologies."
-        },
-        {
-          period: "2023 (6 months)",
-          title: "Frontend Web Development Course",
-          location: "IT Academy",
-          desc: "Intensive training on HTML, CSS, JavaScript, SASS, Bootstrap, Git, and React.js basics along with building real-world practical projects."
-        }
-      ]
     },
     skills: {
       title: "My Skills",
       frontend: "Frontend Technologies",
       design: "Design Tools",
-      tools: "Development Tools & Others",
-      badgesView: "Skills",
-      progressView: "Proficiency"
+      tools: "Development Tools & Others"
     },
     projects: {
       title: "My Projects",
       all: "All",
-      react: "React",
-      vanilla: "Vanilla CSS/JS",
-      design: "Design",
+      filters: {
+        nextjs: "Next.js",
+        react: "React",
+        ai: "AI / Machine Learning",
+        ecommerce: "E-Commerce",
+        landing: "Landing / Agency",
+      } as Record<string, string>,
+      empty: "No projects in this category yet.",
       items: [
         {
           id: 1,
           title: "DevCommons Platform",
           desc: "An open platform where developers share their code snippets, AI prompts, and useful architectural resources for free. Built with Next.js, Tailwind CSS, and full interactive UI features.",
-          tags: ["react", "design"],
           techs: ["React", "Next.js", "Tailwind CSS", "TypeScript"]
         },
         {
           id: 2,
           title: "AgroVision AI Platform",
           desc: "AgroVision AI – Artificial Intelligence platform for agriculture in Uzbekistan. Utilizing modern computer vision and deep learning (YOLOv8 & EfficientNet) models to detect plant types, diagnose crop diseases, and provide smart agricultural recommendations.",
-          tags: ["react", "design"],
           techs: ["React", "Next.js", "Tailwind", "Python", "YOLOv8"]
         },
         {
           id: 3,
           title: "Faxr Mebel Website",
           desc: "Faxr Mebel – Catalog and showcase website for a modern furniture factory. An elegant platform for clients to browse and order premium kitchen, bedroom, and living room furniture online.",
-          tags: ["react", "design"],
           techs: ["React", "Vite", "Tailwind", "Framer Motion"]
         },
         {
           id: 4,
           title: "Zetra Store E-Commerce",
           desc: "Zetra Store – A modern electronic commerce platform featuring dynamic product catalogs, seamless filtering, and responsive shopping cart workflows for an elite shopping experience.",
-          tags: ["react", "design"],
           techs: ["React", "Next.js", "Tailwind CSS", "E-commerce"]
         },
         {
           id: 5,
           title: "Nexus Devs Digital Agency",
           desc: "Nexus Devs – Modern IT agency and software solutions portal featuring state-of-the-art UI/UX animations and high-performance frontend architecture.",
-          tags: ["react", "design"],
           techs: ["React", "Next.js", "Tailwind CSS", "UI/UX"]
         }
       ],

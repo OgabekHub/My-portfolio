@@ -5,6 +5,11 @@ import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
 import { handleLocalFallback, ChatResponse, CodeResponse, SentimentResponse } from "@/utils/aiFallback";
 import { triggerConfetti } from "@/utils/confetti";
+import { applyAiTheme, ThemeColors } from "@/utils/theme";
+import { sendOwnerEmail } from "@/utils/email";
+import { scrollToSection } from "@/utils/scroll";
+import { useToast } from "@/components/Toast";
+import { FaPaperPlane, FaPenFancy, FaRobot, FaSpinner, FaWandMagicSparkles, FaXmark } from "react-icons/fa6";
 
 interface Message {
   sender: "user" | "ai";
@@ -20,8 +25,26 @@ interface GuestComment {
   date: string;
 }
 
+const DEFAULT_COMMENTS: GuestComment[] = [
+  {
+    id: "1",
+    name: "Lazizbek",
+    comment: "Og'abek akaga omad! AgroVision AI loyihasi menga juda yoqdi, zo'r yechim bo'libdi.",
+    sentiment: "positive",
+    date: "02.06.2026",
+  },
+  {
+    id: "2",
+    name: "Sarah Miller",
+    comment: "Impressive portfolio design and animations. Keep it up!",
+    sentiment: "positive",
+    date: "01.06.2026",
+  },
+];
+
 export default function AiCommandCenter() {
   const { language } = useLanguage();
+  const { showToast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"chat" | "code" | "guest">("chat");
 
@@ -56,6 +79,20 @@ export default function AiCommandCenter() {
     };
   }, []);
 
+  // Escape bilan yopish va ochilganda panelga fokus berish
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    panelRef.current?.focus();
+
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen]);
+
   // Click outside listener to close the AI panel
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent | TouchEvent) => {
@@ -80,46 +117,45 @@ export default function AiCommandCenter() {
   }, [isOpen]);
 
 
-  // Load comments and settings on mount
+  // Izohlarni faqat bir marta, mount paytida yuklash
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("guest_comments");
-      if (stored) {
-        setComments(JSON.parse(stored));
-      } else {
-        const defaultComments: GuestComment[] = [
-          {
-            id: "1",
-            name: "Lazizbek",
-            comment: "Og'abek akaga omad! AgroVision AI loyihasi menga juda yoqdi, zo'r yechim bo'libdi.",
-            sentiment: "positive",
-            date: "02.06.2026",
-          },
-          {
-            id: "2",
-            name: "Sarah Miller",
-            comment: "Impressive portfolio design and animations. Keep it up!",
-            sentiment: "positive",
-            date: "01.06.2026",
-          },
-        ];
-        setComments(defaultComments);
-        localStorage.setItem("guest_comments", JSON.stringify(defaultComments));
+    if (typeof window === "undefined") return;
+
+    const stored = localStorage.getItem("guest_comments");
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed)) {
+          setComments(parsed);
+          return;
+        }
+      } catch {
+        // Buzuq localStorage panelni ishdan chiqarmasligi uchun default'ga tushamiz
       }
-
-
-
-      // Default welcome message
-      setMessages([
-        {
-          sender: "ai",
-          text: language === "uz" 
-            ? "Salom! Men Og'abekning AI Copilot yordamchisiman. Menga savollar berishingiz, sayt ranglarini o'zgartirishingiz yoki sahifani navigatsiya qilishingiz mumkin. Keling, boshlaylik!" 
-            : "Hello! I am Og'abek's AI Copilot assistant. You can ask me questions, dynamically change page themes, or navigate sections. Let's begin!",
-          timestamp: new Date(),
-        },
-      ]);
     }
+
+    setComments(DEFAULT_COMMENTS);
+    localStorage.setItem("guest_comments", JSON.stringify(DEFAULT_COMMENTS));
+  }, []);
+
+  // Salomlashish xabari — chat bo'sh bo'lgandagina.
+  // Ilgari bu [language] ga bog'langan edi va til almashtirilsa butun
+  // suhbat tarixi o'chib ketardi.
+  useEffect(() => {
+    setMessages((prev) =>
+      prev.length > 0
+        ? prev
+        : [
+            {
+              sender: "ai",
+              text:
+                language === "uz"
+                  ? "Salom! Men Og'abekning AI Copilot yordamchisiman. Menga savollar berishingiz, sayt ranglarini o'zgartirishingiz yoki sahifani navigatsiya qilishingiz mumkin. Keling, boshlaylik!"
+                  : "Hello! I am Og'abek's AI Copilot assistant. You can ask me questions, dynamically change page themes, or navigate sections. Let's begin!",
+              timestamp: new Date(),
+            },
+          ]
+    );
   }, [language]);
 
   // Auto-scroll chat to bottom
@@ -133,30 +169,18 @@ export default function AiCommandCenter() {
   const executeAiActions = (
     action: string, 
     scrollTarget: string | null, 
-    themeColors: { primary: string; secondary: string; accent: string; light: string } | null | undefined
+    themeColors: ThemeColors | null | undefined
   ) => {
     // 1. Scroll UI Section
     if ((action === "navigate" || action === "both") && scrollTarget) {
-      setTimeout(() => {
-        const element = document.querySelector(scrollTarget);
-        if (element) {
-          const offset = 80;
-          const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - offset;
-          window.scrollTo({ top: targetPosition, behavior: "smooth" });
-        }
-      }, 350);
+      setTimeout(() => scrollToSection(scrollTarget), 350);
     }
 
     // 2. Inject Dynamic CSS Custom Properties
-    if ((action === "theme" || action === "both") && themeColors) {
-      try {
-        document.documentElement.style.setProperty("--color-primary", themeColors.primary);
-        document.documentElement.style.setProperty("--color-secondary", themeColors.secondary);
-        document.documentElement.style.setProperty("--color-accent", themeColors.accent);
-        document.documentElement.style.setProperty("--color-light", themeColors.light);
-      } catch (e) {
-        console.error("Theme injection error:", e);
-      }
+    // applyAiTheme hex bilan birga RGB triplet'ni ham yozadi, aks holda
+    // Tailwind klasslari (bg-primary, text-accent, ...) eski rangda qolardi.
+    if (action === "theme" || action === "both") {
+      applyAiTheme(themeColors);
     }
   };
 
@@ -236,64 +260,60 @@ export default function AiCommandCenter() {
     soundManager.playClick();
     setIsGuestLoading(true);
 
+    const name = guestName.trim();
+    const comment = guestComment.trim();
+
+    // 1. Kayfiyatni aniqlash — API ishlamasa lokal algoritmga tushamiz
+    let result: SentimentResponse;
     try {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: guestComment, mode: "sentiment" }),
+        body: JSON.stringify({ message: comment, mode: "sentiment" }),
       });
-
-      let data;
-      if (response.ok) {
-        data = await response.json();
-      } else {
-        throw new Error("API check failed");
-      }
-
-      const newComment: GuestComment = {
-        id: String(Date.now()),
-        name: guestName,
-        comment: guestComment,
+      if (!response.ok) throw new Error("Sentiment API failed");
+      const data = await response.json();
+      result = {
         sentiment: data.sentiment || "neutral",
-        date: new Date().toLocaleDateString("uz-UZ"),
+        reply: data.reply || "Fikringiz saqlandi!",
       };
-
-      const updated = [newComment, ...comments];
-      setComments(updated);
-      localStorage.setItem("guest_comments", JSON.stringify(updated));
-
-      // Trigger Confetti canvas blast on positive comments
-      if (data.sentiment === "positive") {
-        triggerConfetti();
-        soundManager.playThemeToggle(false);
-      }
-
-      setGuestComment("");
-      alert(data.reply || "Fikringiz saqlandi!");
     } catch {
-      const fallback = handleLocalFallback(guestComment, "sentiment") as SentimentResponse;
-      const newComment: GuestComment = {
-        id: String(Date.now()),
-        name: guestName,
-        comment: guestComment,
-        sentiment: fallback.sentiment || "neutral",
-        date: new Date().toLocaleDateString("uz-UZ"),
-      };
-
-      const updated = [newComment, ...comments];
-      setComments(updated);
-      localStorage.setItem("guest_comments", JSON.stringify(updated));
-
-      if (fallback.sentiment === "positive") {
-        triggerConfetti();
-        soundManager.playThemeToggle(false);
-      }
-
-      setGuestComment("");
-      alert(fallback.reply);
-    } finally {
-      setIsGuestLoading(false);
+      result = handleLocalFallback(comment, "sentiment") as SentimentResponse;
     }
+
+    // 2. Ro'yxatga qo'shish (ko'rsatish uchun localStorage'da saqlanadi)
+    const newComment: GuestComment = {
+      id: String(Date.now()),
+      name,
+      comment,
+      sentiment: result.sentiment,
+      date: new Date().toLocaleDateString("uz-UZ"),
+    };
+
+    const updated = [newComment, ...comments];
+    setComments(updated);
+    try {
+      localStorage.setItem("guest_comments", JSON.stringify(updated));
+    } catch {
+      // Kvota to'lgan yoki private rejim — ko'rsatishga to'sqinlik qilmasin
+    }
+
+    if (result.sentiment === "positive") {
+      triggerConfetti();
+      soundManager.playThemeToggle(false);
+    }
+
+    // 3. Fikrni sayt egasiga yuborish. Ilgari izoh faqat localStorage'da
+    // qolib ketardi va egasi uni hech qachon ko'rmasdi.
+    sendOwnerEmail({
+      name,
+      subject: `Portfolio mehmonlar daftari — ${name} (${result.sentiment})`,
+      message: comment,
+    }).catch((err) => console.error("Guestbook email error:", err));
+
+    setGuestComment("");
+    showToast(result.reply, result.sentiment === "negative" ? "info" : "success");
+    setIsGuestLoading(false);
   };
 
   return (
@@ -302,12 +322,16 @@ export default function AiCommandCenter() {
       {isOpen && (
         <div
           ref={panelRef}
-          className="fixed z-[1000] bottom-[85px] left-1/2 -translate-x-1/2 md:bottom-[95px] md:right-[95px] md:left-auto md:transform-none w-[calc(100vw-40px)] md:w-[380px] max-w-[380px] h-[520px] bg-secondary/85 backdrop-blur-md rounded-2xl border border-accent/20 shadow-[0_15px_50px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden animate-slideUpMobile md:animate-fadeIn font-poppins"
+          role="dialog"
+          aria-modal="true"
+          aria-label="AI Copilot"
+          tabIndex={-1}
+          className="fixed z-[1000] bottom-[85px] left-1/2 -translate-x-1/2 md:bottom-[95px] md:right-[95px] md:left-auto md:transform-none w-[calc(100vw-40px)] md:w-[380px] max-w-[380px] h-[520px] bg-secondary/85 backdrop-blur-md rounded-2xl border border-accent/20 shadow-[0_15px_50px_rgba(0,0,0,0.35)] flex flex-col overflow-hidden animate-slideUpMobile md:animate-fadeIn font-poppins focus:outline-none"
         >
           {/* Header */}
           <div className="p-4 border-b border-accent/15 flex items-center justify-between bg-primary/45">
             <h3 className="font-playfair font-bold text-accent text-lg flex items-center gap-1.5">
-              <i className="fas fa-robot text-base"></i>
+              <FaRobot className="text-base" />
               <span>AI Copilot</span>
             </h3>
             
@@ -320,7 +344,7 @@ export default function AiCommandCenter() {
                 }}
                 className="text-light/50 hover:text-accent text-sm"
               >
-                <i className="fas fa-times text-base"></i>
+                <FaXmark className="text-base" />
               </button>
             </div>
           </div>
@@ -380,7 +404,7 @@ export default function AiCommandCenter() {
                     <div className="flex justify-start">
                       <div className="bg-primary/50 border border-accent/10 rounded-xl rounded-tl-none p-3 text-light/50 flex items-center gap-1.5">
                         <span>Typing</span>
-                        <i className="fas fa-spinner fa-spin text-accent"></i>
+                        <FaSpinner className="animate-spin text-accent" />
                       </div>
                     </div>
                   )}
@@ -404,7 +428,7 @@ export default function AiCommandCenter() {
                     type="submit"
                     className="px-3 rounded-xl bg-accent text-primary text-xs font-semibold hover:bg-light hover:text-primary transition-all flex items-center justify-center"
                   >
-                    <i className="fas fa-paper-plane"></i>
+                    <FaPaperPlane />
                   </button>
                 </form>
               </div>
@@ -430,12 +454,12 @@ export default function AiCommandCenter() {
                   >
                     {isCodeLoading ? (
                       <>
-                        <i className="fas fa-spinner fa-spin mr-1"></i>
+                        <FaSpinner className="animate-spin mr-1" />
                         <span>{language === "uz" ? "Tahlil qilinmoqda..." : "Analyzing..."}</span>
                       </>
                     ) : (
                       <>
-                        <i className="fa-solid fa-wand-magic-sparkles mr-1"></i>
+                        <FaWandMagicSparkles className="mr-1" />
                         <span>{language === "uz" ? "Kodni Tahlil Qilish" : "Run Code Analysis"}</span>
                       </>
                     )}
@@ -478,10 +502,10 @@ export default function AiCommandCenter() {
                     }`}
                   >
                     {isGuestLoading ? (
-                      <i className="fas fa-spinner fa-spin"></i>
+                      <FaSpinner className="animate-spin" />
                     ) : (
                       <>
-                        <i className="fas fa-pen-fancy mr-1"></i>
+                        <FaPenFancy className="mr-1" />
                         <span>{language === "uz" ? "Fikr qoldirish" : "Submit Comment"}</span>
                       </>
                     )}

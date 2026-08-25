@@ -4,6 +4,10 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
+import { FaChevronDown, FaChevronUp, FaGithub, FaUpRightFromSquare } from "react-icons/fa6";
+
+// Filtr tugmalari shu tartibda ko'rsatiladi (loyihada uchraydiganlari)
+const FILTER_ORDER = ["nextjs", "react", "ai", "ecommerce", "landing"];
 
 // --- 3D Tilt Card Sub-component ---
 interface ProjectItem {
@@ -105,7 +109,7 @@ function TiltCard({ project }: { project: ProjectItem }) {
             className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center hover:bg-light hover:text-primary transition-all duration-300 shadow-md"
             aria-label="View on GitHub"
           >
-            <i className="fab fa-github text-xl"></i>
+            <FaGithub className="text-xl" />
           </a>
           <a
             href={project.demo}
@@ -116,7 +120,7 @@ function TiltCard({ project }: { project: ProjectItem }) {
             className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center hover:bg-light hover:text-primary transition-all duration-300 shadow-md"
             aria-label="View live demo"
           >
-            <i className="fas fa-external-link-alt text-lg"></i>
+            <FaUpRightFromSquare className="text-lg" />
           </a>
         </div>
       </div>
@@ -154,37 +158,45 @@ export default function Projects() {
 
   // 💡 YANGI LOYIHA QO'SHISH UCHUN YO'RIQNOMA:
   // 1. Shu yerda yangi loyiha id, rasm (image) va linklarni (github, demo) qo'shing.
-  // 2. keyin `src/data/translations.ts` faylidagi hamyurtimiz (uz) va inglizchi (en) bo'shlashdagi projects -> items ichiga ham xuddi shunday id bilan nomi va ta'rifini qo'shib ketasiz!
+  // 2. keyin `src/data/translations.ts` faylidagi uz va en bo'limlaridagi projects -> items
+  //    ichiga ham xuddi shunday id bilan nomi va ta'rifini qo'shib ketasiz!
+  // Eslatma: teglar (tags) shu yerda turadi — ular tilga bog'liq emas.
+  // Yangi teg qo'shsangiz, uni FILTER_ORDER ga va translations'dagi projects.filters ga ham qo'shing.
   const projectsData = [
     {
       id: 1,
       image: "/img/devcommons.png",
       github: "https://github.com/OgabekHub/devcommons",
       demo: "https://devcommons.vercel.app/",
+      tags: ["nextjs", "react"],
     },
     {
       id: 2,
       image: "/img/agrovision.png",
       github: "https://github.com/OgabekHub",
       demo: "https://agro-vision-ai-zeta.vercel.app/",
+      tags: ["ai", "nextjs", "react"],
     },
     {
       id: 3,
       image: "/img/faxrmebel.png",
       github: "https://github.com/OgabekHub",
       demo: "https://faxr-mebel.vercel.app/",
+      tags: ["react", "landing"],
     },
     {
       id: 4,
       image: "/img/zetrastore.png",
       github: "https://github.com/OgabekHub/zetra-store",
       demo: "https://zetra-store-one.vercel.app/",
+      tags: ["ecommerce", "nextjs", "react"],
     },
     {
       id: 5,
       image: "/img/nexusdevs.png",
       github: "https://github.com/OgabekHub/nexusdevs",
       demo: "https://nexusdevs-xi.vercel.app/",
+      tags: ["landing", "nextjs", "react"],
     },
   ];
 
@@ -194,16 +206,27 @@ export default function Projects() {
       id: data.id,
       title: `Project #${data.id}`,
       desc: "Loyiha haqida batafsil...",
-      tags: ["react", "design"],
       techs: ["Next.js", "Tailwind"],
     };
-    return { ...data, ...item };
+    // data oxirida turadi — teglar tarjimadan emas, projectsData'dan olinadi
+    return { ...item, ...data };
   });
 
   const filteredProjects = combinedProjects.filter((project) => {
     if (filter === "all") return true;
     return project.tags?.includes(filter);
   });
+
+  // Tugmalar ro'yxati loyihalardagi haqiqiy teglardan quriladi, shuning uchun
+  // hech qachon 0 ta natija beruvchi filtr chiqmaydi.
+  const usedTags = new Set(combinedProjects.flatMap((p) => p.tags ?? []));
+  const filterButtons = [
+    { id: "all", label: t.projects.all },
+    ...FILTER_ORDER.filter((tag) => usedTags.has(tag)).map((tag) => ({
+      id: tag,
+      label: t.projects.filters[tag] ?? tag,
+    })),
+  ];
 
   const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, INITIAL_COUNT);
 
@@ -217,14 +240,9 @@ export default function Projects() {
           </span>
         </h2>
 
-        {/* Filter buttons */}
+        {/* Filter buttons — faqat haqiqatan loyihasi bor teglar ko'rsatiladi */}
         <div className="flex justify-center flex-wrap gap-4 mb-16 mt-8">
-          {[
-            { id: "all", label: t.projects.all },
-            { id: "react", label: t.projects.react },
-            { id: "vanilla", label: t.projects.vanilla },
-            { id: "design", label: t.projects.design },
-          ].map((btn) => (
+          {filterButtons.map((btn) => (
             <button
               key={btn.id}
               onClick={() => {
@@ -245,11 +263,15 @@ export default function Projects() {
         </div>
 
         {/* Projects Grid with 3D tilt */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
-          {displayedProjects.map((project) => (
-            <TiltCard key={project.id} project={project} />
-          ))}
-        </div>
+        {displayedProjects.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {displayedProjects.map((project) => (
+              <TiltCard key={project.id} project={project} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-light/60 py-16">{t.projects.empty}</p>
+        )}
 
         {/* Show More / Show Less Button */}
         {filteredProjects.length > INITIAL_COUNT && (
@@ -267,13 +289,11 @@ export default function Projects() {
                   ? t.projects.showLess
                   : `${t.projects.showMore} (+${filteredProjects.length - INITIAL_COUNT})`}
               </span>
-              <i
-                className={`fas fa-chevron-${
-                  showAll ? "up" : "down"
-                } text-xs transition-transform duration-300 ${
-                  showAll ? "group-hover:-translate-y-1" : "group-hover:translate-y-1"
-                }`}
-              ></i>
+              {showAll ? (
+                <FaChevronUp className="text-xs transition-transform duration-300 group-hover:-translate-y-1" />
+              ) : (
+                <FaChevronDown className="text-xs transition-transform duration-300 group-hover:translate-y-1" />
+              )}
             </button>
           </div>
         )}

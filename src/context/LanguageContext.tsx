@@ -23,6 +23,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     setMounted(true);
   }, []);
 
+  // <html lang> ni faol tilga moslash — skrinriderlar va qidiruv tizimlari uchun
+  useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
+
   const toggleLanguage = () => {
     const newLang = language === "uz" ? "en" : "uz";
     setLanguage(newLang);

@@ -1,14 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
-import emailjs from "@emailjs/browser";
+import { sendOwnerEmail } from "@/utils/email";
 import { soundManager } from "@/utils/sound";
+import { useToast } from "@/components/Toast";
+import { FaEnvelope, FaGithub, FaLinkedin, FaLocationDot, FaPaperPlane, FaPhone, FaSpinner, FaTelegram } from "react-icons/fa6";
 
 export default function Contact() {
   const router = useRouter();
   const { t } = useLanguage();
+  const { showToast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,6 +19,12 @@ export default function Contact() {
     message: "",
   });
   const [isSending, setIsSending] = useState(false);
+
+  // Spam himoyasi: yashirin maydon (botlar to'ldiradi, odam ko'rmaydi)
+  // va formaning ochilgan vaqti (bot bir zumda yuboradi).
+  const [honeypot, setHoneypot] = useState("");
+  const formOpenedAt = useRef<number>(Date.now());
+  const MIN_FILL_MS = 3000;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -26,29 +35,32 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    // Honeypot to'ldirilgan yoki forma juda tez yuborilgan — jimgina bekor qilamiz.
+    // Botga muvaffaqiyat kabi ko'rinadi, lekin hech narsa yuborilmaydi.
+    if (honeypot.trim() !== "" || Date.now() - formOpenedAt.current < MIN_FILL_MS) {
+      setFormData({ name: "", email: "", subject: "", message: "" });
+      return;
+    }
+
     setIsSending(true);
 
     try {
-      await emailjs.send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
-        {
-          name: formData.name,
-          email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          from_name: "Og'abek Olimjonov",
-          reply_to: "olimjonov.ogabek.dev@gmail.com",
-        },
-        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
-      );
+      // reply_to endi yuboruvchining manzili — ilgari bu yerda egasining
+      // o'z manzili turgan va kelgan xatga "Reply" o'ziga qaytardi.
+      await sendOwnerEmail({
+        name: formData.name,
+        email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      });
 
       // Reset form and redirect to thank-you route
       setFormData({ name: "", email: "", subject: "", message: "" });
       router.push("/thank-you");
     } catch (error) {
       console.error("EmailJS sending error:", error);
-      alert(t.contact.errorAlert);
+      showToast(t.contact.errorAlert, "error");
       setIsSending(false);
     }
   };
@@ -73,7 +85,7 @@ export default function Contact() {
               <div className="space-y-6">
                 <div className="contact-item flex items-center gap-4">
                   <div className="contact-icon text-accent bg-primary/45 w-10 h-10 rounded-full flex items-center justify-center border border-accent/10">
-                    <i className="fas fa-envelope"></i>
+                    <FaEnvelope />
                   </div>
                   <div>
                     <h4 className="font-semibold text-accent text-sm">Email</h4>
@@ -82,7 +94,7 @@ export default function Contact() {
                 </div>
                 <div className="contact-item flex items-center gap-4">
                   <div className="contact-icon text-accent bg-primary/45 w-10 h-10 rounded-full flex items-center justify-center border border-accent/10">
-                    <i className="fas fa-phone"></i>
+                    <FaPhone />
                   </div>
                   <div>
                     <h4 className="font-semibold text-accent text-sm">Phone</h4>
@@ -91,7 +103,7 @@ export default function Contact() {
                 </div>
                 <div className="contact-item flex items-center gap-4">
                   <div className="contact-icon text-accent bg-primary/45 w-10 h-10 rounded-full flex items-center justify-center border border-accent/10">
-                    <i className="fas fa-map-marker-alt"></i>
+                    <FaLocationDot />
                   </div>
                   <div>
                     <h4 className="font-semibold text-accent text-sm">Location</h4>
@@ -111,7 +123,7 @@ export default function Contact() {
                   className="social-link"
                   aria-label="GitHub"
                 >
-                  <i className="fab fa-github"></i>
+                  <FaGithub />
                 </a>
                 <a
                   href="https://www.linkedin.com/in/og-abek-olimjonov-2a52b3364?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BZCdpoYM8SXiYquzPfhXTIg%3D%3D"
@@ -122,7 +134,7 @@ export default function Contact() {
                   className="social-link"
                   aria-label="LinkedIn"
                 >
-                  <i className="fab fa-linkedin"></i>
+                  <FaLinkedin />
                 </a>
                 <a
                   href="https://t.me/olimjonov_ogabek"
@@ -133,7 +145,7 @@ export default function Contact() {
                   className="social-link"
                   aria-label="Telegram"
                 >
-                  <i className="fab fa-telegram"></i>
+                  <FaTelegram />
                 </a>
               </div>
             </div>
@@ -141,6 +153,17 @@ export default function Contact() {
             {/* Contact Form */}
             <div className="contact-form">
               <form onSubmit={handleSubmit} className="space-y-6" id="contactForm" name="contact">
+                {/* Honeypot — ekrandan tashqarida, skrinriderlardan yashirin */}
+                <input
+                  type="text"
+                  name="company"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute w-px h-px -left-[9999px] opacity-0"
+                />
                 <div className="form-group flex flex-col gap-1">
                   <label className="text-sm font-semibold text-accent">{t.contact.nameLabel}</label>
                   <input
@@ -205,12 +228,12 @@ export default function Contact() {
                   {isSending ? (
                     <>
                       <span>{t.contact.sendingBtn}</span>
-                      <i className="fas fa-spinner fa-spin ml-1"></i>
+                      <FaSpinner className="animate-spin ml-1" />
                     </>
                   ) : (
                     <>
                       <span>{t.contact.sendBtn}</span>
-                      <i className="fas fa-paper-plane ml-1"></i>
+                      <FaPaperPlane className="ml-1" />
                     </>
                   )}
                 </button>
