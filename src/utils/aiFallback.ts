@@ -1,13 +1,7 @@
 export interface ChatResponse {
   reply: string;
-  action: "navigate" | "theme" | "both" | "talk";
+  action: "navigate" | "talk";
   scrollTarget: string | null;
-  themeColors: {
-    primary: string;
-    secondary: string;
-    accent: string;
-    light: string;
-  } | null;
 }
 
 export interface CodeResponse {
@@ -68,9 +62,8 @@ export function handleLocalFallback(
 
   // Default: chat mode
   let reply = "Salom! Men Og'abekning AI Copilot yordamchisiman. Sizga qanday yordam bera olaman?";
-  let action: "navigate" | "theme" | "both" | "talk" = "talk";
+  let action: "navigate" | "talk" = "talk";
   let scrollTarget: string | null = null;
-  let themeColors: ChatResponse["themeColors"] = null;
 
   if (query.includes("loyiha") || query.includes("project") || query.includes("work")) {
     action = "navigate";
@@ -90,34 +83,5 @@ export function handleLocalFallback(
     reply = "U bilan bog'lanish uchun 'Contact' bo'limiga o'tamiz.";
   }
 
-  if (query.includes("kiberpank") || query.includes("cyberpunk") || query.includes("binafsha") || query.includes("neon")) {
-    action = action === "navigate" ? "both" : "theme";
-    themeColors = {
-      primary: "#03001e",
-      secondary: "#1f0030",
-      accent: "#ec38bc",
-      light: "#fdeff9",
-    };
-    reply += " Ranglarni esa kiberpank (neon binafsha) rejimiga o'tkazaman!";
-  } else if (query.includes("yashil") || query.includes("green") || query.includes("tabiat") || query.includes("botanik")) {
-    action = action === "navigate" ? "both" : "theme";
-    themeColors = {
-      primary: "#0a1c12",
-      secondary: "#153322",
-      accent: "#4db885",
-      light: "#eaf7f0",
-    };
-    reply += " Ranglarni esa botanik (tabiat yashili) rejimiga almashtiraman!";
-  } else if (query.includes("oltin") || query.includes("gold") || query.includes("asliy") || query.includes("sariq") || query.includes("restore") || query.includes("reset")) {
-    action = action === "navigate" ? "both" : "theme";
-    themeColors = {
-      primary: "#1a1a1a",
-      secondary: "#2d2d2d",
-      accent: "#c8a164",
-      light: "#f5f5f5",
-    };
-    reply += " Ranglarni portfolioning asliy oltin-qorong'i rejimiga qaytardim.";
-  }
-
-  return { reply, action, scrollTarget, themeColors };
+  return { reply, action, scrollTarget };
 }

@@ -122,25 +122,11 @@ export async function POST(req: Request) {
         Navigatsiya qoidalari:
         - Agar foydalanuvchi ma'lum bir bo'limga o'tishni so'rasa (masalan: "loyihalar", "ishlar", "ko'nikmalar", "haqida", "aloqa", "bog'lanish"), 'scrollTarget' maydoni uchun quyidagilardan mosini tanlang: "#home", "#about", "#skills", "#projects", "#contact". Mos bo'lim bo'lmasa, null qoldiring.
 
-        Mavzu o'zgartirish (Theme Generation) qoidalari:
-        - Agar foydalanuvchi ranglarni o'zgartirishni so'rasa (masalan: "kiberpank", "yashil rang", "oltin rang", "qora qil", "oq rejim"), 'themeColors' obyektiga uyg'un va chiroyli ranglar kodini yozing:
-          * primary: asosiy fon rangi (to'q yoki yorqin rang)
-          * secondary: kartalar foni rangi (primary'dan bir oz farq qiluvchi)
-          * accent: urg'u beruvchi rang (tugmalar, havolalar, masalan: oltin #c8a164, yashil, neon pushti)
-          * light: matn rangi (to'q fonlar uchun oq/och rang, och fonlar uchun to'q rang)
-        - Mavzu o'zgartirish so'ralmagan bo'lsa, 'themeColors' maydonini null qoldiring.
-
         Javobni aniq quyidagi JSON formatida qaytaring:
         {
           "reply": "Sizning o'zbekcha chiroyli va samimiy javobingiz",
-          "action": "navigate | theme | both | talk",
-          "scrollTarget": "#projects" (yoki null),
-          "themeColors": {
-            "primary": "#...",
-            "secondary": "#...",
-            "accent": "#...",
-            "light": "#..."
-          } (yoki null)
+          "action": "navigate | talk",
+          "scrollTarget": "#projects" (yoki null)
         }
       `;
     }

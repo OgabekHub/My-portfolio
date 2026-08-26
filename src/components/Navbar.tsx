@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
-import { resetAiTheme } from "@/utils/theme";
 import { scrollToSection } from "@/utils/scroll";
 import { NAV_LINKS } from "@/data/navLinks";
 import dynamic from "next/dynamic";
@@ -35,8 +34,6 @@ export default function Navbar() {
     setIsDark(nextDark);
     soundManager.playThemeToggle(nextDark);
 
-    // AI o'rnatgan inline ranglarni tozalash — bo'lmasa bu tugma ta'sirsiz qoladi
-    resetAiTheme();
     if (nextDark) {
       document.documentElement.classList.add("dark");
       localStorage.setItem("theme", "dark");

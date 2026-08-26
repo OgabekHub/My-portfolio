@@ -5,7 +5,6 @@ import { useLanguage } from "@/context/LanguageContext";
 import { soundManager } from "@/utils/sound";
 import { handleLocalFallback, ChatResponse, CodeResponse, SentimentResponse } from "@/utils/aiFallback";
 import { triggerConfetti } from "@/utils/confetti";
-import { applyAiTheme, ThemeColors } from "@/utils/theme";
 import { sendOwnerEmail } from "@/utils/email";
 import { scrollToSection } from "@/utils/scroll";
 import { useToast } from "@/components/Toast";
@@ -47,7 +46,6 @@ export default function AiCommandCenter() {
   const { showToast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"chat" | "code" | "guest">("chat");
-
 
   // Chat Tab states
   const [messages, setMessages] = useState<Message[]>([]);
@@ -116,7 +114,6 @@ export default function AiCommandCenter() {
     };
   }, [isOpen]);
 
-
   // Izohlarni faqat bir marta, mount paytida yuklash
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -150,8 +147,8 @@ export default function AiCommandCenter() {
               sender: "ai",
               text:
                 language === "uz"
-                  ? "Salom! Men Og'abekning AI Copilot yordamchisiman. Menga savollar berishingiz, sayt ranglarini o'zgartirishingiz yoki sahifani navigatsiya qilishingiz mumkin. Keling, boshlaylik!"
-                  : "Hello! I am Og'abek's AI Copilot assistant. You can ask me questions, dynamically change page themes, or navigate sections. Let's begin!",
+                  ? "Salom! Men Og'abekning AI Copilot yordamchisiman. Menga savollar berishingiz yoki kerakli bo'limga o'tishimni so'rashingiz mumkin. Keling, boshlaylik!"
+                  : "Hello! I am Og'abek's AI Copilot assistant. Ask me anything, or tell me which section to take you to. Let's begin!",
               timestamp: new Date(),
             },
           ]
@@ -163,24 +160,10 @@ export default function AiCommandCenter() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-
-
-  // Process structured actions (scroll UI, inject custom theme CSS variables)
-  const executeAiActions = (
-    action: string, 
-    scrollTarget: string | null, 
-    themeColors: ThemeColors | null | undefined
-  ) => {
-    // 1. Scroll UI Section
-    if ((action === "navigate" || action === "both") && scrollTarget) {
+  // AI javobidagi navigatsiya buyrug'ini bajarish.
+  const executeAiAction = (action: string, scrollTarget: string | null) => {
+    if (action === "navigate" && scrollTarget) {
       setTimeout(() => scrollToSection(scrollTarget), 350);
-    }
-
-    // 2. Inject Dynamic CSS Custom Properties
-    // applyAiTheme hex bilan birga RGB triplet'ni ham yozadi, aks holda
-    // Tailwind klasslari (bg-primary, text-accent, ...) eski rangda qolardi.
-    if (action === "theme" || action === "both") {
-      applyAiTheme(themeColors);
     }
   };
 
@@ -211,12 +194,12 @@ export default function AiCommandCenter() {
       const aiReply = data.reply || "Xatolik yuz berdi.";
 
       setMessages((prev) => [...prev, { sender: "ai", text: aiReply, timestamp: new Date() }]);
-      executeAiActions(data.action, data.scrollTarget, data.themeColors);
+      executeAiAction(data.action, data.scrollTarget);
     } catch {
       // Offline fallback
       const fallback = handleLocalFallback(activeMsg, "chat") as ChatResponse;
       setMessages((prev) => [...prev, { sender: "ai", text: fallback.reply, timestamp: new Date() }]);
-      executeAiActions(fallback.action, fallback.scrollTarget, fallback.themeColors);
+      executeAiAction(fallback.action, fallback.scrollTarget);
     } finally {
       setIsChatLoading(false);
     }
@@ -410,8 +393,6 @@ export default function AiCommandCenter() {
                   )}
                   <div ref={messagesEndRef} />
                 </div>
-
-
 
                 {/* Chat Form */}
                 <form onSubmit={handleChatSubmit} className="flex gap-2 mt-2">
