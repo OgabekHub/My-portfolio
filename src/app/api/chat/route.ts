@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 
-const VALID_MODES = ["chat", "code", "sentiment"] as const;
 const MAX_MESSAGE_LENGTH = 1000;
-const MAX_CODE_LENGTH = 5000;
 
 /** So'rov shu saytdan kelganini tekshirish (dev'da localhost'ga ruxsat). */
 function isAllowedOrigin(req: Request): boolean {
@@ -38,34 +36,23 @@ export async function POST(req: Request) {
       );
     }
 
-    const { message, mode, code } = await req.json();
+    const { message, mode } = await req.json();
 
     // --- 3. Input validatsiyasi (Gemini'ga so'rov yuborishdan OLDIN) ---
-    if (mode !== undefined && !VALID_MODES.includes(mode)) {
+    // Faqat chat rejimi qoldi; eski mijozlar yuboradigan mode: "chat" ham qabul qilinadi
+    if (mode !== undefined && mode !== "chat") {
       return NextResponse.json({ error: "Invalid mode" }, { status: 400 });
     }
 
-    if (message !== undefined && typeof message !== "string") {
-      return NextResponse.json({ error: "message must be a string" }, { status: 400 });
+    if (typeof message !== "string" || !message.trim()) {
+      return NextResponse.json({ error: "message is required" }, { status: 400 });
     }
 
-    if (typeof message === "string" && message.length > MAX_MESSAGE_LENGTH) {
+    if (message.length > MAX_MESSAGE_LENGTH) {
       return NextResponse.json(
         { error: `Xabar juda uzun (maksimal ${MAX_MESSAGE_LENGTH} belgi).` },
         { status: 400 }
       );
-    }
-
-    if (mode === "code") {
-      if (typeof code !== "string" || !code.trim()) {
-        return NextResponse.json({ error: "code is required" }, { status: 400 });
-      }
-      if (code.length > MAX_CODE_LENGTH) {
-        return NextResponse.json(
-          { error: `Kod juda uzun (maksimal ${MAX_CODE_LENGTH} belgi).` },
-          { status: 400 }
-        );
-      }
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
@@ -74,44 +61,18 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "API key is not configured" }, { status: 401 });
     }
 
-    let systemInstruction = "";
-
-    if (mode === "code") {
-      systemInstruction = `
-        Siz Og'abekning portfoliosidagi AI Kod Tahlilchisisiz.
-        Foydalanuvchi taqdim etgan kodni tahlil qiling. Xatoliklar, optimizatsiya usullari va sintaksis bo'yicha tavsiyalarni o'zbek tilida, muloyim va professional ohangda bering.
-        Javobda o'zbek tili qoidalariga rioya qiling.
-        Javobni aniq quyidagi JSON formatida qaytaring:
-        {
-          "feedback": "Sizning kod tahlilingiz (markdown formatida, chiroyli qatorlar va ro'yxat ko'rinishida)."
-        }
-      `;
-    } else if (mode === "sentiment") {
-      systemInstruction = `
-        Siz Og'abekning portfoliodagi Fikrlar daftari (Guestbook) tahlilchisisiz.
-        Foydalanuvchi qoldirgan fikrni tahlil qiling va uning kayfiyatini ("positive" | "neutral" | "negative") aniqlang hamda o'zbek tilida qisqa, samimiy va do'stona munosabat yozing.
-        Mezonlar:
-        - "positive": maqtovlar, ezgu tilaklar, minnatdorchilik.
-        - "neutral": oddiy savollar yoki salomlar.
-        - "negative": haqoratlar, reklama, yomon so'zlar.
-        
-        Javobni aniq quyidagi JSON formatida qaytaring:
-        {
-          "sentiment": "positive | neutral | negative",
-          "reply": "O'zbek tilida qisqa va samimiy minnatdorchilik yoki munosabat matni."
-        }
-      `;
-    } else {
-      systemInstruction = `
+    const systemInstruction = `
         Siz Og'abek Olimjonovning portfoliodagi AI Copilot (Kopilot) yordamchisiz.
         Og'abek haqida ma'lumotlar:
         - Yo'nalishi: Frontend dasturchi.
         - Manzili: Namangan, O'zbekiston.
         - Ko'nikmalari: HTML5, CSS3, JavaScript, React.js, Tailwind CSS, Next.js, Git, GitHub, Netlify, Vercel.
         - Loyihalari:
-          1. Portfolio Card: Ijtimoiy tarmoqlar kartasi (HTML/CSS).
-          2. AgroVision AI: Agro-kasalliklarni chuqur o'rganish (deep learning) orqali aniqlovchi platforma (YOLOv8 va EfficientNet ishlatilgan).
-          3. Faxr Mebel: Mebellar elektron tijorat (E-commerce) veb-sayti.
+          1. DevCommons: dasturchilar kod parchalari, AI promtlari va loyihalarini bo'lishadigan ochiq platforma (Next.js, Tailwind CSS, TypeScript).
+          2. AgroVision AI: o'simlik kasalliklarini kompyuter ko'rishi orqali aniqlovchi qishloq xo'jaligi platformasi (YOLOv8 va EfficientNet).
+          3. Faxr Mebel: mebel fabrikasining katalog veb-sayti (React, Vite, Tailwind).
+          4. Zetra Store: elektron savdo (E-commerce) platformasi (Next.js, Tailwind CSS).
+          5. Nexus Devs: IT agentlik sayti (Next.js, Tailwind CSS).
 
         Muloqot qoidalari (O'TA MUHIM):
         1. Foydalanuvchilar bilan doimo samimiy, muloyim va "Siz" deb hurmat bilan gaplashing.
@@ -129,9 +90,6 @@ export async function POST(req: Request) {
           "scrollTarget": "#projects" (yoki null)
         }
       `;
-    }
-
-    const promptText = mode === "code" ? `Code:\n${code}\n\nMessage: ${message || "Review this code"}` : message;
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
@@ -145,7 +103,7 @@ export async function POST(req: Request) {
             {
               parts: [
                 {
-                  text: `${systemInstruction}\n\nUser Input: ${promptText}`,
+                  text: `${systemInstruction}\n\nUser Input: ${message}`,
                 },
               ],
             },

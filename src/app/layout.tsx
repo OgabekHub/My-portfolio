@@ -3,7 +3,6 @@ import { Playfair_Display, Poppins } from "next/font/google";
 import "./globals.css";
 
 import { LanguageProvider } from "@/context/LanguageContext";
-import CustomCursor from "@/components/CustomCursor";
 import { ToastProvider } from "@/components/Toast";
 
 const playfair = Playfair_Display({
@@ -106,7 +105,6 @@ export default function RootLayout({
       >
         <LanguageProvider>
           <ToastProvider>
-            <CustomCursor />
             {children}
           </ToastProvider>
         </LanguageProvider>

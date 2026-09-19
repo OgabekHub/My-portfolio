@@ -1,8 +1,8 @@
 import { translations } from "./translations";
 
-/** Navigatsiya havolalari — Navbar (desktop + mobil) va Footer shu ro'yxatdan quriladi. */
+/** Navigatsiya havolalari — Navbar (desktop + mobil) shu ro'yxatdan quriladi.
+ *  Bosh sahifaga logo olib boradi, shuning uchun bu yerda #home yo'q. */
 export const NAV_LINKS = [
-  { href: "#home", key: "home" },
   { href: "#about", key: "about" },
   { href: "#skills", key: "skills" },
   { href: "#projects", key: "projects" },

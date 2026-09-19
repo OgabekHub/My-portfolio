@@ -9,108 +9,41 @@ import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AiCommandCenter from "@/components/AiCommandCenter";
-import SplashScreen from "@/components/SplashScreen";
-import MusicPlayer from "@/components/MusicPlayer";
-import EasterEggGame from "@/components/EasterEggGame";
 import { FaArrowUp } from "react-icons/fa6";
+
 export default function Home() {
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   useEffect(() => {
-    let ticking = false;
-
-    const handleScroll = () => {
-      if (ticking) return;
-      ticking = true;
-
-      requestAnimationFrame(() => {
-        // Update scroll progress bar
-        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-        if (totalHeight > 0) {
-          const scrolled = (window.scrollY / totalHeight) * 100;
-          setScrollProgress(scrolled);
-        }
-
-        // Show/hide back to top button
-        setShowBackToTop(window.scrollY > 300);
-        ticking = false;
-      });
-    };
-
+    const handleScroll = () => setShowBackToTop(window.scrollY > 600);
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // .reveal elementlari ko'rinishga kirganda bir marta yumshoq paydo bo'ladi.
+  // threshold 0: element qanchalik baland bo'lmasin, bir pikseli kirishi yetarli.
+  // (0.1 bo'lganda viewport'dan 10 barobar baland Projects bloki qisqa yoki
+  // kattalashtirilgan oynada hech qachon "visible" bo'lmay, bo'sh qolardi.)
   useEffect(() => {
-    const observerOptions = {
-      threshold: 0.12,
-      rootMargin: "0px",
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-
-          // Animate hero title spans
-          if (entry.target.classList.contains("hero")) {
-            const spans = entry.target.querySelectorAll(".hero-title span");
-            spans.forEach((span) => span.classList.add("visible"));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
           }
-        }
-      });
-    }, observerOptions);
-
-    // Cinematic stagger observer for project cards
-    const staggerObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const cards = entry.target.querySelectorAll(".project-card, .skill-card, .about-card");
-          cards.forEach((card, i) => {
-            setTimeout(() => {
-              card.classList.add("visible");
-            }, i * 120);
-          });
-          staggerObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.08 });
-
-    // Query elements to observe
-    const observedElements = document.querySelectorAll(
-      "section, .about-image-container, .about-card, .about-goals, .skill-card, .project-card, .contact-info, .contact-form, footer"
+        });
+      },
+      { threshold: 0, rootMargin: "0px 0px -10% 0px" }
     );
 
-    observedElements.forEach((el) => observer.observe(el));
-
-    // Stagger containers
-    const staggerContainers = document.querySelectorAll("#projects .grid, #skills .grid, #about .grid");
-    staggerContainers.forEach((el) => staggerObserver.observe(el));
-
-    return () => {
-      observer.disconnect();
-      staggerObserver.disconnect();
-    };
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
   }, []);
-
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
 
   return (
     <>
-      {/* Scroll Progress Bar */}
-      <div
-        className="scroll-progress"
-        style={{ width: `${scrollProgress}%` }}
-      ></div>
-
-      <SplashScreen />
       <Navbar />
       <main>
         <Hero />
@@ -121,22 +54,17 @@ export default function Home() {
       </main>
       <Footer />
       <AiCommandCenter />
-      <MusicPlayer />
-      <EasterEggGame />
 
-      {/* Back to top button */}
-      <button
-        onClick={scrollToTop}
-        className="fixed bottom-[20px] right-[20px] md:bottom-[30px] md:right-[30px] w-[50px] h-[50px] rounded-full bg-accent text-primary flex items-center justify-center text-lg cursor-pointer transition-all duration-300 z-[999] border-none shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:translate-y-[-5px] hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)]"
-        style={{
-          display: showBackToTop ? "flex" : "none",
-          opacity: showBackToTop ? 1 : 0,
-        }}
-        title="Go to top"
-        aria-label="Back to top"
-      >
-        <FaArrowUp />
-      </button>
+      {showBackToTop && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="icon-btn animate-fadeIn fixed bottom-6 right-6 z-40 border border-light/15 bg-primary/80 backdrop-blur"
+          title="Go to top"
+          aria-label="Back to top"
+        >
+          <FaArrowUp />
+        </button>
+      )}
     </>
   );
 }
