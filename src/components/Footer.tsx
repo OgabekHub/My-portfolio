@@ -4,7 +4,10 @@ import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToSection } from "@/utils/scroll";
 import { NAV_LINKS } from "@/data/navLinks";
+import dynamic from "next/dynamic";
 import { FaEnvelope, FaGithub, FaHeart, FaLinkedin, FaLocationDot, FaPhone, FaTelegram } from "react-icons/fa6";
+
+const BlobLogo = dynamic(() => import("./BlobLogo"), { ssr: false });
 
 export default function Footer() {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
@@ -32,7 +35,7 @@ export default function Footer() {
                 className="flex items-center space-x-2"
               >
                 <div className="w-[56px] h-[56px] flex items-center justify-center flex-shrink-0 relative">
-                  <span className="logo-mark" role="img" aria-label="Og'abek Olimjonov" />
+                  <BlobLogo size={56} />
                 </div>
                 <div className="logo-details opacity-0 transition-all duration-500">
                   <span className="text-accent font-playfair tracking-wide">Og&apos;abek</span>
