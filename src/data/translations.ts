@@ -3,6 +3,7 @@ export type Language = "uz" | "en";
 export const translations = {
   uz: {
     nav: {
+      home: "Bosh sahifa",
       about: "Men haqimda",
       skills: "Ko'nikmalar",
       projects: "Loyihalar",
@@ -10,13 +11,22 @@ export const translations = {
     },
     hero: {
       role: "Frontend Dasturchi",
-      tagline: "React va Next.js yordamida tez, qulay va toza interfeyslar yarataman.",
+      hello: "Assalomu alaykum,",
+      im: "Men Og'abek",
+      surname: "Olimjonov",
+      words: ["Web Dasturchi", "UI/UX Dizayner", "Frontend Dasturchi"],
       talk: "Bog'lanish",
       work: "Loyihalarim",
     },
     about: {
       title: "Men haqimda",
       intro: "Assalomu alaykum! Men Og'abek Olimjonov — zamonaviy, tezkor va foydalanuvchilar uchun qulay veb-saytlar yaratishga qiziquvchi Junior Frontend dasturchiman. HTML, CSS, JavaScript va React.js yordamida responsive (moslashuvchan) interfeyslar yaratish hamda Figma dizaynlarini piksel-ideal ko'rinishda kodga o'tkazish bo'yicha amaliy tajribaga egaman. Har doim toza kod yozishga va ilg'or texnologiyalarni o'rganishga intilaman.",
+      coreSkillsTitle: "Asosiy Ko'nikmalar",
+      coreSkills: [
+        "HTML5, CSS3, JavaScript",
+        "React.js, Moslashuvchan Dizayn (Responsive)",
+        "UI/UX Dizayn, Figma"
+      ],
       interestsTitle: "Qiziqishlar",
       interests: [
         "Veb Dasturlash",
@@ -35,6 +45,15 @@ export const translations = {
     },
     projects: {
       title: "Mening Loyihalarim",
+      all: "Barchasi",
+      filters: {
+        nextjs: "Next.js",
+        react: "React",
+        ai: "Sun'iy intellekt",
+        ecommerce: "Elektron savdo",
+        landing: "Landing / Agentlik",
+      } as Record<string, string>,
+      empty: "Bu turkumda hozircha loyiha yo'q.",
       items: [
         {
           id: 1,
@@ -68,10 +87,13 @@ export const translations = {
         }
       ],
       liveDemo: "Saytni ko'rish",
-      gitHub: "Kodni ko'rish"
+      gitHub: "Kodni ko'rish",
+      showMore: "Ko'proq ko'rish",
+      showLess: "Yig'ish"
     },
     contact: {
       title: "Men bilan bog'lanish",
+      connect: "Aloqa o'rnatamiz",
       desc: "Har qanday savol yoki hamkorlik takliflari uchun murojaat qilishingiz mumkin. Yangi loyihalar va ajoyib g'oyalarni muhokama qilish uchun doim ochiqman.",
       nameLabel: "Ismingiz",
       namePlaceholder: "Ismingizni kiriting",
@@ -85,6 +107,13 @@ export const translations = {
       sendingBtn: "Yuborilmoqda...",
       errorAlert: "❌ Kechirasiz, xatolik yuz berdi. Iltimos, menga to'g'ridan-to'g'ri yozing:\nolimjonov.ogabek.dev@gmail.com"
     },
+    footer: {
+      desc: "Chiroyli va funksional veb-tajribalar yaratishga ishtiyoqi baland frontend dasturchi. Fikrlaringizni hayotga tatbiq etish uchun birgalikda ishlaymiz.",
+      quickLinks: "Tezkor havolalar",
+      info: "Aloqa ma'lumotlari",
+      rights: "Barcha huquqlar himoyalangan.",
+      madeWith: "tomonidan yaratildi"
+    },
     thankYou: {
       title: "Xabar Qabul Qilindi!",
       desc: "Murojaat qilganingiz uchun tashakkur! Xabaringizni oldim va siz bilan 24-48 soat ichida bog'lanaman. Siz bilan muloqot qilishni intiqlik bilan kutaman! 🚀",
@@ -96,6 +125,7 @@ export const translations = {
   },
   en: {
     nav: {
+      home: "Home",
       about: "About",
       skills: "Skills",
       projects: "Projects",
@@ -103,13 +133,22 @@ export const translations = {
     },
     hero: {
       role: "Frontend Developer",
-      tagline: "I build fast, accessible and clean interfaces with React and Next.js.",
+      hello: "Hello,",
+      im: "I'm Og'abek",
+      surname: "Olimjonov",
+      words: ["Web Developer", "UI/UX Designer", "Frontend Developer"],
       talk: "Let's Talk",
       work: "My Work",
     },
     about: {
       title: "About Me",
       intro: "Hello! I'm Og'abek Olimjonov, a passionate Junior Frontend Developer dedicated to building modern, responsive, and user-friendly web interfaces. I have hands-on experience working with HTML, CSS, JavaScript, and React.js, focusing on pixel-perfect translation from Figma designs to clean, maintainable code. I am always eager to learn new technologies and build solutions that deliver great user experiences.",
+      coreSkillsTitle: "Core Skills",
+      coreSkills: [
+        "HTML5, CSS3, JavaScript",
+        "React.js, Responsive Design",
+        "UI/UX Design, Figma"
+      ],
       interestsTitle: "Interests",
       interests: [
         "Web Development",
@@ -128,6 +167,15 @@ export const translations = {
     },
     projects: {
       title: "My Projects",
+      all: "All",
+      filters: {
+        nextjs: "Next.js",
+        react: "React",
+        ai: "AI / Machine Learning",
+        ecommerce: "E-Commerce",
+        landing: "Landing / Agency",
+      } as Record<string, string>,
+      empty: "No projects in this category yet.",
       items: [
         {
           id: 1,
@@ -161,10 +209,13 @@ export const translations = {
         }
       ],
       liveDemo: "Live Demo",
-      gitHub: "View Code"
+      gitHub: "View Code",
+      showMore: "Show More",
+      showLess: "Show Less"
     },
     contact: {
       title: "Contact Me",
+      connect: "Let's Connect",
       desc: "Feel free to reach out to me for any questions or opportunities. I'm always open to discussing new projects and ideas.",
       nameLabel: "Name",
       namePlaceholder: "Enter your name",
@@ -177,6 +228,13 @@ export const translations = {
       sendBtn: "Send Message",
       sendingBtn: "Sending...",
       errorAlert: "❌ Sorry, something went wrong. Please email me directly:\nolimjonov.ogabek.dev@gmail.com"
+    },
+    footer: {
+      desc: "A passionate frontend developer focused on creating beautiful and functional web experiences. Let's work together to bring your ideas to life.",
+      quickLinks: "Quick Links",
+      info: "Contact Info",
+      rights: "All rights reserved.",
+      madeWith: "Made with"
     },
     thankYou: {
       title: "Message Received!",

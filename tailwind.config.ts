@@ -25,7 +25,6 @@ const config: Config = {
         secondary: withOpacity('--color-secondary-rgb'),
         accent: withOpacity('--color-accent-rgb'),
         light: withOpacity('--color-text-main-rgb'),
-        muted: withOpacity('--color-text-muted-rgb'),
       },
       fontFamily: {
         playfair: ['var(--font-playfair)', 'serif'],

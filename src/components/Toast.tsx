@@ -63,7 +63,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           <p className="flex-1">{toast.message}</p>
           <button
             onClick={() => setToast(null)}
-            className="text-muted hover:text-accent transition-colors"
+            className="text-light/50 hover:text-accent transition-colors"
             aria-label="Yopish"
           >
             <FaXmark aria-hidden="true" />
