@@ -9,9 +9,6 @@ import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AiCommandCenter from "@/components/AiCommandCenter";
-import SplashScreen from "@/components/SplashScreen";
-import MusicPlayer from "@/components/MusicPlayer";
-import EasterEggGame from "@/components/EasterEggGame";
 import { FaArrowUp } from "react-icons/fa6";
 export default function Home() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -110,7 +107,6 @@ export default function Home() {
         style={{ width: `${scrollProgress}%` }}
       ></div>
 
-      <SplashScreen />
       <Navbar />
       <main>
         <Hero />
@@ -121,8 +117,6 @@ export default function Home() {
       </main>
       <Footer />
       <AiCommandCenter />
-      <MusicPlayer />
-      <EasterEggGame />
 
       {/* Back to top button */}
       <button

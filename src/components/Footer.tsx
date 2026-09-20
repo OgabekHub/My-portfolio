@@ -2,13 +2,9 @@
 
 import React, { useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { soundManager } from "@/utils/sound";
 import { scrollToSection } from "@/utils/scroll";
 import { NAV_LINKS } from "@/data/navLinks";
-import dynamic from "next/dynamic";
 import { FaEnvelope, FaGithub, FaHeart, FaLinkedin, FaLocationDot, FaPhone, FaTelegram } from "react-icons/fa6";
-
-const BlobLogo = dynamic(() => import("./BlobLogo"), { ssr: false });
 
 export default function Footer() {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
@@ -36,7 +32,7 @@ export default function Footer() {
                 className="flex items-center space-x-2"
               >
                 <div className="w-[56px] h-[56px] flex items-center justify-center flex-shrink-0 relative">
-                  <BlobLogo size={56} />
+                  <span className="logo-mark" role="img" aria-label="Og'abek Olimjonov" />
                 </div>
                 <div className="logo-details opacity-0 transition-all duration-500">
                   <span className="text-accent font-playfair tracking-wide">Og&apos;abek</span>
@@ -52,8 +48,6 @@ export default function Footer() {
                 href="https://github.com/OgabekHub"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => soundManager.playClick()}
-                onMouseEnter={() => soundManager.playHover()}
                 className="footer-social-link"
                 aria-label="GitHub"
               >
@@ -63,8 +57,6 @@ export default function Footer() {
                 href="https://www.linkedin.com/in/og-abek-olimjonov-2a52b3364?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BZCdpoYM8SXiYquzPfhXTIg%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => soundManager.playClick()}
-                onMouseEnter={() => soundManager.playHover()}
                 className="footer-social-link"
                 aria-label="LinkedIn"
               >
@@ -74,8 +66,6 @@ export default function Footer() {
                 href="https://t.me/olimjonov_ogabek"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => soundManager.playClick()}
-                onMouseEnter={() => soundManager.playHover()}
                 className="footer-social-link"
                 aria-label="Telegram"
               >
@@ -93,10 +83,8 @@ export default function Footer() {
                   <a
                     href={link.href}
                     onClick={(e) => {
-                      soundManager.playClick();
                       handleScrollTo(e, link.href);
                     }}
-                    onMouseEnter={() => soundManager.playHover()}
                   >
                     {t.nav[link.key]}
                   </a>

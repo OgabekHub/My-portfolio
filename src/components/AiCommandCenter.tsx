@@ -2,13 +2,9 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { soundManager } from "@/utils/sound";
-import { handleLocalFallback, ChatResponse, CodeResponse, SentimentResponse } from "@/utils/aiFallback";
-import { triggerConfetti } from "@/utils/confetti";
-import { sendOwnerEmail } from "@/utils/email";
+import { handleLocalFallback, ChatResponse } from "@/utils/aiFallback";
 import { scrollToSection } from "@/utils/scroll";
-import { useToast } from "@/components/Toast";
-import { FaPaperPlane, FaPenFancy, FaRobot, FaSpinner, FaWandMagicSparkles, FaXmark } from "react-icons/fa6";
+import { FaPaperPlane, FaRobot, FaSpinner, FaXmark } from "react-icons/fa6";
 
 interface Message {
   sender: "user" | "ai";
@@ -16,52 +12,14 @@ interface Message {
   timestamp: Date;
 }
 
-interface GuestComment {
-  id: string;
-  name: string;
-  comment: string;
-  sentiment: "positive" | "neutral" | "negative";
-  date: string;
-}
-
-const DEFAULT_COMMENTS: GuestComment[] = [
-  {
-    id: "1",
-    name: "Lazizbek",
-    comment: "Og'abek akaga omad! AgroVision AI loyihasi menga juda yoqdi, zo'r yechim bo'libdi.",
-    sentiment: "positive",
-    date: "02.06.2026",
-  },
-  {
-    id: "2",
-    name: "Sarah Miller",
-    comment: "Impressive portfolio design and animations. Keep it up!",
-    sentiment: "positive",
-    date: "01.06.2026",
-  },
-];
-
 export default function AiCommandCenter() {
   const { language } = useLanguage();
-  const { showToast } = useToast();
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<"chat" | "code" | "guest">("chat");
 
-  // Chat Tab states
+  // Chat states
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isChatLoading, setIsChatLoading] = useState(false);
-
-  // Code Tab states
-  const [code, setCode] = useState("");
-  const [codeReview, setCodeReview] = useState("");
-  const [isCodeLoading, setIsCodeLoading] = useState(false);
-
-  // Guestbook Tab states
-  const [comments, setComments] = useState<GuestComment[]>([]);
-  const [guestName, setGuestName] = useState("");
-  const [guestComment, setGuestComment] = useState("");
-  const [isGuestLoading, setIsGuestLoading] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -114,27 +72,6 @@ export default function AiCommandCenter() {
     };
   }, [isOpen]);
 
-  // Izohlarni faqat bir marta, mount paytida yuklash
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const stored = localStorage.getItem("guest_comments");
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed)) {
-          setComments(parsed);
-          return;
-        }
-      } catch {
-        // Buzuq localStorage panelni ishdan chiqarmasligi uchun default'ga tushamiz
-      }
-    }
-
-    setComments(DEFAULT_COMMENTS);
-    localStorage.setItem("guest_comments", JSON.stringify(DEFAULT_COMMENTS));
-  }, []);
-
   // Salomlashish xabari — chat bo'sh bo'lgandagina.
   // Ilgari bu [language] ga bog'langan edi va til almashtirilsa butun
   // suhbat tarixi o'chib ketardi.
@@ -173,7 +110,6 @@ export default function AiCommandCenter() {
     const activeMsg = customMsg || input;
     if (!activeMsg.trim() || isChatLoading) return;
 
-    soundManager.playClick();
     const userMsgObj: Message = { sender: "user", text: activeMsg, timestamp: new Date() };
     setMessages((prev) => [...prev, userMsgObj]);
     setInput("");
@@ -197,106 +133,12 @@ export default function AiCommandCenter() {
       executeAiAction(data.action, data.scrollTarget);
     } catch {
       // Offline fallback
-      const fallback = handleLocalFallback(activeMsg, "chat") as ChatResponse;
+      const fallback: ChatResponse = handleLocalFallback(activeMsg);
       setMessages((prev) => [...prev, { sender: "ai", text: fallback.reply, timestamp: new Date() }]);
       executeAiAction(fallback.action, fallback.scrollTarget);
     } finally {
       setIsChatLoading(false);
     }
-  };
-
-  // Run AI Code review
-  const handleCodeSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!code.trim() || isCodeLoading) return;
-
-    soundManager.playClick();
-    setIsCodeLoading(true);
-    setCodeReview(language === "uz" ? "Kodingiz tahlil qilinmoqda..." : "Analyzing your code...");
-
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: "Code Review", mode: "code", code }),
-      });
-
-      if (!response.ok) {
-        throw new Error("API call error");
-      }
-
-      const data = await response.json();
-      setCodeReview(data.feedback || "Tahlil natijasi bo'sh.");
-    } catch {
-      const fallback = handleLocalFallback("Code Review", "code", code) as CodeResponse;
-      setCodeReview(fallback.feedback);
-    } finally {
-      setIsCodeLoading(false);
-    }
-  };
-
-  // Submit comment to Guestbook with AI Sentiment Analysis
-  const handleCommentSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!guestName.trim() || !guestComment.trim() || isGuestLoading) return;
-
-    soundManager.playClick();
-    setIsGuestLoading(true);
-
-    const name = guestName.trim();
-    const comment = guestComment.trim();
-
-    // 1. Kayfiyatni aniqlash — API ishlamasa lokal algoritmga tushamiz
-    let result: SentimentResponse;
-    try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: comment, mode: "sentiment" }),
-      });
-      if (!response.ok) throw new Error("Sentiment API failed");
-      const data = await response.json();
-      result = {
-        sentiment: data.sentiment || "neutral",
-        reply: data.reply || "Fikringiz saqlandi!",
-      };
-    } catch {
-      result = handleLocalFallback(comment, "sentiment") as SentimentResponse;
-    }
-
-    // 2. Ro'yxatga qo'shish (ko'rsatish uchun localStorage'da saqlanadi)
-    const newComment: GuestComment = {
-      id: String(Date.now()),
-      name,
-      comment,
-      sentiment: result.sentiment,
-      date: new Date().toLocaleDateString("uz-UZ"),
-    };
-
-    const updated = [newComment, ...comments];
-    setComments(updated);
-    try {
-      localStorage.setItem("guest_comments", JSON.stringify(updated));
-    } catch {
-      // Kvota to'lgan yoki private rejim — ko'rsatishga to'sqinlik qilmasin
-    }
-
-    if (result.sentiment === "positive") {
-      triggerConfetti();
-      soundManager.playThemeToggle(false);
-    }
-
-    // 3. Fikrni sayt egasiga yuborish. Ilgari izoh faqat localStorage'da
-    // qolib ketardi va egasi uni hech qachon ko'rmasdi.
-    sendOwnerEmail({
-      name,
-      subject: `Portfolio mehmonlar daftari — ${name} (${result.sentiment})`,
-      message: comment,
-    }).catch((err) => console.error("Guestbook email error:", err));
-
-    setGuestComment("");
-    showToast(result.reply, result.sentiment === "negative" ? "info" : "success");
-    setIsGuestLoading(false);
   };
 
   return (
@@ -322,7 +164,6 @@ export default function AiCommandCenter() {
             <div className="flex items-center gap-3">
               <button
                 onClick={() => {
-                  soundManager.playClick();
                   setIsOpen(false);
                 }}
                 className="text-light/50 hover:text-accent text-sm"
@@ -332,39 +173,8 @@ export default function AiCommandCenter() {
             </div>
           </div>
 
-          {/* Nav Tabs */}
-          <div className="grid grid-cols-3 text-xs font-semibold border-b border-accent/10">
-            <button
-              onClick={() => { soundManager.playClick(); setActiveTab("chat"); }}
-              className={`py-2.5 text-center border-b-2 transition-all ${
-                activeTab === "chat" ? "border-accent text-accent bg-accent/5" : "border-transparent text-light/60 hover:text-accent"
-              }`}
-            >
-              💬 Chat
-            </button>
-            <button
-              onClick={() => { soundManager.playClick(); setActiveTab("code"); }}
-              className={`py-2.5 text-center border-b-2 transition-all ${
-                activeTab === "code" ? "border-accent text-accent bg-accent/5" : "border-transparent text-light/60 hover:text-accent"
-              }`}
-            >
-              🛠️ Code
-            </button>
-            <button
-              onClick={() => { soundManager.playClick(); setActiveTab("guest"); }}
-              className={`py-2.5 text-center border-b-2 transition-all ${
-                activeTab === "guest" ? "border-accent text-accent bg-accent/5" : "border-transparent text-light/60 hover:text-accent"
-              }`}
-            >
-              ✍️ Guest
-            </button>
-          </div>
-
           {/* Body Content */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
-            
-            {/* 1. CHAT TAB */}
-            {activeTab === "chat" && (
               <div className="h-full flex flex-col">
                 <div className="flex-1 overflow-y-auto space-y-3 pr-1 text-xs">
                   {messages.map((m, idx) => (
@@ -413,110 +223,6 @@ export default function AiCommandCenter() {
                   </button>
                 </form>
               </div>
-            )}
-
-            {/* 2. CODE TAB */}
-            {activeTab === "code" && (
-              <div className="h-full flex flex-col space-y-3">
-                <form onSubmit={handleCodeSubmit} className="flex flex-col space-y-2">
-                  <textarea
-                    value={code}
-                    onChange={(e) => setCode(e.target.value)}
-                    rows={6}
-                    placeholder={language === "uz" ? "// Kodingizni shu yerga tashlang...\nfunction test() {\n  return 'hello';\n}" : "// Paste your code snippet here..."}
-                    className="w-full bg-primary/40 text-light border border-accent/20 rounded-xl p-3 text-xs focus:outline-none focus:border-accent font-mono"
-                  ></textarea>
-                  <button
-                    type="submit"
-                    disabled={isCodeLoading || !code.trim()}
-                    className={`py-2 rounded-xl bg-accent text-primary text-xs font-bold transition-all hover:bg-light hover:text-primary ${
-                      isCodeLoading || !code.trim() ? "opacity-60 cursor-not-allowed" : ""
-                    }`}
-                  >
-                    {isCodeLoading ? (
-                      <>
-                        <FaSpinner className="animate-spin mr-1" />
-                        <span>{language === "uz" ? "Tahlil qilinmoqda..." : "Analyzing..."}</span>
-                      </>
-                    ) : (
-                      <>
-                        <FaWandMagicSparkles className="mr-1" />
-                        <span>{language === "uz" ? "Kodni Tahlil Qilish" : "Run Code Analysis"}</span>
-                      </>
-                    )}
-                  </button>
-                </form>
-
-                {codeReview && (
-                  <div className="flex-1 bg-primary/30 border border-accent/10 rounded-xl p-3 text-xs leading-relaxed text-light/95 max-h-[220px] overflow-y-auto scroll-smooth whitespace-pre-wrap font-sans">
-                    {codeReview}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* 3. GUEST TAB */}
-            {activeTab === "guest" && (
-              <div className="h-full flex flex-col space-y-3">
-                <form onSubmit={handleCommentSubmit} className="space-y-2 bg-primary/20 border border-accent/10 p-3 rounded-xl">
-                  <input
-                    type="text"
-                    value={guestName}
-                    onChange={(e) => setGuestName(e.target.value)}
-                    placeholder={language === "uz" ? "Ismingiz" : "Your Name"}
-                    required
-                    className="w-full bg-primary/50 text-light border border-accent/20 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-accent"
-                  />
-                  <textarea
-                    value={guestComment}
-                    onChange={(e) => setGuestComment(e.target.value)}
-                    rows={2}
-                    placeholder={language === "uz" ? "Fikringiz (ijobiy fikrlar konfettilar otadi! 🎉)" : "Leave your feedback..."}
-                    required
-                    className="w-full bg-primary/50 text-light border border-accent/20 rounded-lg p-3 text-xs focus:outline-none focus:border-accent"
-                  ></textarea>
-                  <button
-                    type="submit"
-                    disabled={isGuestLoading || !guestName.trim() || !guestComment.trim()}
-                    className={`w-full py-1.5 rounded-lg bg-accent text-primary text-xs font-bold hover:bg-light hover:text-primary transition-all ${
-                      isGuestLoading || !guestName.trim() || !guestComment.trim() ? "opacity-60 cursor-not-allowed" : ""
-                    }`}
-                  >
-                    {isGuestLoading ? (
-                      <FaSpinner className="animate-spin" />
-                    ) : (
-                      <>
-                        <FaPenFancy className="mr-1" />
-                        <span>{language === "uz" ? "Fikr qoldirish" : "Submit Comment"}</span>
-                      </>
-                    )}
-                  </button>
-                </form>
-
-                {/* Comment Feed */}
-                <div className="flex-1 space-y-3 overflow-y-auto max-h-[190px] pr-1">
-                  {comments.map((c) => (
-                    <div key={c.id} className="bg-primary/45 border border-accent/5 rounded-xl p-3 text-xs relative">
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="font-semibold text-accent">{c.name}</span>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-[10px] text-light/40">{c.date}</span>
-                          <span className={`text-[9px] px-1.5 py-0.5 rounded-full font-medium ${
-                            c.sentiment === "positive" ? "bg-green-500/10 text-green-400" :
-                            c.sentiment === "negative" ? "bg-red-500/10 text-red-400" : "bg-yellow-500/10 text-yellow-400"
-                          }`}>
-                            {c.sentiment === "positive" ? "Positive 🟢" :
-                             c.sentiment === "negative" ? "Negative 🔴" : "Neutral 🟡"}
-                          </span>
-                        </div>
-                      </div>
-                      <p className="text-light/95 leading-relaxed font-sans">{c.comment}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
           </div>
         </div>
       )}

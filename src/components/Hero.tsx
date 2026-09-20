@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import InteractiveParticles from "./InteractiveParticles";
-import { soundManager } from "@/utils/sound";
 import { scrollToSection } from "@/utils/scroll";
 import { FaArrowRight, FaChevronDown, FaDiagramProject, FaGithub, FaLinkedin, FaTelegram, FaTerminal } from "react-icons/fa6";
 
@@ -147,10 +146,8 @@ export default function Hero() {
                 <a
                   href="#contact"
                   onClick={(e) => {
-                    soundManager.playClick();
                     handleScrollTo(e, "#contact");
                   }}
-                  onMouseEnter={() => soundManager.playHover()}
                   className="hero-btn primary sketch-hover"
                 >
                   <span>{t.hero.talk}</span>
@@ -161,10 +158,8 @@ export default function Hero() {
                 <a
                   href="#projects"
                   onClick={(e) => {
-                    soundManager.playClick();
                     handleScrollTo(e, "#projects");
                   }}
-                  onMouseEnter={() => soundManager.playHover()}
                   className="hero-btn secondary sketch-hover"
                 >
                   <span>{t.hero.work}</span>
@@ -179,8 +174,6 @@ export default function Hero() {
                 href="https://github.com/OgabekHub"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => soundManager.playClick()}
-                onMouseEnter={() => soundManager.playHover()}
                 className="social-link"
                 aria-label="GitHub"
               >
@@ -190,8 +183,6 @@ export default function Hero() {
                 href="https://www.linkedin.com/in/og-abek-olimjonov-2a52b3364?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BZCdpoYM8SXiYquzPfhXTIg%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => soundManager.playClick()}
-                onMouseEnter={() => soundManager.playHover()}
                 className="social-link"
                 aria-label="LinkedIn"
               >
@@ -201,8 +192,6 @@ export default function Hero() {
                 href="https://t.me/olimjonov_ogabek"
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => soundManager.playClick()}
-                onMouseEnter={() => soundManager.playHover()}
                 className="social-link"
                 aria-label="Telegram"
               >

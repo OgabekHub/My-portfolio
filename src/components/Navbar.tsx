@@ -1,38 +1,25 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { soundManager } from "@/utils/sound";
 import { scrollToSection } from "@/utils/scroll";
 import { NAV_LINKS } from "@/data/navLinks";
-import dynamic from "next/dynamic";
-import { FaBars, FaMoon, FaSun, FaVolumeHigh, FaVolumeXmark, FaWandMagicSparkles, FaXmark } from "react-icons/fa6";
-
-const BlobLogo = dynamic(() => import("./BlobLogo"), { ssr: false });
+import { FaBars, FaMoon, FaSun, FaWandMagicSparkles, FaXmark } from "react-icons/fa6";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogoHovered, setIsLogoHovered] = useState(false);
   const { language, toggleLanguage, t } = useLanguage();
   const [isDark, setIsDark] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     const isLight = !document.documentElement.classList.contains("dark");
     setIsDark(!isLight);
-    setIsMuted(soundManager.getMuteStatus());
   }, []);
-
-  const handleMuteToggle = () => {
-    soundManager.playClick();
-    const nextMuted = soundManager.toggleMute();
-    setIsMuted(nextMuted);
-  };
 
   const handleThemeToggle = () => {
     const nextDark = !isDark;
     setIsDark(nextDark);
-    soundManager.playThemeToggle(nextDark);
 
     if (nextDark) {
       document.documentElement.classList.add("dark");
@@ -53,24 +40,6 @@ export default function Navbar() {
     scrollToSection(targetId);
   };
 
-  const clickCountRef = useRef(0);
-  const clickTimerRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleLogoClick = () => {
-    clickCountRef.current += 1;
-    
-    if (clickCountRef.current === 5) {
-      soundManager.playClick();
-      window.dispatchEvent(new CustomEvent('easter-egg-trigger'));
-      clickCountRef.current = 0;
-    }
-
-    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
-    clickTimerRef.current = setTimeout(() => {
-      clickCountRef.current = 0;
-    }, 1500);
-  };
-
   return (
     <nav className="fixed w-full bg-primary/95 backdrop-blur-sm shadow-lg z-50 border-b border-secondary/20">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -82,14 +51,11 @@ export default function Navbar() {
         >
           <a
             href="#home"
-            onClick={(e) => {
-              handleLinkClick(e, "#home");
-              handleLogoClick();
-            }}
+            onClick={(e) => handleLinkClick(e, "#home")}
             className="flex items-center space-x-2"
           >
             <div className="w-[56px] h-[56px] flex items-center justify-center flex-shrink-0 relative">
-              <BlobLogo size={56} />
+              <span className="logo-mark" role="img" aria-label="Og'abek Olimjonov" />
             </div>
 
             <div className="logo-details opacity-0 transition-all duration-500">
@@ -109,10 +75,8 @@ export default function Navbar() {
                 <a
                   href={link.href}
                   onClick={(e) => {
-                    soundManager.playClick();
                     handleLinkClick(e, link.href);
                   }}
-                  onMouseEnter={() => soundManager.playHover()}
                   className="nav-item nav-link"
                 >
                   {t.nav[link.key]}
@@ -125,30 +89,17 @@ export default function Navbar() {
             {/* Dark Mode Toggle */}
             <button
               onClick={handleThemeToggle}
-              onMouseEnter={() => soundManager.playHover()}
               className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/60 text-accent transition-all duration-300"
               aria-label="Toggle dark mode"
             >
               {isDark ? <FaSun className="text-lg" /> : <FaMoon className="text-lg" />}
             </button>
 
-            {/* Sound Toggle */}
-            <button
-              onClick={handleMuteToggle}
-              onMouseEnter={() => soundManager.playHover()}
-              className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/60 text-accent transition-all duration-300"
-              aria-label="Toggle sound"
-            >
-              {isMuted ? <FaVolumeXmark className="text-lg" /> : <FaVolumeHigh className="text-lg" />}
-            </button>
-
             {/* AI Copilot Magic/Sparkles Button */}
             <button
               onClick={() => {
-                soundManager.playClick();
                 window.dispatchEvent(new CustomEvent("toggle-ai-copilot"));
               }}
-              onMouseEnter={() => soundManager.playHover()}
               className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/60 text-accent transition-all duration-300 relative group"
               aria-label="AI Copilot"
               title="AI Copilot"
@@ -161,10 +112,8 @@ export default function Navbar() {
             {/* Language Switcher */}
             <button
               onClick={() => {
-                soundManager.playClick();
                 toggleLanguage();
               }}
-              onMouseEnter={() => soundManager.playHover()}
               className="border border-accent/40 rounded-full px-3 py-1 text-sm font-semibold bg-transparent hover:bg-accent/10 hover:border-accent text-accent transition-all duration-300 min-w-[42px]"
             >
               {language === "uz" ? "EN" : "UZ"}
@@ -177,7 +126,6 @@ export default function Navbar() {
           {/* AI Copilot Magic/Sparkles Button for Mobile */}
           <button
             onClick={() => {
-              soundManager.playClick();
               window.dispatchEvent(new CustomEvent("toggle-ai-copilot"));
             }}
             className="w-9 h-9 rounded-full flex items-center justify-center bg-secondary/20 text-accent relative hover:bg-secondary/40 active:scale-95 transition-all"
@@ -192,7 +140,6 @@ export default function Navbar() {
           <button
             id="menu-btn"
             onClick={() => {
-              soundManager.playClick();
               toggleMenu();
             }}
             className={`${isOpen ? "active" : ""}`}
@@ -213,10 +160,8 @@ export default function Navbar() {
               <a
                 href={link.href}
                 onClick={(e) => {
-                  soundManager.playClick();
                   handleLinkClick(e, link.href);
                 }}
-                onMouseEnter={() => soundManager.playHover()}
                 className="nav-item text-lg"
               >
                 {t.nav[link.key]}
@@ -234,23 +179,12 @@ export default function Navbar() {
               {isDark ? <FaSun className="text-base" /> : <FaMoon className="text-base" />}
             </button>
 
-            {/* Sound Toggle for Mobile Drawer */}
-            <button
-              onClick={handleMuteToggle}
-              className="w-10 h-10 rounded-full flex items-center justify-center bg-secondary/20 hover:bg-secondary/40 text-accent transition-all duration-300 border border-accent/15"
-              aria-label="Toggle sound"
-            >
-              {isMuted ? <FaVolumeXmark className="text-base" /> : <FaVolumeHigh className="text-base" />}
-            </button>
-
             {/* Language Switcher for Mobile */}
             <button
               onClick={() => {
-                soundManager.playClick();
                 toggleLanguage();
                 setIsOpen(false);
               }}
-              onMouseEnter={() => soundManager.playHover()}
               className="h-10 px-4 rounded-full flex items-center justify-center border border-accent/40 text-xs font-semibold bg-transparent hover:bg-accent/10 text-accent transition-all duration-300 min-w-[100px]"
             >
               {language === "uz" ? "English" : "O'zbekcha"}

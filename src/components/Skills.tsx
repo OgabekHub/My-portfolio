@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useLanguage } from "@/context/LanguageContext";
-import { soundManager } from "@/utils/sound";
 import type { IconType } from "react-icons";
 import { FaCode, FaCss3Alt, FaEye, FaFilm, FaGitAlt, FaGithub, FaHtml5, FaJs, FaMobileScreenButton, FaNpm, FaObjectGroup, FaPalette, FaPenNib, FaReact, FaScrewdriverWrench, FaServer, FaTerminal, FaWind } from "react-icons/fa6";
 
@@ -86,7 +85,6 @@ export default function Skills() {
                 {category.badges.map((badge, bIdx) => (
                   <span
                     key={bIdx}
-                    onMouseEnter={() => soundManager.playHover()}
                     className="tech-badge flex items-center sketch-hover"
                   >
                     <badge.Icon className="mr-1.5" />

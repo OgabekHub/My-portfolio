@@ -3,7 +3,6 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
-import { soundManager } from "@/utils/sound";
 import { FaChevronDown, FaChevronUp, FaGithub, FaUpRightFromSquare } from "react-icons/fa6";
 
 // Filtr tugmalari shu tartibda ko'rsatiladi (loyihada uchraydiganlari)
@@ -104,8 +103,6 @@ function TiltCard({ project }: { project: ProjectItem }) {
             href={project.github}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => soundManager.playClick()}
-            onMouseEnter={() => soundManager.playHover()}
             className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center hover:bg-light hover:text-primary transition-all duration-300 shadow-md"
             aria-label="View on GitHub"
           >
@@ -115,8 +112,6 @@ function TiltCard({ project }: { project: ProjectItem }) {
             href={project.demo}
             target={project.demo.startsWith("#") ? "_self" : "_blank"}
             rel={project.demo.startsWith("#") ? "" : "noopener noreferrer"}
-            onClick={() => soundManager.playClick()}
-            onMouseEnter={() => soundManager.playHover()}
             className="w-12 h-12 rounded-full bg-accent text-primary flex items-center justify-center hover:bg-light hover:text-primary transition-all duration-300 shadow-md"
             aria-label="View live demo"
           >
@@ -246,11 +241,9 @@ export default function Projects() {
             <button
               key={btn.id}
               onClick={() => {
-                soundManager.playClick();
                 setFilter(btn.id);
                 setShowAll(false);
               }}
-              onMouseEnter={() => soundManager.playHover()}
               className={`px-5 py-2 rounded-full border text-sm font-semibold transition-all duration-300 ${
                 filter === btn.id
                   ? "bg-accent border-accent text-primary shadow-lg shadow-accent/25"
@@ -278,10 +271,8 @@ export default function Projects() {
           <div className="mt-14 flex justify-center animate-in fade-in duration-500">
             <button
               onClick={() => {
-                soundManager.playClick();
                 setShowAll(!showAll);
               }}
-              onMouseEnter={() => soundManager.playHover()}
               className="hero-btn secondary group flex items-center gap-2 cursor-pointer text-sm font-semibold transition-all duration-300 shadow-md"
             >
               <span>

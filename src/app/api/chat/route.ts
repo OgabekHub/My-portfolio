@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
 
-const VALID_MODES = ["chat", "code", "sentiment"] as const;
+const VALID_MODES = ["chat"] as const;
 const MAX_MESSAGE_LENGTH = 1000;
-const MAX_CODE_LENGTH = 5000;
 
 /** So'rov shu saytdan kelganini tekshirish (dev'da localhost'ga ruxsat). */
 function isAllowedOrigin(req: Request): boolean {
@@ -38,7 +37,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { message, mode, code } = await req.json();
+    const { message, mode } = await req.json();
 
     // --- 3. Input validatsiyasi (Gemini'ga so'rov yuborishdan OLDIN) ---
     if (mode !== undefined && !VALID_MODES.includes(mode)) {
@@ -56,53 +55,13 @@ export async function POST(req: Request) {
       );
     }
 
-    if (mode === "code") {
-      if (typeof code !== "string" || !code.trim()) {
-        return NextResponse.json({ error: "code is required" }, { status: 400 });
-      }
-      if (code.length > MAX_CODE_LENGTH) {
-        return NextResponse.json(
-          { error: `Kod juda uzun (maksimal ${MAX_CODE_LENGTH} belgi).` },
-          { status: 400 }
-        );
-      }
-    }
-
     const apiKey = process.env.GEMINI_API_KEY;
 
     if (!apiKey) {
       return NextResponse.json({ error: "API key is not configured" }, { status: 401 });
     }
 
-    let systemInstruction = "";
-
-    if (mode === "code") {
-      systemInstruction = `
-        Siz Og'abekning portfoliosidagi AI Kod Tahlilchisisiz.
-        Foydalanuvchi taqdim etgan kodni tahlil qiling. Xatoliklar, optimizatsiya usullari va sintaksis bo'yicha tavsiyalarni o'zbek tilida, muloyim va professional ohangda bering.
-        Javobda o'zbek tili qoidalariga rioya qiling.
-        Javobni aniq quyidagi JSON formatida qaytaring:
-        {
-          "feedback": "Sizning kod tahlilingiz (markdown formatida, chiroyli qatorlar va ro'yxat ko'rinishida)."
-        }
-      `;
-    } else if (mode === "sentiment") {
-      systemInstruction = `
-        Siz Og'abekning portfoliodagi Fikrlar daftari (Guestbook) tahlilchisisiz.
-        Foydalanuvchi qoldirgan fikrni tahlil qiling va uning kayfiyatini ("positive" | "neutral" | "negative") aniqlang hamda o'zbek tilida qisqa, samimiy va do'stona munosabat yozing.
-        Mezonlar:
-        - "positive": maqtovlar, ezgu tilaklar, minnatdorchilik.
-        - "neutral": oddiy savollar yoki salomlar.
-        - "negative": haqoratlar, reklama, yomon so'zlar.
-        
-        Javobni aniq quyidagi JSON formatida qaytaring:
-        {
-          "sentiment": "positive | neutral | negative",
-          "reply": "O'zbek tilida qisqa va samimiy minnatdorchilik yoki munosabat matni."
-        }
-      `;
-    } else {
-      systemInstruction = `
+    const systemInstruction = `
         Siz Og'abek Olimjonovning portfoliodagi AI Copilot (Kopilot) yordamchisiz.
         Og'abek haqida ma'lumotlar:
         - Yo'nalishi: Frontend dasturchi.
@@ -129,9 +88,6 @@ export async function POST(req: Request) {
           "scrollTarget": "#projects" (yoki null)
         }
       `;
-    }
-
-    const promptText = mode === "code" ? `Code:\n${code}\n\nMessage: ${message || "Review this code"}` : message;
 
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
@@ -145,7 +101,7 @@ export async function POST(req: Request) {
             {
               parts: [
                 {
-                  text: `${systemInstruction}\n\nUser Input: ${promptText}`,
+                  text: `${systemInstruction}\n\nUser Input: ${message}`,
                 },
               ],
             },
