@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToSection } from "@/utils/scroll";
 import { NAV_LINKS } from "@/data/navLinks";
@@ -11,9 +12,15 @@ const BlobLogo = dynamic(() => import("./BlobLogo"), { ssr: false });
 
 export default function Footer() {
   const [isLogoHovered, setIsLogoHovered] = useState(false);
-  const { t } = useLanguage();
+  const { t, localeHref } = useLanguage();
+  const pathname = usePathname();
+
+  // Navbar bilan bir xil qoida: bosh sahifada skroll, ichki sahifada navigatsiya.
+  const isHome = pathname === localeHref();
+  const sectionHref = (hash: string) => `${localeHref()}${hash}`;
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    if (!isHome) return;
     e.preventDefault();
     scrollToSection(targetId);
   };
@@ -30,7 +37,7 @@ export default function Footer() {
               onMouseLeave={() => setIsLogoHovered(false)}
             >
               <a
-                href="#home"
+                href={sectionHref("#home")}
                 onClick={(e) => handleScrollTo(e, "#home")}
                 className="flex items-center space-x-2"
               >
@@ -84,7 +91,7 @@ export default function Footer() {
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <a
-                    href={link.href}
+                    href={sectionHref(link.href)}
                     onClick={(e) => {
                       handleScrollTo(e, link.href);
                     }}

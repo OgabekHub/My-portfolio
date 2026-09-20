@@ -16,6 +16,25 @@ export const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
 });
 
+/**
+ * globals.css'da bo'limlar va kartalar `opacity: 0` bilan boshlanadi va ularni
+ * IntersectionObserver `.visible` klassi bilan ochadi. JS ishlamasa sayt
+ * bo'm-bo'sh ko'rinadi — faqat navbar qoladi. Bu blok <noscript> ichida
+ * beriladi, shuning uchun JS ishlayotganda hech narsaga ta'sir qilmaydi.
+ */
+export const NOSCRIPT_REVEAL_CSS = `
+  section, footer,
+  #about, #skills, #projects, #contact,
+  .section-animate,
+  .hero-title span,
+  .about-image-container, .about-text, .about-card, .about-card ul li, .about-goals,
+  .skill-card, .project-card,
+  .contact-info, .contact-form {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+`;
+
 /** Sahifa chizilishidan oldin temani qo'yadi — "oq lampochka" effektini oldini oladi. */
 export const THEME_SCRIPT = `
   (function() {

@@ -58,36 +58,43 @@ export const translations = {
         {
           id: 1,
           title: "DevCommons – Dasturchilar Platformasi",
-          desc: "Dasturchilar o'z kod parchalari (snippets), sun'iy intellekt promtlari va loyihalarini o'zaro bepul bo'lishadigan ochiq platforma. Next.js va Tailwind CSS yordamida yaratilgan zamonaviy hamjamiyat portal.",
-          techs: ["React", "Next.js", "Tailwind CSS", "TypeScript"]
+          desc: "Dasturchilar va AI bilan ishlaydiganlar uchun kod parchalari, promtlar va agent konfiguratsiyalarini bir joyda saqlab, ulashadigan platforma. REST API, CLI va MCP orqali ham ulanish mumkin.",
+          role: "Frontend, Supabase bazasi va autentifikatsiya, API, CLI",
+          techs: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"]
         },
         {
           id: 2,
           title: "AgroVision AI Platformasi",
-          desc: "AgroVision AI – Qishloq xo'jaligi uchun sun'iy intellekt platformasi. Zamonaviy kompyuter ko'rishi va chuqur o'rganish (YOLOv8 & EfficientNet) modellari yordamida o'simlik turlarini aniqlash, kasalliklarni tashxislash va aqlli ekin tavsiyalarini olish tizimi.",
-          techs: ["React", "Next.js", "Tailwind", "Python", "YOLOv8"]
+          desc: "Fermer o'simlik yoki kasallangan barg rasmini yuklaydi — platforma turini aniqlaydi, tashxis qo'yadi va o'zbek tilida davolash tavsiyasini beradi. Gemini Vision va men o'zim o'rgatgan EfficientNet-B3 modeli birga ishlaydi.",
+          role: "Frontend, FastAPI backend, modelni o'rgatish",
+          techs: ["Next.js", "React", "FastAPI", "PyTorch", "Gemini Vision"]
         },
         {
           id: 3,
           title: "Faxr Mebel veb-sayti",
-          desc: "Faxr Mebel – Zamonaviy mebel fabrikasining katalog veb-sayti. Mijozlarga oshxona, mehmonxona va yotoqxona uchun premium mebellarni onlayn ko'rish va buyurtma berish imkonini beruvchi chiroyli va qulay platforma.",
-          techs: ["React", "Vite", "Tailwind", "Framer Motion"]
+          desc: "Mebel fabrikasi uchun buyurtma asosida qilingan katalog sayti: kolleksiyalar, AR orqali mebelni xonada ko'rish, konsultatsiya band qilish va admin paneli. Uch tilda ishlaydi.",
+          role: "Buyurtma ishi — butun frontend, Firebase, AR ko'rish",
+          techs: ["React", "Vite", "Firebase", "Tailwind"]
         },
         {
           id: 4,
           title: "Zetra Store – Onlayn Do'kon",
-          desc: "Zetra Store – Zamonaviy elektron savdo (E-commerce) platformasi. Foydalanuvchilarga eng so'nggi mahsulotlarni qulay katalogda ko'rish, saralash va tezgi buyurtma berish imkonini taqdim etuvchi zamonaviy internet do'kon.",
-          techs: ["React", "Next.js", "Tailwind CSS", "E-commerce"]
+          desc: "Raqamli mahsulotlar bozorining frontend qismi: katalog, saralash, savat, valyuta va til almashtirish. Ma'lumotlar statik, to'lov tizimi ulanmagan — e'tibor holat boshqaruvi va testlarga qaratilgan.",
+          role: "Frontend — o'z holat qatlami, 18 ta test, CI",
+          techs: ["Next.js 16", "React 19", "Tailwind 4", "Vitest"]
         },
         {
           id: 5,
-          title: "Nexus Devs – Dasturchilar Agentligi",
-          desc: "Nexus Devs – Zamonaviy IT agentlik va dasturiy yechimlar dizayn korxonasi sayti. Yuqori unumdorlik va mukammal UI/UX dizayn asosida qurilgan maxsus sahifa.",
-          techs: ["React", "Next.js", "Tailwind CSS", "UI/UX"]
+          title: "Nexus Devs – shaxsiy sayt va blog",
+          desc: "Frontend, AI avtomatlashtirish va Telegram botlar yo'nalishlarini ko'rsatuvchi shaxsiy sayt. Markdown fayllardan quriladigan blog va EmailJS orqali ishlaydigan bog'lanish formasi bilan.",
+          role: "Butun sayt — Next.js, fayl asosidagi blog",
+          techs: ["Next.js", "React", "Tailwind CSS", "Markdown"]
         }
       ],
       liveDemo: "Saytni ko'rish",
       gitHub: "Kodni ko'rish",
+      caseStudy: "Batafsil tahlil",
+      roleLabel: "Mening rolim",
       showMore: "Ko'proq ko'rish",
       showLess: "Yig'ish"
     },
@@ -180,36 +187,43 @@ export const translations = {
         {
           id: 1,
           title: "DevCommons Platform",
-          desc: "An open platform where developers share their code snippets, AI prompts, and useful architectural resources for free. Built with Next.js, Tailwind CSS, and full interactive UI features.",
-          techs: ["React", "Next.js", "Tailwind CSS", "TypeScript"]
+          desc: "A platform where developers and people working with AI keep and share code snippets, prompts and agent configurations in one place, reachable through a REST API, a CLI and MCP.",
+          role: "Frontend, Supabase database and auth, API, CLI",
+          techs: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"]
         },
         {
           id: 2,
           title: "AgroVision AI Platform",
-          desc: "AgroVision AI – Artificial Intelligence platform for agriculture in Uzbekistan. Utilizing modern computer vision and deep learning (YOLOv8 & EfficientNet) models to detect plant types, diagnose crop diseases, and provide smart agricultural recommendations.",
-          techs: ["React", "Next.js", "Tailwind", "Python", "YOLOv8"]
+          desc: "A farmer uploads a photo of a plant or a diseased leaf; the platform identifies it, diagnoses the problem and gives treatment advice in Uzbek. Gemini Vision works together with an EfficientNet-B3 model I trained myself.",
+          role: "Frontend, FastAPI backend, model training",
+          techs: ["Next.js", "React", "FastAPI", "PyTorch", "Gemini Vision"]
         },
         {
           id: 3,
           title: "Faxr Mebel Website",
-          desc: "Faxr Mebel – Catalog and showcase website for a modern furniture factory. An elegant platform for clients to browse and order premium kitchen, bedroom, and living room furniture online.",
-          techs: ["React", "Vite", "Tailwind", "Framer Motion"]
+          desc: "A commissioned catalogue site for a furniture factory: collections, viewing a piece in your own room through AR, consultation booking and an admin area. Ships in three languages.",
+          role: "Client work — the whole frontend, Firebase, AR viewing",
+          techs: ["React", "Vite", "Firebase", "Tailwind"]
         },
         {
           id: 4,
           title: "Zetra Store E-Commerce",
-          desc: "Zetra Store – A modern electronic commerce platform featuring dynamic product catalogs, seamless filtering, and responsive shopping cart workflows for an elite shopping experience.",
-          techs: ["React", "Next.js", "Tailwind CSS", "E-commerce"]
+          desc: "The frontend of a digital-products marketplace: catalogue, filtering, cart, currency and language switching. The data is static and no payment provider is wired up — the focus was state management and tests.",
+          role: "Frontend — custom state layer, 18 test files, CI",
+          techs: ["Next.js 16", "React 19", "Tailwind 4", "Vitest"]
         },
         {
           id: 5,
-          title: "Nexus Devs Digital Agency",
-          desc: "Nexus Devs – Modern IT agency and software solutions portal featuring state-of-the-art UI/UX animations and high-performance frontend architecture.",
-          techs: ["React", "Next.js", "Tailwind CSS", "UI/UX"]
+          title: "Nexus Devs – personal site and blog",
+          desc: "A personal site presenting frontend, AI automation and Telegram bot work, with a blog built from Markdown files and a contact form running on EmailJS.",
+          role: "The whole site — Next.js, file-based blog",
+          techs: ["Next.js", "React", "Tailwind CSS", "Markdown"]
         }
       ],
       liveDemo: "Live Demo",
       gitHub: "View Code",
+      caseStudy: "Read the case study",
+      roleLabel: "My role",
       showMore: "Show More",
       showLess: "Show Less"
     },

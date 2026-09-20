@@ -1,5 +1,5 @@
 import React from "react";
-import { playfair, poppins, THEME_SCRIPT } from "@/app/fonts";
+import { playfair, poppins, THEME_SCRIPT, NOSCRIPT_REVEAL_CSS } from "@/app/fonts";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { ToastProvider } from "@/components/Toast";
 import { buildJsonLd, type Locale } from "@/lib/site";
@@ -31,6 +31,9 @@ export default function RootShell({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(buildJsonLd(locale)) }}
+        />
+        <noscript
+          dangerouslySetInnerHTML={{ __html: `<style>${NOSCRIPT_REVEAL_CSS}</style>` }}
         />
       </head>
       <body

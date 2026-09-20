@@ -12,21 +12,33 @@ Contact: olimjonov.ogabek.dev@gmail.com · +998 97 064 04 24 · Namangan, Uzbeki
 - [Portfolio (Uzbek)](https://ogabek.vercel.app/): main page — about, skills, projects, contact.
 - [Portfolio (English)](https://ogabek.vercel.app/en): the same content in English.
 
+## Case studies
+
+Longer write-ups of the two most substantial projects: the problem, what was
+built, the hardest part and the result.
+
+- [DevCommons (English)](https://ogabek.vercel.app/en/case/devcommons) ·
+  [Uzbek](https://ogabek.vercel.app/loyiha/devcommons)
+- [AgroVision AI (English)](https://ogabek.vercel.app/en/case/agrovision-ai) ·
+  [Uzbek](https://ogabek.vercel.app/loyiha/agrovision-ai)
+
 ## Projects
 
 - [DevCommons](https://devcommons.vercel.app/): a platform for developers to share
   code snippets and prompts. Next.js, React, Tailwind CSS.
   Source: https://github.com/OgabekHub/devcommons
 - [AgroVision AI](https://agro-vision-ai-zeta.vercel.app/): web platform for detecting
-  crop diseases from images. Next.js and React on the frontend.
+  crop diseases from images, aimed at agriculture in Uzbekistan.
+  Source: https://github.com/OgabekHub/agro-vision-ai
 - [Faxr Mebel](https://faxr-mebel.vercel.app/): catalogue website for a furniture
-  manufacturer. React, Tailwind CSS, Framer Motion.
+  manufacturer.
+  Source: https://github.com/OgabekHub/faxr-mebel
 - [Zetra Store](https://zetra-store-one.vercel.app/): e-commerce storefront with
   catalogue and cart. Next.js, React, Tailwind CSS.
   Source: https://github.com/OgabekHub/zetra-store
-- [NexusDevs](https://nexusdevs-xi.vercel.app/): landing page for a development
-  agency. Next.js, React, Tailwind CSS.
-  Source: https://github.com/OgabekHub/nexusdevs
+- [NexusDevs](https://nexusdevs.vercel.app/): a second personal site presenting
+  frontend, AI automation and Telegram bot work, with a short blog.
+  Source: https://github.com/OgabekHub/nexus-devs
 
 ## Skills
 

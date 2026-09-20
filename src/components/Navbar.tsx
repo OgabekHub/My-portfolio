@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { scrollToSection } from "@/utils/scroll";
 import { NAV_LINKS } from "@/data/navLinks";
@@ -12,8 +13,15 @@ const BlobLogo = dynamic(() => import("./BlobLogo"), { ssr: false });
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLogoHovered, setIsLogoHovered] = useState(false);
-  const { language, toggleLanguage, t } = useLanguage();
+  const { language, toggleLanguage, localeHref, t } = useLanguage();
   const [isDark, setIsDark] = useState(true);
+  const pathname = usePathname();
+
+  // Bosh sahifada #havolalar joyida silliq skroll qiladi; case study kabi
+  // ichki sahifalarda esa o'sha bo'lim yo'q, shuning uchun bosh sahifaga
+  // o'tish kerak. Href har doim to'liq ("/#about") — JS ishlamasa ham ishlaydi.
+  const isHome = pathname === localeHref();
+  const sectionHref = (hash: string) => `${localeHref()}${hash}`;
 
   useEffect(() => {
     const isLight = !document.documentElement.classList.contains("dark");
@@ -38,8 +46,9 @@ export default function Navbar() {
   };
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    e.preventDefault();
     setIsOpen(false);
+    if (!isHome) return; // brauzer o'zi bosh sahifaga o'tsin
+    e.preventDefault();
     scrollToSection(targetId);
   };
 
@@ -53,7 +62,7 @@ export default function Navbar() {
           onMouseLeave={() => setIsLogoHovered(false)}
         >
           <a
-            href="#home"
+            href={sectionHref("#home")}
             onClick={(e) => handleLinkClick(e, "#home")}
             className="flex items-center space-x-2"
           >
@@ -76,7 +85,7 @@ export default function Navbar() {
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
                 <a
-                  href={link.href}
+                  href={sectionHref(link.href)}
                   onClick={(e) => {
                     handleLinkClick(e, link.href);
                   }}
@@ -161,7 +170,7 @@ export default function Navbar() {
           {NAV_LINKS.map((link) => (
             <li key={link.href}>
               <a
-                href={link.href}
+                href={sectionHref(link.href)}
                 onClick={(e) => {
                   handleLinkClick(e, link.href);
                 }}

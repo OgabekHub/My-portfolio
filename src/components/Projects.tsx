@@ -4,7 +4,7 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { PROJECTS } from "@/data/projects";
-import { FaChevronDown, FaChevronUp, FaGithub, FaUpRightFromSquare } from "react-icons/fa6";
+import { FaArrowRight, FaChevronDown, FaChevronUp, FaGithub, FaUpRightFromSquare } from "react-icons/fa6";
 
 // Filtr tugmalari shu tartibda ko'rsatiladi (loyihada uchraydiganlari)
 const FILTER_ORDER = ["nextjs", "react", "ai", "ecommerce", "landing"];
@@ -14,6 +14,7 @@ interface ProjectItem {
   id: number;
   title: string;
   desc: string;
+  role?: string;
   techs: string[];
   tags: string[];
   image: string;
@@ -21,7 +22,17 @@ interface ProjectItem {
   demo: string;
 }
 
-function TiltCard({ project }: { project: ProjectItem }) {
+function TiltCard({
+  project,
+  caseHref,
+  caseLabel,
+  roleLabel,
+}: {
+  project: ProjectItem;
+  caseHref?: string;
+  caseLabel: string;
+  roleLabel: string;
+}) {
   const cardRef = useRef<HTMLDivElement>(null);
   const glareRef = useRef<HTMLDivElement>(null);
   const [style, setStyle] = useState<React.CSSProperties>({
@@ -129,6 +140,11 @@ function TiltCard({ project }: { project: ProjectItem }) {
         <p className="project-description text-sm text-light/80 leading-relaxed mb-4">
           {project.desc}
         </p>
+        {project.role && (
+          <p className="text-xs text-light/55 mb-4">
+            <span className="text-accent/90">{roleLabel}:</span> {project.role}
+          </p>
+        )}
         <div className="project-tech flex flex-wrap gap-2">
           {project.techs.map((techItem, tIdx) => (
             <span
@@ -139,6 +155,17 @@ function TiltCard({ project }: { project: ProjectItem }) {
             </span>
           ))}
         </div>
+
+        {/* Batafsil tahlil faqat case study yozilgan loyihalarda chiqadi */}
+        {caseHref && (
+          <a
+            href={caseHref}
+            className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-light transition-colors"
+          >
+            {caseLabel}
+            <FaArrowRight className="text-xs" />
+          </a>
+        )}
       </div>
     </div>
   );
@@ -146,7 +173,7 @@ function TiltCard({ project }: { project: ProjectItem }) {
 
 // --- Main Projects Component ---
 export default function Projects() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [filter, setFilter] = useState<string>("all");
   const [showAll, setShowAll] = useState<boolean>(false);
 
@@ -224,7 +251,19 @@ export default function Projects() {
         {displayedProjects.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {displayedProjects.map((project) => (
-              <TiltCard key={project.id} project={project} />
+              <TiltCard
+                key={project.id}
+                project={project}
+                caseLabel={t.projects.caseStudy}
+                roleLabel={t.projects.roleLabel}
+                caseHref={
+                  project.caseSlug
+                    ? language === "en"
+                      ? `/en/case/${project.caseSlug}`
+                      : `/loyiha/${project.caseSlug}`
+                    : undefined
+                }
+              />
             ))}
           </div>
         ) : (

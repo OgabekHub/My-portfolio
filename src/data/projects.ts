@@ -18,6 +18,8 @@ export interface ProjectData {
   github: string;
   demo: string;
   tags: string[];
+  /** Batafsil tahlil sahifasi bo'lsa — uning slug'i. */
+  caseSlug?: string;
 }
 
 export const PROJECTS: ProjectData[] = [
@@ -28,20 +30,22 @@ export const PROJECTS: ProjectData[] = [
     github: "https://github.com/OgabekHub/devcommons",
     demo: "https://devcommons.vercel.app/",
     tags: ["nextjs", "react"],
+    caseSlug: "devcommons",
   },
   {
     id: 2,
     name: "AgroVision AI",
     image: "/img/agrovision.png",
-    github: "https://github.com/OgabekHub",
+    github: "https://github.com/OgabekHub/agro-vision-ai",
     demo: "https://agro-vision-ai-zeta.vercel.app/",
     tags: ["ai", "nextjs", "react"],
+    caseSlug: "agrovision-ai",
   },
   {
     id: 3,
     name: "Faxr Mebel",
     image: "/img/faxrmebel.png",
-    github: "https://github.com/OgabekHub",
+    github: "https://github.com/OgabekHub/faxr-mebel",
     demo: "https://faxr-mebel.vercel.app/",
     tags: ["react", "landing"],
   },
@@ -57,8 +61,8 @@ export const PROJECTS: ProjectData[] = [
     id: 5,
     name: "NexusDevs",
     image: "/img/nexusdevs.png",
-    github: "https://github.com/OgabekHub/nexusdevs",
-    demo: "https://nexusdevs-xi.vercel.app/",
+    github: "https://github.com/OgabekHub/nexus-devs",
+    demo: "https://nexusdevs.vercel.app/",
     tags: ["landing", "nextjs", "react"],
   },
 ];
