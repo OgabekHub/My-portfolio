@@ -1,44 +1,62 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useCallback, useContext } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { translations, Language } from "@/data/translations";
 
 interface LanguageContextProps {
   language: Language;
   toggleLanguage: () => void;
+  /** Joriy tildagi manzil yasaydi: uz uchun "/…", en uchun "/en/…". */
+  localeHref: (path?: string) => string;
   t: typeof translations.uz;
 }
 
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguage] = useState<Language>("uz");
-  const [mounted, setMounted] = useState(false);
+export function LanguageProvider({
+  locale,
+  children,
+}: {
+  locale: Language;
+  children: React.ReactNode;
+}) {
+  const router = useRouter();
+  const pathname = usePathname();
 
-  useEffect(() => {
-    const savedLang = localStorage.getItem("preferredLanguage") as Language;
-    if (savedLang === "uz" || savedLang === "en") {
-      setLanguage(savedLang);
-    }
-    setMounted(true);
-  }, []);
-
-  // <html lang> ni faol tilga moslash — skrinriderlar va qidiruv tizimlari uchun
-  useEffect(() => {
-    document.documentElement.lang = language;
-  }, [language]);
-
+  // Til endi URL'dan keladi, state'dan emas. Shuning uchun server chizgan
+  // HTML allaqachon to'g'ri tilda bo'ladi va qidiruv tizimlari ikkala
+  // versiyani ham ko'radi.
   const toggleLanguage = () => {
-    const newLang = language === "uz" ? "en" : "uz";
-    setLanguage(newLang);
-    localStorage.setItem("preferredLanguage", newLang);
+    const hash = typeof window !== "undefined" ? window.location.hash : "";
+    const current = pathname || "/";
+    let target: string;
+
+    if (current === "/en" || current.startsWith("/en/")) {
+      target = current.slice(3) || "/";
+    } else {
+      target = current === "/" ? "/en" : `/en${current}`;
+    }
+
+    router.push(`${target}${hash}`);
   };
 
-  // Default to UZ during SSR, update to active language on client mount
-  const activeT = mounted ? translations[language] : translations.uz;
+  // useCallback — aks holda har render'da yangi funksiya bo'lib, uni
+  // useEffect dependency'siga qo'ygan komponentlar (masalan thank-you
+  // sahifasidagi taymer) cheksiz qayta ishga tushardi.
+  const localeHref = useCallback(
+    (path = "") => {
+      const suffix = path.replace(/^\/+/, "");
+      const base = locale === "en" ? "/en" : "";
+      return suffix ? `${base}/${suffix}` : base || "/";
+    },
+    [locale]
+  );
 
   return (
-    <LanguageContext.Provider value={{ language, toggleLanguage, t: activeT }}>
+    <LanguageContext.Provider
+      value={{ language: locale, toggleLanguage, localeHref, t: translations[locale] }}
+    >
       {children}
     </LanguageContext.Provider>
   );

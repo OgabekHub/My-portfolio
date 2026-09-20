@@ -5,21 +5,21 @@ import { useRouter } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
 import { FaCheck, FaDiagramProject, FaGithub, FaHouse, FaLinkedin, FaTelegram } from "react-icons/fa6";
 
-export default function ThankYouPage() {
+export default function ThankYouContent() {
   const router = useRouter();
-  const { t } = useLanguage();
+  const { t, localeHref } = useLanguage();
   const [seconds, setSeconds] = useState(10);
 
   useEffect(() => {
     if (seconds <= 0) {
-      router.push("/");
+      router.push(localeHref());
       return;
     }
     const interval = setInterval(() => {
       setSeconds((prev) => prev - 1);
     }, 1000);
     return () => clearInterval(interval);
-  }, [seconds, router]);
+  }, [seconds, router, localeHref]);
 
   return (
     <div className="relative min-h-screen bg-primary text-light flex flex-col items-center justify-center overflow-hidden font-poppins">
@@ -52,14 +52,14 @@ export default function ThankYouPage() {
         {/* Buttons */}
         <div className="btn-group flex gap-4 justify-center flex-wrap">
           <button
-            onClick={() => router.push("/")}
+            onClick={() => router.push(localeHref())}
             className="btn btn-primary bg-gradient-to-r from-accent to-accent/80 text-primary font-bold px-7 py-3 rounded-full shadow-[0_4px_18px_rgba(200,161,100,0.35)] hover:translate-y-[-3px] hover:shadow-[0_8px_28px_rgba(200,161,100,0.5)] transition-all flex items-center gap-2"
           >
             <FaHouse />
             {t.thankYou.backBtn}
           </button>
           <button
-            onClick={() => router.push("/#projects")}
+            onClick={() => router.push(`${localeHref()}#projects`)}
             className="btn btn-secondary bg-transparent border-2 border-accent/40 text-accent font-bold px-7 py-3 rounded-full hover:bg-accent/10 hover:border-accent hover:translate-y-[-3px] transition-all flex items-center gap-2"
           >
             <FaDiagramProject />

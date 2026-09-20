@@ -3,6 +3,7 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import { PROJECTS } from "@/data/projects";
 import { FaChevronDown, FaChevronUp, FaGithub, FaUpRightFromSquare } from "react-icons/fa6";
 
 // Filtr tugmalari shu tartibda ko'rsatiladi (loyihada uchraydiganlari)
@@ -157,43 +158,7 @@ export default function Projects() {
   //    ichiga ham xuddi shunday id bilan nomi va ta'rifini qo'shib ketasiz!
   // Eslatma: teglar (tags) shu yerda turadi — ular tilga bog'liq emas.
   // Yangi teg qo'shsangiz, uni FILTER_ORDER ga va translations'dagi projects.filters ga ham qo'shing.
-  const projectsData = [
-    {
-      id: 1,
-      image: "/img/devcommons.png",
-      github: "https://github.com/OgabekHub/devcommons",
-      demo: "https://devcommons.vercel.app/",
-      tags: ["nextjs", "react"],
-    },
-    {
-      id: 2,
-      image: "/img/agrovision.png",
-      github: "https://github.com/OgabekHub",
-      demo: "https://agro-vision-ai-zeta.vercel.app/",
-      tags: ["ai", "nextjs", "react"],
-    },
-    {
-      id: 3,
-      image: "/img/faxrmebel.png",
-      github: "https://github.com/OgabekHub",
-      demo: "https://faxr-mebel.vercel.app/",
-      tags: ["react", "landing"],
-    },
-    {
-      id: 4,
-      image: "/img/zetrastore.png",
-      github: "https://github.com/OgabekHub/zetra-store",
-      demo: "https://zetra-store-one.vercel.app/",
-      tags: ["ecommerce", "nextjs", "react"],
-    },
-    {
-      id: 5,
-      image: "/img/nexusdevs.png",
-      github: "https://github.com/OgabekHub/nexusdevs",
-      demo: "https://nexusdevs-xi.vercel.app/",
-      tags: ["landing", "nextjs", "react"],
-    },
-  ];
+  const projectsData = PROJECTS;
 
   // Loyihalar ro'yxatini to'g'ri o'qish hamda tarjima berilmagan taqdirda ham hechnima yo'qolmasligini ta'minlash:
   const combinedProjects = projectsData.map((data) => {

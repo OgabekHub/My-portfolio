@@ -1,0 +1,42 @@
+# Og'abek Olimjonov — Frontend Developer
+
+> Junior frontend developer based in Namangan, Uzbekistan. Builds responsive,
+> accessible interfaces with HTML, CSS, JavaScript, React.js, Next.js and
+> Tailwind CSS, and translates Figma designs into production code. Open to
+> junior and remote roles. The portfolio is published in Uzbek and English.
+
+Contact: olimjonov.ogabek.dev@gmail.com · +998 97 064 04 24 · Namangan, Uzbekistan (UTC+5)
+
+## Pages
+
+- [Portfolio (Uzbek)](https://ogabek.vercel.app/): main page — about, skills, projects, contact.
+- [Portfolio (English)](https://ogabek.vercel.app/en): the same content in English.
+
+## Projects
+
+- [DevCommons](https://devcommons.vercel.app/): a platform for developers to share
+  code snippets and prompts. Next.js, React, Tailwind CSS.
+  Source: https://github.com/OgabekHub/devcommons
+- [AgroVision AI](https://agro-vision-ai-zeta.vercel.app/): web platform for detecting
+  crop diseases from images. Next.js and React on the frontend.
+- [Faxr Mebel](https://faxr-mebel.vercel.app/): catalogue website for a furniture
+  manufacturer. React, Tailwind CSS, Framer Motion.
+- [Zetra Store](https://zetra-store-one.vercel.app/): e-commerce storefront with
+  catalogue and cart. Next.js, React, Tailwind CSS.
+  Source: https://github.com/OgabekHub/zetra-store
+- [NexusDevs](https://nexusdevs-xi.vercel.app/): landing page for a development
+  agency. Next.js, React, Tailwind CSS.
+  Source: https://github.com/OgabekHub/nexusdevs
+
+## Skills
+
+- Frontend: HTML5, CSS3, JavaScript, React.js, Next.js, Tailwind CSS
+- Design: Figma, responsive design, UI/UX, wireframing
+- Tools: Git, GitHub, npm, CLI, Netlify, Vercel
+
+## Links
+
+- GitHub: https://github.com/OgabekHub
+- LinkedIn: https://www.linkedin.com/in/og-abek-olimjonov-2a52b3364
+- Telegram: https://t.me/olimjonov_ogabek
+- Resume: https://olimjonov-ogabek-resume.netlify.app/

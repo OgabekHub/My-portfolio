@@ -9,7 +9,7 @@ import { FaEnvelope, FaGithub, FaLinkedin, FaLocationDot, FaPaperPlane, FaPhone,
 
 export default function Contact() {
   const router = useRouter();
-  const { t } = useLanguage();
+  const { t, localeHref } = useLanguage();
   const { showToast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
@@ -56,7 +56,7 @@ export default function Contact() {
 
       // Reset form and redirect to thank-you route
       setFormData({ name: "", email: "", subject: "", message: "" });
-      router.push("/thank-you");
+      router.push(localeHref("thank-you"));
     } catch (error) {
       console.error("EmailJS sending error:", error);
       showToast(t.contact.errorAlert, "error");

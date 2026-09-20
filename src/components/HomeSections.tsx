@@ -10,7 +10,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AiCommandCenter from "@/components/AiCommandCenter";
 import { FaArrowUp } from "react-icons/fa6";
-export default function Home() {
+export default function HomeSections() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
 
