@@ -91,8 +91,6 @@ export const translations = {
           techs: ["Next.js", "React", "Tailwind CSS", "Markdown"]
         }
       ],
-      liveDemo: "Saytni ko'rish",
-      gitHub: "Kodni ko'rish",
       caseStudy: "Batafsil tahlil",
       roleLabel: "Mening rolim",
       showMore: "Ko'proq ko'rish",
@@ -220,8 +218,6 @@ export const translations = {
           techs: ["Next.js", "React", "Tailwind CSS", "Markdown"]
         }
       ],
-      liveDemo: "Live Demo",
-      gitHub: "View Code",
       caseStudy: "Read the case study",
       roleLabel: "My role",
       showMore: "Show More",
