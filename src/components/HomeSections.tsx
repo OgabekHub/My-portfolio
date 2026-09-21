@@ -118,10 +118,11 @@ export default function HomeSections() {
       <Footer />
       <AiCommandCenter />
 
-      {/* Back to top button */}
+      {/* Back to top button — telefonda kichikroq: 50px tugma karta matni va
+          forma maydonlarini yopib qo'yardi */}
       <button
         onClick={scrollToTop}
-        className="fixed bottom-[20px] right-[20px] md:bottom-[30px] md:right-[30px] w-[50px] h-[50px] rounded-full bg-accent text-primary flex items-center justify-center text-lg cursor-pointer transition-all duration-300 z-[999] border-none shadow-[0_4px_12px_rgba(0,0,0,0.15)] hover:translate-y-[-5px] hover:shadow-[0_6px_16px_rgba(0,0,0,0.2)]"
+        className="back-to-top fixed bottom-4 right-4 md:bottom-[30px] md:right-[30px] w-10 h-10 md:w-[50px] md:h-[50px] rounded-full flex items-center justify-center text-base md:text-lg cursor-pointer z-[999] border-none"
         style={{
           display: showBackToTop ? "flex" : "none",
           opacity: showBackToTop ? 1 : 0,

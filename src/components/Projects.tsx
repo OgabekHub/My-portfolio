@@ -4,6 +4,7 @@ import React, { useState, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { PROJECTS } from "@/data/projects";
+import SectionHeading from "./SectionHeading";
 import { FaArrowRight, FaChevronDown, FaChevronUp, FaGithub, FaUpRightFromSquare } from "react-icons/fa6";
 
 // Filtr tugmalari shu tartibda ko'rsatiladi (loyihada uchraydiganlari)
@@ -35,10 +36,12 @@ function TiltCard({
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const glareRef = useRef<HTMLDivElement>(null);
+  // Tinch holatda soya inline berilmaydi — uni globals.css'dagi .surface-card
+  // boshqaradi (qorong'i va yorug' temada har xil). Inline soya faqat og'ish
+  // paytida, sichqonchaga ergashishi uchun kerak.
   const [style, setStyle] = useState<React.CSSProperties>({
     transform: "rotateX(0deg) rotateY(0deg)",
     transition: "transform 0.1s ease, box-shadow 0.1s ease",
-    boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
   });
 
   const MAX_TILT = 12; // degrees
@@ -76,7 +79,6 @@ function TiltCard({
     setStyle({
       transform: "rotateX(0deg) rotateY(0deg) scale3d(1,1,1)",
       transition: "transform 0.45s cubic-bezier(0.16,1,0.3,1), box-shadow 0.45s ease",
-      boxShadow: "0 4px 24px rgba(0,0,0,0.12)",
     });
     if (glareRef.current) {
       glareRef.current.style.opacity = "0";
@@ -86,14 +88,11 @@ function TiltCard({
   return (
     <div
       ref={cardRef}
-      className="tilt-card project-card visible bg-secondary border border-accent/10 rounded-2xl overflow-hidden shadow-md hover:border-accent/40 relative animate-in fade-in duration-500"
+      className="tilt-card project-card surface-card visible relative flex flex-col"
       style={style}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      {/* Hand-drawn sketchy dashed hover border */}
-      <div className="sketch-card-border" />
-
       {/* Glare overlay */}
       <div
         ref={glareRef}
@@ -132,40 +131,37 @@ function TiltCard({
         </div>
       </div>
 
-      {/* Content */}
-      <div className="project-content p-6">
-        <h3 className="project-title text-xl font-bold font-playfair text-accent mb-3">
+      {/* Content — texnologiyalar va havola pastga tekislanadi, shunda bir
+          qatordagi kartalar matn uzunligidan qat'i nazar teng ko'rinadi */}
+      <div className="project-content p-6 flex flex-col flex-1">
+        <h3 className="project-title font-playfair mb-3">
           {project.title}
         </h3>
         <p className="project-description text-sm text-light/80 leading-relaxed mb-4">
           {project.desc}
         </p>
         {project.role && (
-          <p className="text-xs text-light/55 mb-4">
+          <p className="project-role text-xs mb-5">
             <span className="text-accent/90">{roleLabel}:</span> {project.role}
           </p>
         )}
-        <div className="project-tech flex flex-wrap gap-2">
-          {project.techs.map((techItem, tIdx) => (
-            <span
-              key={tIdx}
-              className="px-3 py-1 rounded-md bg-primary/60 text-accent text-xs font-semibold border border-accent/10 sketch-hover"
-            >
-              {techItem}
-            </span>
-          ))}
-        </div>
+        <div className="mt-auto">
+          <div className="project-tech">
+            {project.techs.map((techItem, tIdx) => (
+              <span key={tIdx} className="tech-chip sketch-hover">
+                {techItem}
+              </span>
+            ))}
+          </div>
 
-        {/* Batafsil tahlil faqat case study yozilgan loyihalarda chiqadi */}
-        {caseHref && (
-          <a
-            href={caseHref}
-            className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-light transition-colors"
-          >
-            {caseLabel}
-            <FaArrowRight className="text-xs" />
-          </a>
-        )}
+          {/* Batafsil tahlil faqat case study yozilgan loyihalarda chiqadi */}
+          {caseHref && (
+            <a href={caseHref} className="case-link">
+              {caseLabel}
+              <FaArrowRight className="case-link-arrow" aria-hidden="true" />
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -218,17 +214,13 @@ export default function Projects() {
   const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, INITIAL_COUNT);
 
   return (
-    <section id="projects" className="py-20 bg-primary/40 relative">
+    <section id="projects" className="section-block relative">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-playfair font-bold text-center mb-6">
-          {t.projects.title.split(" ")[0]}{" "}
-          <span className="text-accent">
-            {t.projects.title.split(" ").slice(1).join(" ")}
-          </span>
-        </h2>
+        <SectionHeading title={t.projects.title} />
 
-        {/* Filter buttons — faqat haqiqatan loyihasi bor teglar ko'rsatiladi */}
-        <div className="flex justify-center flex-wrap gap-4 mb-16 mt-8">
+        {/* Filter buttons — faqat haqiqatan loyihasi bor teglar ko'rsatiladi.
+            Telefonda bitta qatorda gorizontal suriladi (uch qatorga o'ralmaydi). */}
+        <div className="filter-bar" role="group" aria-label={t.nav.projects}>
           {filterButtons.map((btn) => (
             <button
               key={btn.id}
@@ -236,11 +228,8 @@ export default function Projects() {
                 setFilter(btn.id);
                 setShowAll(false);
               }}
-              className={`px-5 py-2 rounded-full border text-sm font-semibold transition-all duration-300 ${
-                filter === btn.id
-                  ? "bg-accent border-accent text-primary shadow-lg shadow-accent/25"
-                  : "bg-transparent border-accent/20 text-light/80 hover:border-accent hover:text-accent"
-              }`}
+              aria-pressed={filter === btn.id}
+              className={`filter-pill ${filter === btn.id ? "is-active" : ""}`}
             >
               {btn.label}
             </button>

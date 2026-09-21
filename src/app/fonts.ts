@@ -33,6 +33,7 @@ export const NOSCRIPT_REVEAL_CSS = `
     opacity: 1 !important;
     transform: none !important;
   }
+  .heading-sketch path { stroke-dashoffset: 0 !important; }
 `;
 
 /** Sahifa chizilishidan oldin temani qo'yadi — "oq lampochka" effektini oldini oladi. */

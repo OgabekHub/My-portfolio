@@ -23,10 +23,51 @@ export default function Navbar() {
   const isHome = pathname === localeHref();
   const sectionHref = (hash: string) => `${localeHref()}${hash}`;
 
+  // Sahifa tepasida navbar shaffof — hero ochiq ko'rinadi; skroll boshlanganda
+  // fon, soya va chegara paydo bo'ladi.
+  const [isScrolled, setIsScrolled] = useState(false);
+  // Hozir ekran o'rtasida turgan bo'lim — shu havola oltin bilan belgilanadi.
+  const [activeHash, setActiveHash] = useState<string>("#home");
+
   useEffect(() => {
     const isLight = !document.documentElement.classList.contains("dark");
     setIsDark(!isLight);
   }, []);
+
+  useEffect(() => {
+    let ticking = false;
+    const update = () => {
+      setIsScrolled(window.scrollY > 24);
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!isHome) return;
+    // Ekranning o'rta chizig'ini kesib o'tgan bo'lim faol hisoblanadi:
+    // tepadan 45% va pastdan 50% qirqilgan tor tasma.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveHash(`#${entry.target.id}`);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    NAV_LINKS.forEach((link) => {
+      const el = document.querySelector(link.href);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, [isHome]);
 
   const handleThemeToggle = () => {
     const nextDark = !isDark;
@@ -53,7 +94,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="fixed w-full bg-primary/95 backdrop-blur-sm shadow-lg z-50 border-b border-secondary/20">
+    <nav className={`site-nav fixed w-full z-50 ${isScrolled || isOpen ? "is-scrolled" : ""}`}>
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
         <div
@@ -80,21 +121,25 @@ export default function Navbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8 font-poppins">
-          <ul className="flex space-x-8">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={sectionHref(link.href)}
-                  onClick={(e) => {
-                    handleLinkClick(e, link.href);
-                  }}
-                  className="nav-item nav-link"
-                >
-                  {t.nav[link.key]}
-                </a>
-              </li>
-            ))}
+        <div className="hidden md:flex items-center space-x-6 font-poppins">
+          <ul className="flex space-x-2 lg:space-x-3">
+            {NAV_LINKS.map((link) => {
+              const isActive = isHome && activeHash === link.href;
+              return (
+                <li key={link.href}>
+                  <a
+                    href={sectionHref(link.href)}
+                    onClick={(e) => {
+                      handleLinkClick(e, link.href);
+                    }}
+                    className={`nav-item nav-link ${isActive ? "is-active" : ""}`}
+                    aria-current={isActive ? "true" : undefined}
+                  >
+                    {t.nav[link.key]}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="flex items-center space-x-4 border-l border-gray-600/30 pl-6">
@@ -167,19 +212,23 @@ export default function Navbar() {
       {/* Mobile Navigation */}
       <div id="mobile-nav" className={`mobile-nav md:hidden ${isOpen ? "active" : ""}`}>
         <ul className="flex flex-col items-center space-y-4 py-6 font-poppins">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={sectionHref(link.href)}
-                onClick={(e) => {
-                  handleLinkClick(e, link.href);
-                }}
-                className="nav-item text-lg"
-              >
-                {t.nav[link.key]}
-              </a>
-            </li>
-          ))}
+          {NAV_LINKS.map((link) => {
+            const isActive = isHome && activeHash === link.href;
+            return (
+              <li key={link.href}>
+                <a
+                  href={sectionHref(link.href)}
+                  onClick={(e) => {
+                    handleLinkClick(e, link.href);
+                  }}
+                  className={`nav-item text-lg ${isActive ? "is-active" : ""}`}
+                  aria-current={isActive ? "true" : undefined}
+                >
+                  {t.nav[link.key]}
+                </a>
+              </li>
+            );
+          })}
 
           <li className="pt-4 border-t border-gray-600/20 w-[80%] flex items-center justify-center space-x-4 pb-2">
             {/* Dark Mode Toggle for Mobile Drawer */}

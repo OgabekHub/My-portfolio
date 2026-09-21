@@ -3,6 +3,7 @@
 import React, { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "@/context/LanguageContext";
+import SectionHeading from "./SectionHeading";
 import { sendOwnerEmail } from "@/utils/email";
 import { useToast } from "@/components/Toast";
 import { FaEnvelope, FaGithub, FaLinkedin, FaLocationDot, FaPaperPlane, FaPhone, FaSpinner, FaTelegram } from "react-icons/fa6";
@@ -65,54 +66,50 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 bg-secondary relative">
+    <section id="contact" className="section-block relative">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-playfair font-bold text-center mb-16">
-          {t.contact.title.split(" ")[0]}{" "}
-          <span className="text-accent">
-            {t.contact.title.split(" ").slice(1).join(" ")}
-          </span>
-        </h2>
-        <div className="max-w-4xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <SectionHeading title={t.contact.title} />
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
             {/* Contact Info */}
-            <div className="contact-info">
-              <h3 className="text-2xl font-bold text-accent mb-6">{t.contact.connect}</h3>
-              <p className="text-light/80 mb-8 text-sm leading-relaxed">
+            <div className="contact-info surface-card lg:col-span-2 flex flex-col">
+              <h3 className="card-title card-title-lg mb-4">{t.contact.connect}</h3>
+              <p className="text-light/75 mb-8 text-sm leading-relaxed">
                 {t.contact.desc}
               </p>
-              <div className="space-y-6">
-                <div className="contact-item flex items-center gap-4">
-                  <div className="contact-icon text-accent bg-primary/45 w-10 h-10 rounded-full flex items-center justify-center border border-accent/10">
+              <div className="space-y-5">
+                <div className="contact-item">
+                  <div className="contact-icon">
                     <FaEnvelope />
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-accent text-sm">Email</h4>
-                    <p className="text-light/70 text-sm">olimjonov.ogabek.dev@gmail.com</p>
+                  <div className="min-w-0">
+                    <h4 className="contact-label">Email</h4>
+                    {/* Tor ekranda "@" dan keyin bo'linadi — so'z o'rtasidan emas */}
+                    <p className="contact-value">olimjonov.ogabek.dev@<wbr />gmail.com</p>
                   </div>
                 </div>
-                <div className="contact-item flex items-center gap-4">
-                  <div className="contact-icon text-accent bg-primary/45 w-10 h-10 rounded-full flex items-center justify-center border border-accent/10">
+                <div className="contact-item">
+                  <div className="contact-icon">
                     <FaPhone />
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-accent text-sm">Phone</h4>
-                    <p className="text-light/70 text-sm">+998 97 064 04 24</p>
+                  <div className="min-w-0">
+                    <h4 className="contact-label">Phone</h4>
+                    <p className="contact-value">+998 97 064 04 24</p>
                   </div>
                 </div>
-                <div className="contact-item flex items-center gap-4">
-                  <div className="contact-icon text-accent bg-primary/45 w-10 h-10 rounded-full flex items-center justify-center border border-accent/10">
+                <div className="contact-item">
+                  <div className="contact-icon">
                     <FaLocationDot />
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-accent text-sm">Location</h4>
-                    <p className="text-light/70 text-sm">Namangan, Uzbekistan</p>
+                  <div className="min-w-0">
+                    <h4 className="contact-label">Location</h4>
+                    <p className="contact-value">Namangan, Uzbekistan</p>
                   </div>
                 </div>
               </div>
 
-              {/* Social Links */}
-              <div className="mt-8 flex space-x-4">
+              {/* Social Links — kartaning pastiga tekislanadi */}
+              <div className="mt-auto pt-8 flex space-x-4">
                 <a
                   href="https://github.com/OgabekHub"
                   target="_blank"
@@ -144,8 +141,8 @@ export default function Contact() {
             </div>
 
             {/* Contact Form */}
-            <div className="contact-form">
-              <form onSubmit={handleSubmit} className="space-y-6" id="contactForm" name="contact">
+            <div className="contact-form surface-card lg:col-span-3">
+              <form onSubmit={handleSubmit} className="contact-form-grid" id="contactForm" name="contact">
                 {/* Honeypot — ekrandan tashqarida, skrinriderlardan yashirin */}
                 <input
                   type="text"
@@ -157,60 +154,64 @@ export default function Contact() {
                   aria-hidden="true"
                   className="absolute w-px h-px -left-[9999px] opacity-0"
                 />
-                <div className="form-group flex flex-col gap-1">
-                  <label className="text-sm font-semibold text-accent">{t.contact.nameLabel}</label>
+                <div className="form-group">
+                  <label htmlFor="contact-name" className="field-label">{t.contact.nameLabel}</label>
                   <input
+                    id="contact-name"
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="form-input bg-primary/50 text-light border border-accent/20 rounded-xl p-3 focus:outline-none focus:border-accent text-sm"
+                    className="form-input"
                     placeholder={t.contact.namePlaceholder}
+                    autoComplete="name"
                     required
                   />
                 </div>
-                <div className="form-group flex flex-col gap-1">
-                  <label className="text-sm font-semibold text-accent">{t.contact.emailLabel}</label>
+                <div className="form-group">
+                  <label htmlFor="contact-email" className="field-label">{t.contact.emailLabel}</label>
                   <input
+                    id="contact-email"
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="form-input bg-primary/50 text-light border border-accent/20 rounded-xl p-3 focus:outline-none focus:border-accent text-sm"
+                    className="form-input"
                     placeholder={t.contact.emailPlaceholder}
+                    autoComplete="email"
                     required
                   />
                 </div>
-                <div className="form-group flex flex-col gap-1">
-                  <label className="text-sm font-semibold text-accent">{t.contact.subjectLabel}</label>
+                <div className="form-group is-wide">
+                  <label htmlFor="contact-subject" className="field-label">{t.contact.subjectLabel}</label>
                   <input
+                    id="contact-subject"
                     type="text"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="form-input bg-primary/50 text-light border border-accent/20 rounded-xl p-3 focus:outline-none focus:border-accent text-sm"
+                    className="form-input"
                     placeholder={t.contact.subjectPlaceholder}
                     required
                   />
                 </div>
-                <div className="form-group flex flex-col gap-1">
-                  <label className="text-sm font-semibold text-accent">{t.contact.messageLabel}</label>
+                <div className="form-group is-wide">
+                  <label htmlFor="contact-message" className="field-label">{t.contact.messageLabel}</label>
                   <textarea
+                    id="contact-message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    className="form-input bg-primary/50 text-light border border-accent/20 rounded-xl p-3 focus:outline-none focus:border-accent text-sm"
-                    rows={4}
+                    className="form-input"
+                    rows={5}
                     placeholder={t.contact.messagePlaceholder}
                     required
                   ></textarea>
                 </div>
-                 <button
+                <button
                   type="submit"
                   disabled={isSending}
-                  className={`submit-btn w-full py-3 rounded-xl bg-accent text-primary font-bold hover:bg-light hover:text-primary transition-all duration-300 flex items-center justify-center gap-2 ${
-                    isSending ? "opacity-75 cursor-not-allowed" : ""
-                  }`}
+                  className={`submit-btn is-wide ${isSending ? "opacity-75 cursor-not-allowed" : ""}`}
                 >
                   {isSending ? (
                     <>

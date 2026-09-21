@@ -3,20 +3,16 @@
 import React from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
+import SectionHeading from "./SectionHeading";
 import { FaBullseye, FaCode, FaFilePdf, FaHeart, FaUpRightFromSquare } from "react-icons/fa6";
 
 export default function About() {
   const { t } = useLanguage();
 
   return (
-    <section id="about" className="py-20 bg-primary/30 relative">
+    <section id="about" className="section-block relative">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-playfair font-bold text-center mb-16">
-          {t.about.title.split(" ")[0]}{" "}
-          <span className="text-accent">
-            {t.about.title.split(" ").slice(1).join(" ")}
-          </span>
-        </h2>
+        <SectionHeading title={t.about.title} />
         <div className="flex flex-col md:flex-row items-center gap-12">
           {/* Profile Image */}
           <div className="md:w-1/3 flex justify-center">
@@ -42,11 +38,13 @@ export default function About() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Skills Card */}
-                <div className="about-card bg-secondary/40 border border-accent/15 p-6 rounded-2xl backdrop-blur-sm">
-                  <div className="about-card-icon text-accent text-2xl mb-4">
-                    <FaCode />
+                <div className="about-card surface-card p-6">
+                  <div className="card-head">
+                    <div className="about-card-icon text-accent text-2xl">
+                      <FaCode />
+                    </div>
+                    <h3 className="card-title">{t.about.coreSkillsTitle}</h3>
                   </div>
-                  <h3 className="text-xl font-bold text-accent mb-3">{t.about.coreSkillsTitle}</h3>
                   <ul className="list-disc list-inside space-y-2 text-light/80 text-sm">
                     {t.about.coreSkills.map((skill, index) => (
                       <li key={index}>{skill}</li>
@@ -55,11 +53,13 @@ export default function About() {
                 </div>
 
                 {/* Interests Card */}
-                <div className="about-card bg-secondary/40 border border-accent/15 p-6 rounded-2xl backdrop-blur-sm">
-                  <div className="about-card-icon text-accent text-2xl mb-4">
-                    <FaHeart />
+                <div className="about-card surface-card p-6">
+                  <div className="card-head">
+                    <div className="about-card-icon text-accent text-2xl">
+                      <FaHeart />
+                    </div>
+                    <h3 className="card-title">{t.about.interestsTitle}</h3>
                   </div>
-                  <h3 className="text-xl font-bold text-accent mb-3">{t.about.interestsTitle}</h3>
                   <ul className="list-disc list-inside space-y-2 text-light/80 text-sm">
                     {t.about.interests.map((interest, index) => (
                       <li key={index}>{interest}</li>
@@ -69,12 +69,12 @@ export default function About() {
               </div>
 
               {/* Goals Banner */}
-              <div className="about-goals bg-secondary/35 border border-accent/15 p-6 rounded-2xl flex items-start gap-4">
+              <div className="about-goals surface-card p-6 flex items-start gap-4">
                 <div className="about-goals-icon text-accent text-3xl mt-1">
                   <FaBullseye />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-accent mb-2">{t.about.goalsTitle}</h3>
+                  <h3 className="card-title mb-2">{t.about.goalsTitle}</h3>
                   <p className="text-light/80 text-sm leading-relaxed">
                     {t.about.goalsDesc}
                   </p>

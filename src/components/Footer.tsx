@@ -26,7 +26,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-primary py-16 border-t border-light/10">
+    <footer className="site-footer bg-primary py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Description Column */}
@@ -124,17 +124,17 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-light/10 mt-12 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-xs text-light/50">
-              &copy; {new Date().getFullYear()} Og&apos;abek Olimjonov. {t.footer.rights}
-            </p>
-            <div className="mt-4 md:mt-0">
-              <p className="text-xs text-light/50">
-                {t.footer.madeWith} <FaHeart className="text-accent" aria-hidden="true" /> by Og&apos;abek
-              </p>
-            </div>
-          </div>
+        <div className="footer-bottom">
+          <p className="text-xs text-light/50">
+            &copy; {new Date().getFullYear()} Og&apos;abek Olimjonov. {t.footer.rights}
+          </p>
+          {/* Tailwind preflight svg'ni `display:block` qiladi — inline-flex
+              bo'lmasa yurakcha matnni uch qatorga bo'lib yuboradi */}
+          <p className="footer-made text-xs text-light/50">
+            {t.footer.madeWith}
+            <FaHeart className="text-accent" aria-hidden="true" />
+            by Og&apos;abek
+          </p>
         </div>
       </div>
     </footer>

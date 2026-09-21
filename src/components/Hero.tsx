@@ -106,8 +106,9 @@ export default function Hero() {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-          {/* Text Content */}
-          <div className="text-center m-auto md:text-center md:w-1/2">
+          {/* Text Content — desktopda chapga tekislangan: portret bilan bitta
+              vertikal o'q hosil qiladi; telefonda markazda qoladi */}
+          <div className="hero-copy text-center md:text-left md:w-1/2">
             <div className="mb-6 animate-fadeIn inline-block">
               <span className="sketch-box px-5 py-1.5 bg-primary/70 text-accent font-mono text-sm tracking-wider inline-flex items-center gap-2">
                 <FaTerminal className="text-xs" />
@@ -141,8 +142,8 @@ export default function Hero() {
             <p className="text-lg md:text-xl font-poppins text-light/80 mb-8 animate-fadeIn h-[32px]">
               <span className="typing-text">{currentText}</span>
             </p>
-            <div className="flex flex-col md:flex-row gap-4 justify-center items-center animate-fadeIn">
-              <MagneticBtn>
+            <div className="hero-actions flex flex-col sm:flex-row gap-4 justify-center md:justify-start items-center animate-fadeIn">
+              <MagneticBtn className="hero-action">
                 <a
                   href="#contact"
                   onClick={(e) => {
@@ -154,7 +155,7 @@ export default function Hero() {
                   <FaArrowRight className="ml-2" />
                 </a>
               </MagneticBtn>
-              <MagneticBtn>
+              <MagneticBtn className="hero-action">
                 <a
                   href="#projects"
                   onClick={(e) => {
@@ -169,7 +170,7 @@ export default function Hero() {
             </div>
 
             {/* Social Media Links */}
-            <div className="mt-8 flex justify-center space-x-4 animate-fadeIn">
+            <div className="mt-8 flex justify-center md:justify-start space-x-4 animate-fadeIn">
               <a
                 href="https://github.com/OgabekHub"
                 target="_blank"
@@ -200,18 +201,21 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Profile Image */}
+          {/* Profile Image — tashqi qobiq orqadagi yumshoq oltin nurni
+              chizadi (globals.css → .hero-portrait) */}
           <div className="md:w-1/2 flex justify-center">
-            <div className="hero-image-container">
-              <Image
-                src="/img/Portrait of Michael Mando in a Black Suit Jacket.png"
-                alt="Og'abek Olimjonov"
-                className="hero-image animate-fadeIn"
-                width={500}
-                height={500}
-                priority
-                style={{ objectFit: "cover" }}
-              />
+            <div className="hero-portrait">
+              <div className="hero-image-container">
+                <Image
+                  src="/img/Portrait of Michael Mando in a Black Suit Jacket.png"
+                  alt="Og'abek Olimjonov"
+                  className="hero-image animate-fadeIn"
+                  width={500}
+                  height={500}
+                  priority
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
             </div>
           </div>
         </div>

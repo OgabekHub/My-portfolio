@@ -2,17 +2,23 @@
 
 import React from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import SectionHeading from "./SectionHeading";
 import type { IconType } from "react-icons";
 import { FaCode, FaCss3Alt, FaEye, FaFilm, FaGitAlt, FaGithub, FaHtml5, FaJs, FaMobileScreenButton, FaNpm, FaObjectGroup, FaPalette, FaPenNib, FaReact, FaScrewdriverWrench, FaServer, FaTerminal, FaWind } from "react-icons/fa6";
 
-/** Vercel logosi react-icons'da yo'q — inline SVG sifatida qoladi. */
-function VercelIcon({ className }: { className?: string }) {
+/**
+ * Vercel logosi react-icons'da yo'q — inline SVG sifatida qoladi.
+ * O'lchami react-icons kabi 1em: badge ichida boshqa ikonkalar bilan bir xil.
+ */
+function VercelIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 116 100"
+      width="1em"
+      height="1em"
       fill="currentColor"
-      className={className || "w-3.5 h-3 text-accent inline-block mr-1.5"}
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path fillRule="evenodd" clipRule="evenodd" d="M57.5 0L115 100H0L57.5 0Z" />
     </svg>
@@ -64,30 +70,27 @@ export default function Skills() {
   ];
 
   return (
-    <section id="skills" className="py-20 bg-secondary relative">
+    <section id="skills" className="section-block relative">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-playfair font-bold text-center mb-16">
-          {t.skills.title.split(" ")[0]}{" "}
-          <span className="text-accent">
-            {t.skills.title.split(" ").slice(1).join(" ")}
-          </span>
-        </h2>
+        <SectionHeading title={t.skills.title} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skillCategories.map((category, idx) => (
-            <div key={idx} className="skill-card sketch-hover">
-              <div className="skill-icon">
-                <category.Icon />
+            <div key={idx} className="skill-card surface-card">
+              <div className="card-head">
+                <div className="skill-icon">
+                  <category.Icon />
+                </div>
+                <h3 className="skill-title">{category.title}</h3>
               </div>
-              <h3 className="skill-title">{category.title}</h3>
-              
+
               <div className="tech-badges">
                 {category.badges.map((badge, bIdx) => (
                   <span
                     key={bIdx}
-                    className="tech-badge flex items-center sketch-hover"
+                    className="tech-badge sketch-hover"
                   >
-                    <badge.Icon className="mr-1.5" />
+                    <badge.Icon aria-hidden="true" />
                     <span>{badge.name}</span>
                   </span>
                 ))}
