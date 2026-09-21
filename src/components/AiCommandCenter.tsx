@@ -116,10 +116,11 @@ export default function AiCommandCenter() {
     setIsChatLoading(true);
 
     try {
+      // Til — AI shu versiya faktlaridan foydalanadi va noaniq bo'lsa shu tilda javob beradi
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: activeMsg, mode: "chat" }),
+        body: JSON.stringify({ message: activeMsg, mode: "chat", language }),
       });
 
       if (!response.ok) {
@@ -127,13 +128,13 @@ export default function AiCommandCenter() {
       }
 
       const data = await response.json();
-      const aiReply = data.reply || "Xatolik yuz berdi.";
+      const aiReply = data.reply || (language === "uz" ? "Xatolik yuz berdi." : "Something went wrong.");
 
       setMessages((prev) => [...prev, { sender: "ai", text: aiReply, timestamp: new Date() }]);
       executeAiAction(data.action, data.scrollTarget);
     } catch {
       // Offline fallback
-      const fallback: ChatResponse = handleLocalFallback(activeMsg);
+      const fallback: ChatResponse = handleLocalFallback(activeMsg, language);
       setMessages((prev) => [...prev, { sender: "ai", text: fallback.reply, timestamp: new Date() }]);
       executeAiAction(fallback.action, fallback.scrollTarget);
     } finally {
@@ -196,7 +197,7 @@ export default function AiCommandCenter() {
                   {isChatLoading && (
                     <div className="flex justify-start">
                       <div className="bg-primary/50 border border-accent/10 rounded-xl rounded-tl-none p-3 text-light/50 flex items-center gap-1.5">
-                        <span>Typing</span>
+                        <span>{language === "uz" ? "Yozmoqda" : "Typing"}</span>
                         <FaSpinner className="animate-spin text-accent" />
                       </div>
                     </div>

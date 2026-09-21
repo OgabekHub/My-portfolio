@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { checkRateLimit, getClientIp } from "@/lib/rateLimit";
+import { buildSystemPrompt } from "@/lib/aiContext";
 
 const VALID_MODES = ["chat"] as const;
+const VALID_LANGUAGES = ["uz", "en"] as const;
 const MAX_MESSAGE_LENGTH = 1000;
 
 /** So'rov shu saytdan kelganini tekshirish (dev'da localhost'ga ruxsat). */
@@ -37,18 +39,24 @@ export async function POST(req: Request) {
       );
     }
 
-    const { message, mode } = await req.json();
+    const { message, mode, language } = await req.json();
 
     // --- 3. Input validatsiyasi (Gemini'ga so'rov yuborishdan OLDIN) ---
     if (mode !== undefined && !VALID_MODES.includes(mode)) {
       return NextResponse.json({ error: "Invalid mode" }, { status: 400 });
     }
 
-    if (message !== undefined && typeof message !== "string") {
-      return NextResponse.json({ error: "message must be a string" }, { status: 400 });
+    // Til — tashrifchi turgan sahifa versiyasi; eski mijozlar uchun standart uz
+    if (language !== undefined && !VALID_LANGUAGES.includes(language)) {
+      return NextResponse.json({ error: "Invalid language" }, { status: 400 });
+    }
+    const locale: (typeof VALID_LANGUAGES)[number] = language ?? "uz";
+
+    if (typeof message !== "string" || !message.trim()) {
+      return NextResponse.json({ error: "message must be a non-empty string" }, { status: 400 });
     }
 
-    if (typeof message === "string" && message.length > MAX_MESSAGE_LENGTH) {
+    if (message.length > MAX_MESSAGE_LENGTH) {
       return NextResponse.json(
         { error: `Xabar juda uzun (maksimal ${MAX_MESSAGE_LENGTH} belgi).` },
         { status: 400 }
@@ -61,34 +69,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "API key is not configured" }, { status: 401 });
     }
 
-    const systemInstruction = `
-        Siz Og'abek Olimjonovning portfoliodagi AI Copilot (Kopilot) yordamchisiz.
-        Og'abek haqida ma'lumotlar:
-        - Yo'nalishi: Frontend dasturchi.
-        - Manzili: Namangan, O'zbekiston.
-        - Ko'nikmalari: HTML5, CSS3, JavaScript, React.js, Tailwind CSS, Next.js, Git, GitHub, Netlify, Vercel.
-        - Loyihalari:
-          1. Portfolio Card: Ijtimoiy tarmoqlar kartasi (HTML/CSS).
-          2. AgroVision AI: Agro-kasalliklarni chuqur o'rganish (deep learning) orqali aniqlovchi platforma (YOLOv8 va EfficientNet ishlatilgan).
-          3. Faxr Mebel: Mebellar elektron tijorat (E-commerce) veb-sayti.
-
-        Muloqot qoidalari (O'TA MUHIM):
-        1. Foydalanuvchilar bilan doimo samimiy, muloyim va "Siz" deb hurmat bilan gaplashing.
-        2. O'zbek tili grammatikasi va imlosiga qat'iy rioya qiling. "o'" va "g'" harflarini, shuningdek tutuq belgilarini to'g'ri ishlating (masalan: ko'nikma, to'g'ri, bog'lanish, ma'lumot).
-        3. Nutq sintezi (Text-to-Speech) orqali o'qilishi oson bo'lishi uchun, murakkab inglizcha so'zlar yoki dasturlash terminlarini iloji boricha sodda o'zbekcha so'zlar bilan tushuntiring. Matematik belgilar yoki qavslardan matnda kamroq foydalaning.
-        4. Javoblarni qisqa, mazmunli va londa qiling (maksimal 2-3 ta sodda gap).
-
-        Navigatsiya qoidalari:
-        - Agar foydalanuvchi ma'lum bir bo'limga o'tishni so'rasa (masalan: "loyihalar", "ishlar", "ko'nikmalar", "haqida", "aloqa", "bog'lanish"), 'scrollTarget' maydoni uchun quyidagilardan mosini tanlang: "#home", "#about", "#skills", "#projects", "#contact". Mos bo'lim bo'lmasa, null qoldiring.
-
-        Javobni aniq quyidagi JSON formatida qaytaring:
-        {
-          "reply": "Sizning o'zbekcha chiroyli va samimiy javobingiz",
-          "action": "navigate | talk",
-          "scrollTarget": "#projects" (yoki null)
-        }
-      `;
-
+    // Prompt saytning o'z ma'lumotlaridan yig'iladi (lib/aiContext.ts) va
+    // tashrifchi xabaridan alohida, systemInstruction sifatida beriladi —
+    // shunda xabar ichidagi "oldingi ko'rsatmalarni unut" kabi gaplar uni
+    // bosib o'tishi qiyinroq bo'ladi.
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
       {
@@ -97,13 +81,13 @@ export async function POST(req: Request) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: buildSystemPrompt(locale) }],
+          },
           contents: [
             {
-              parts: [
-                {
-                  text: `${systemInstruction}\n\nUser Input: ${message}`,
-                },
-              ],
+              role: "user",
+              parts: [{ text: message }],
             },
           ],
           generationConfig: {
