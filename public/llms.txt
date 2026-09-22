@@ -9,18 +9,18 @@ Contact: olimjonov.ogabek.dev@gmail.com · +998 97 064 04 24 · Namangan, Uzbeki
 
 ## Pages
 
-- [Portfolio (Uzbek)](https://ogabek.vercel.app/): main page — about, skills, projects, contact.
-- [Portfolio (English)](https://ogabek.vercel.app/en): the same content in English.
+- [Portfolio (Uzbek)](https://ogabek-olimjonov-portfolio.vercel.app/): main page — about, skills, projects, contact.
+- [Portfolio (English)](https://ogabek-olimjonov-portfolio.vercel.app/en): the same content in English.
 
 ## Case studies
 
 Longer write-ups of the two most substantial projects: the problem, what was
 built, the hardest part and the result.
 
-- [DevCommons (English)](https://ogabek.vercel.app/en/case/devcommons) ·
-  [Uzbek](https://ogabek.vercel.app/loyiha/devcommons)
-- [AgroVision AI (English)](https://ogabek.vercel.app/en/case/agrovision-ai) ·
-  [Uzbek](https://ogabek.vercel.app/loyiha/agrovision-ai)
+- [DevCommons (English)](https://ogabek-olimjonov-portfolio.vercel.app/en/case/devcommons) ·
+  [Uzbek](https://ogabek-olimjonov-portfolio.vercel.app/loyiha/devcommons)
+- [AgroVision AI (English)](https://ogabek-olimjonov-portfolio.vercel.app/en/case/agrovision-ai) ·
+  [Uzbek](https://ogabek-olimjonov-portfolio.vercel.app/loyiha/agrovision-ai)
 
 ## Projects
 

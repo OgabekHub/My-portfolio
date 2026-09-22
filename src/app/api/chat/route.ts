@@ -17,7 +17,7 @@ function isAllowedOrigin(req: Request): boolean {
   try {
     const { hostname } = new URL(origin);
     if (hostname === "localhost" || hostname === "127.0.0.1") return true;
-    return hostname === "ogabek.vercel.app" || hostname.endsWith(".vercel.app");
+    return hostname === "ogabek-olimjonov-portfolio.vercel.app" || hostname.endsWith(".vercel.app");
   } catch {
     return false;
   }

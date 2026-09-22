@@ -1,6 +1,6 @@
 import { PROJECTS } from "@/data/projects";
 
-export const SITE_URL = "https://ogabek.vercel.app";
+export const SITE_URL = "https://ogabek-olimjonov-portfolio.vercel.app";
 
 export const SOCIAL_PROFILES = [
   "https://github.com/OgabekHub",

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ogabek.vercel.app/sitemap.xml
+Sitemap: https://ogabek-olimjonov-portfolio.vercel.app/sitemap.xml
